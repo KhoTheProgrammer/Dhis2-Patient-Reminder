@@ -11,9 +11,12 @@
     "deploy": "d2-app-scripts deploy"
   },
   "devDependencies": {
-    "@dhis2/cli-app-scripts": "^11.7.4"
+    "@dhis2/cli-app-scripts": "^11.7.4",
+    "html-webpack-plugin": "^5.6.3"
   },
   "dependencies": {
-    "@dhis2/app-runtime": "^3.11.2"
+    "@dhis2/app-runtime": "^3.11.2",
+    "@dhis2/cli": "^5.0.1",
+    "@dhis2/ui": "^9.12.0"
   }
 }
