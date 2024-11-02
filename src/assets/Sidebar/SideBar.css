@@ -1,0 +1,14 @@
+.sidebar{
+    background-color: #0F479A;
+    width: 25%;
+    height: 100lvh;
+    margin: 0;
+    font-family:sans-serif;
+}
+
+p{
+    color:#fff;
+    text-align: center;
+    border-bottom: 1px solid white;
+    padding: 5px;
+}
