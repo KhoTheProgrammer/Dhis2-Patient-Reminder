@@ -13,7 +13,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const App = () => (
   <div>
       <BrowserRouter>
-      <Sidebar />
+      <PatientEnrollment />
         <Routes>
           <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={Patients} />
