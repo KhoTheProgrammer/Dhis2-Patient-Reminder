@@ -1,28 +1,33 @@
-/* src/components/Sidebar.css */
 .sidebar {
-    width: 250px; /* Adjust the width as needed */
-    background-color: #0357aa; /* Light background color */
-    padding: 20px; /* Padding around the links */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
-    height: 100vh; /* Full height */
-    position: fixed; /* Fixed position */
+    width: 250px; 
+    background-color: #1f64aa; 
+    padding: 20px; 
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1); 
+    height: 100vh; 
+    position: fixed; 
     display: flex;
-    flex-direction: column; /* Stack links vertically */
+    flex-direction: column; 
 }
 
 .sidebar nav {
     display: flex;
-    flex-direction: column; /* Stack links vertically */
+    flex-direction: column; 
 }
 
 .sidebar a {
-    text-decoration: none; /* Remove underline */
-    color: #ffffff; /* Text color */
-    padding: 10px 15px; /* Padding around links */
-    border-radius: 4px; /* Rounded corners */
-    display: flex; /* Use flexbox for icon and text alignment */
-    align-items: center; /* Center items vertically */
-    transition: background-color 0.3s; /* Smooth transition for background color */
+    text-decoration: none; 
+    color: #ffffff;
+    padding: 15px; 
+    border-radius: 4px; 
+    display: flex; 
+    align-items: center; 
+    transition: background-color 0.3s; 
+    margin-bottom: 10px; 
+    width: 100%; 
+}
+
+.sidebar a:last-child {
+    margin-bottom: 0; /* Remove margin from the last link */
 }
 
 .sidebar a i {
@@ -30,11 +35,11 @@
 }
 
 .sidebar a:hover {
-    background-color: #002549; /* Background color on hover */
+    background-color: #0080ff; /* Background color on hover */
 }
 
 .sidebar .active {
-    background-color: #007bff; /* Active link background color */
-    font-weight: bolder;
+    background-color: #003d7e; /* Active link background color */
     color: #fff; /* Active link text color */
+    font-weight: bolder;
 }

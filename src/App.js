@@ -6,7 +6,8 @@ import HomePage from './assets/HomePage';
 import PatientEnrollment from './assets/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
-import Progress from './assets/Progress'
+import Progress from './assets/Progress';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 const App = () => (
