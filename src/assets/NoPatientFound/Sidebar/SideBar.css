@@ -1,0 +1,14 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    background-color: #2c6793;
+    width: 12rem;
+    height: 100lvh;
+    font-family:sans-serif;
+}
+
+.sidebar-item{
+    color:#fff;
+    border-bottom: 1px solid white;
+    padding: 5px;
+}
