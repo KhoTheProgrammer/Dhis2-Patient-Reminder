@@ -1,0 +1,12 @@
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    margin-left: 200px; /* Pushes content to the right of the fixed sidebar */
+    padding: 20px;
+    background-color: #ECF0F1;
+    overflow-y: auto;
+    flex-grow: 1;
+}
