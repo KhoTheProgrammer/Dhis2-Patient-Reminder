@@ -26,6 +26,14 @@
     width: 100%; 
 }
 
+.icon {
+    margin-right: 10px; /* Space between icon and text */
+    width: 20px;
+    height: 20px;
+    fill: #ecf0f1; /* SVG icon color */
+    transition: fill 0.3s ease;
+}
+
 .sidebar a:last-child {
     margin-bottom: 0; /* Remove margin from the last link */
 }
