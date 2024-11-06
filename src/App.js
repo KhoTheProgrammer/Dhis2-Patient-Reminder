@@ -7,7 +7,7 @@ import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
 import Progress from './assets/Progress';
-import Register from './assets/Register';
+import Register from './components/register/Register';
 import './App.css';
 
 const App = () => (
