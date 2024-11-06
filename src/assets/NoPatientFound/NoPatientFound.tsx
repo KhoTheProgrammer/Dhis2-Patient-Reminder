@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from './Sidebar/Sidebar'
+import Sidebar from '../sidebar/Sidebar'
 import Card from './Card/Card'
 import "./NoPatientFound.css"
 
