@@ -1,10 +1,10 @@
-import React from 'react'
-import './Outlet.css'
+import React from 'react';
 
-function Patients() {
-  return (
-    <div>Patients</div>
-  )
-}
+const Patients = () => (
+    <div>
+        <h2>Patient List</h2>
+        <p>This is the Patients page.</p>
+    </div>
+);
 
-export default Patients
+export default Patients;
