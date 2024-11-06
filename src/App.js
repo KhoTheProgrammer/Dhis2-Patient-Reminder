@@ -8,6 +8,7 @@ import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
 import Progress from './assets/Progress';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Register from './assets/Register';
 
 
 const App = () => (
@@ -17,6 +18,7 @@ const App = () => (
         <Routes>
           <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={Patients} />
+          <Route path='/register' Component={Register} />
           <Route path="/enroll" component={PatientEnrollment} />
           <Route path="/messages" component={Messages} />
           <Route path="/follow-up" component={FollowUp} />
