@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
-import Sidebar from './assets/Sidebar';
+import Sidebar from './assets/sidebar/Sidebar';
 import Patients from './assets/Patients';
 import HomePage from './assets/HomePage';
-import PatientEnrollment from './assets/PatientEnrollment';
+import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
 import Progress from './assets/Progress';
@@ -14,7 +14,6 @@ import Register from './assets/Register';
 const App = () => (
   <div>
       <BrowserRouter>
-      <Sidebar />
         <Routes>
           <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={Patients} />
