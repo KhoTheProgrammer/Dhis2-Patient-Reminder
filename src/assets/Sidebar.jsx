@@ -8,6 +8,9 @@ const Sidebar = () => (
             <NavLink to="/patients" activeClassName="active">
                 <i className="fas fa-user"></i> Patient
             </NavLink>
+            <NavLink to="/register" activeClassName="active">
+                <i className="fas fa-user-plus"></i> Register Patient
+            </NavLink>
             <NavLink to="/enroll" activeClassName="active">
                 <i className="fas fa-user-plus"></i> Enroll Patient
             </NavLink>

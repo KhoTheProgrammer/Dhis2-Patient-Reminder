@@ -26,20 +26,28 @@
     width: 100%; 
 }
 
+.icon {
+    margin-right: 10px; 
+    width: 20px;
+    height: 20px;
+    fill: #ecf0f1; 
+    transition: fill 0.3s ease;
+}
+
 .sidebar a:last-child {
-    margin-bottom: 0; /* Remove margin from the last link */
+    margin-bottom: 0; 
 }
 
 .sidebar a i {
-    margin-right: 10px; /* Space between icon and text */
+    margin-right: 10px; 
 }
 
 .sidebar a:hover {
-    background-color: #0080ff; /* Background color on hover */
+    background-color: #0080ff; 
 }
 
 .sidebar .active {
-    background-color: #003d7e; /* Active link background color */
-    color: #fff; /* Active link text color */
+    background-color: #003d7e; 
+    color: #fff; 
     font-weight: bolder;
 }
