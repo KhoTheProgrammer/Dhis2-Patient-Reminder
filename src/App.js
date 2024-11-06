@@ -14,6 +14,7 @@ import Register from './assets/Register';
 const App = () => (
   <div>
       <BrowserRouter>
+      <Sidebar/>
         <Routes>
           <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={Patients} />
