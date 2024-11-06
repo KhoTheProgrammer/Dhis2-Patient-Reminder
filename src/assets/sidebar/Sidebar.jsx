@@ -1,27 +1,33 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as PatientIcon } from '../../icons/patient.svg';
+import { ReactComponent as RegisterIcon } from '../../icons/register.svg';
+import { ReactComponent as EnrollIcon } from '../../icons/enroll.svg';
+import { ReactComponent as Email } from '../../icons/email.svg';
+import { ReactComponent as FollowUpIcon } from '../../icons/followup.svg';
+import { ReactComponent as ProgressIcon } from '../../icons/progress.svg';
 import './SideBar.css';
 
 const Sidebar = () => (
     <div className="sidebar">
         <nav>
             <NavLink to="/patients" activeClassName="active">
-                <i className="fas fa-user"></i> Patient
+                <PatientIcon /> Patient
             </NavLink>
             <NavLink to="/register" activeClassName="active">
-                <i className="fas fa-user-plus"></i> Register Patient
+                <RegisterIcon /> Register Patient
             </NavLink>
             <NavLink to="/enroll" activeClassName="active">
-                <i className="fas fa-user-plus"></i> Enroll Patient
+                <EnrollIcon /> Enroll Patient
             </NavLink>
             <NavLink to="/messages" activeClassName="active">
-                <i className="fas fa-envelope"></i> Sent Messages
+                <Email /> Sent Messages
             </NavLink>
             <NavLink to="/follow-up" activeClassName="active">
-                <i className="fas fa-calendar-check"></i> Follow Up
+                <FollowUpIcon /> Follow Up
             </NavLink>
             <NavLink to="/progress" activeClassName="active">
-                <i className="fas fa-chart-line"></i> Patient's Progress
+                <ProgressIcon /> Patient's Progress
             </NavLink>
         </nav>
     </div>
