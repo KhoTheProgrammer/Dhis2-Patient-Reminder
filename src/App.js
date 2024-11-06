@@ -1,7 +1,8 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import React from 'react'
-import classes from './App.module.css'
+import SendMessage from './components/SendMessage/SendMessage'
+import NoPatientFound from "./assets/NoPatientFound/NoPatientFound"
 
 const query = {
     me: {
@@ -21,9 +22,10 @@ const MyApp = () => {
     }
 
     return (
-        <div className={classes.container}>
-            <h1 className={classes.welcome}>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
-            <h3>{i18n.t('Welcome to DHIS2!')}</h3>
+        <div >
+            {/* <h1 className={classes.welcome}>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
+            <h3>{i18n.t('Welcome to DHIS2!')}</h3> */}
+            <SendMessage></SendMessage>
         </div>
     )
 }
