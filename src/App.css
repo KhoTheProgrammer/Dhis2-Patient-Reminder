@@ -4,7 +4,7 @@
 }
 
 .content {
-    margin-left: 200px; /* Pushes content to the right of the fixed sidebar */
+    margin-left: 250px; /* Pushes content to the right of the fixed sidebar */
     padding: 20px;
     background-color: #ECF0F1;
     overflow-y: auto;
