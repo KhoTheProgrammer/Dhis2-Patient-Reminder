@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../../assets/NoPatientFound/Sidebar/Sidebar'
+import Sidebar from '../../assets/sidebar/Sidebar'
 import TableMessage from './Table'
 import "./SendMessage.css"
 
