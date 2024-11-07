@@ -114,35 +114,43 @@ const data = [
   },
 ];
 
-const Patients = () => (
-  <div className="table">
-    <Table>
-      <TableHead className="tablehead">
-        <TableRow>
-          <TableCellHead>First name</TableCellHead>
-          <TableCellHead>Last name</TableCellHead>
-          <TableCellHead>Date Enrolled</TableCellHead>
-          <TableCellHead>Organisation unit</TableCellHead>
-          <TableCellHead>Health Program</TableCellHead>
-          <TableCellHead>Add Appointment</TableCellHead>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data.map((person, index) => (
-          <TableRow key={index} className="tablerow">
-            <TableCell>{person.firstName}</TableCell>
-            <TableCell>{person.lastName}</TableCell>
-            <TableCell>{person.incidentDate}</TableCell>
-            <TableCell>{person.registeringUnit}</TableCell>
-            <TableCell>{person.assignedUser}</TableCell>
-            <TableCell>
-              <Button className="button">Add</Button>
-            </TableCell>
+const Patients = () => {
+  const tableHeaders = [
+    "First name",
+    "Last name",
+    "Date Enrolled",
+    "Organisation unit",
+    "Health Program",
+    "Add Appointment",
+  ];
+
+  return (
+    <div className="table">
+      <Table>
+        <TableHead className="tablehead">
+          <TableRow>
+            {tableHeaders.map((header, index) => (
+              <TableCellHead key={index}>{header}</TableCellHead>
+            ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </div>
-);
+        </TableHead>
+        <TableBody>
+          {data.map((person, index) => (
+            <TableRow key={index} className="tablerow">
+              <TableCell>{person.firstName}</TableCell>
+              <TableCell>{person.lastName}</TableCell>
+              <TableCell>{person.incidentDate}</TableCell>
+              <TableCell>{person.registeringUnit}</TableCell>
+              <TableCell>{person.assignedUser}</TableCell>
+              <TableCell>
+                <Button className="button">Add</Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
 
 export default Patients;
