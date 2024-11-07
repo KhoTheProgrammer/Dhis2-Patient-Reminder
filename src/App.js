@@ -7,12 +7,10 @@ import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
 import Progress from './assets/Progress';
-import Register from './components/register/Register';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Register from './assets/Register';
-import SendMessage from './components/SendMessage/SendMessage';
-
+import Register from './components/register/Register';
+import Patients from './components/patients/Patients';
 
 const App = () => (
   <Router>
