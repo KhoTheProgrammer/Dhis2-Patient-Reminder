@@ -6,7 +6,7 @@ const orgUnit = "DiszpKrYNg8";
 
 export const patientsQuery = {
     trackedEntityInstances: {
-        resource: "trackedEntityInstances",
+        resource: "trackedEntityInstances.json",
         params: {
             ou: orgUnit,
             trackedEntityType: trackedEntityType,
