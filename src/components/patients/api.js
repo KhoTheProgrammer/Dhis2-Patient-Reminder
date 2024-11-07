@@ -11,7 +11,7 @@ export const patientsQuery = {
             ou: orgUnit,
             trackedEntityType: trackedEntityType,
             fields:[
-                'attributes[displayName, value]'
+                'attributes[displayName, value, created]'
             ]
         }
     }

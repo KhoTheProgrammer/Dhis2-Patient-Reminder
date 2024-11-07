@@ -13,27 +13,44 @@ import {
 import { useDataQuery } from "@dhis2/app-runtime";
 
 const Patients = () => {
-  const tableHeaders = ["First name", "Last name", 'Add Appointment'];
+  const tableHeaders = [
+    "First name",
+    "Last name",
+    "Date Enrolled",
+    "Add Appointment",
+  ];
 
   const [patients, setPatients] = useState([]);
   const { loading, error, data } = useDataQuery(patientsQuery);
 
   useEffect(() => {
     if (data) {
-      const patientsData = data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
-        const attributes = instance.attributes;
+      const patientsData =
+        data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
+          const attributes = instance.attributes;
 
-        const getAttributeValue = (name) => {
-          const attribute = attributes.find((attr) => attr.displayName === name);
-          return attribute ? attribute.value : "";
-        };
+          const getAttributeValue = (name) => {
+            const attribute = attributes.find(
+              (attr) => attr.displayName === name
+            );
+            return attribute ? attribute.value : "";
+          };
 
-        return {
-          id: instance.trackedEntityInstance,
-          firstName: getAttributeValue("First name"),
-          lastName: getAttributeValue("Last name"),
-        };
-      });
+          // Extract the created date and format it
+          const createdDate = attributes.find(
+            (attr) => attr.displayName === "First name"
+          )?.created;
+          const formattedDate = createdDate
+            ? new Date(createdDate).toLocaleDateString()
+            : "";
+
+          return {
+            id: instance.trackedEntityInstance,
+            firstName: getAttributeValue("First name"),
+            lastName: getAttributeValue("Last name"),
+            created: formattedDate,
+          };
+        });
 
       setPatients(patientsData);
     }
@@ -66,8 +83,14 @@ const Patients = () => {
             <TableRow key={index} className="tablerow">
               <TableCell>{person.firstName}</TableCell>
               <TableCell>{person.lastName}</TableCell>
+              <TableCell>{person.created}</TableCell>
               <TableCell>
-                <Button className="button" onClick={() => handleAddAppointment(person.id)}>Add</Button>
+                <Button
+                  className="button"
+                  onClick={() => handleAddAppointment(person.id)}
+                >
+                  Add
+                </Button>
               </TableCell>
             </TableRow>
           ))}
