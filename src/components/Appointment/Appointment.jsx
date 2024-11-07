@@ -1,12 +1,9 @@
 import React from "react";
 import "./Appointment.css";
 
-const handleSave = () => {
-  onClose();
-};
 
-if (!isVisible) return null;
-const Appointment = ({ isVisible, onClose }) => {
+
+const Appointment = () => {
   return (
     <div className="appointment">
       <div>
