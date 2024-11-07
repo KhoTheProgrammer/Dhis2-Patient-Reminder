@@ -11,6 +11,7 @@ import {
   TableCellHead,
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
+import Card from "../../assets/NoPatientFound/Card/Card";
 
 const Patients = () => {
   const tableHeaders = [
@@ -69,34 +70,40 @@ const Patients = () => {
   };
 
   return (
-    <div className="table">
-      <Table>
-        <TableHead className="tablehead">
-          <TableRow>
-            {tableHeaders.map((header, index) => (
-              <TableCellHead key={index}>{header}</TableCellHead>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {patients.map((person, index) => (
-            <TableRow key={index} className="tablerow">
-              <TableCell>{person.firstName}</TableCell>
-              <TableCell>{person.lastName}</TableCell>
-              <TableCell>{person.created}</TableCell>
-              <TableCell>
-                <Button
-                  className="button"
-                  onClick={() => handleAddAppointment(person.id)}
-                >
-                  Add
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    <>
+      {patients.length > 0 ? (
+        <div className="table">
+          <Table>
+            <TableHead className="tablehead">
+              <TableRow>
+                {tableHeaders.map((header, index) => (
+                  <TableCellHead key={index}>{header}</TableCellHead>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {patients.map((person, index) => (
+                <TableRow key={index} className="tablerow">
+                  <TableCell>{person.firstName}</TableCell>
+                  <TableCell>{person.lastName}</TableCell>
+                  <TableCell>{person.created}</TableCell>
+                  <TableCell>
+                    <Button
+                      className="button"
+                      onClick={() => handleAddAppointment(person.id)}
+                    >
+                      Add
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <Card />
+      )}
+    </>
   );
 };
 
