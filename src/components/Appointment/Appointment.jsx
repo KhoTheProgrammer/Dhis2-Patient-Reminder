@@ -1,6 +1,5 @@
 import React from "react";
 import "./Appointment.css";
-import { Button } from "@dhis2/ui";
 
 const handleSave = () => {
   onClose();
