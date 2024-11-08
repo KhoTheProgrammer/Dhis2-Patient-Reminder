@@ -7,7 +7,7 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  z-index: 1000; /* Ensures it appears on top of other elements */
+  z-index: 1000; 
   width: 300px;
   text-align: center;
 }
@@ -18,13 +18,14 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 999; /* Layer beneath appointment popup */
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999;
 }
 
 .input {
   margin-bottom: 20px;
   width: 100%;
+  padding: 5px;
 }
 
 .buttons-container {
@@ -38,7 +39,7 @@
 }
 
 .cancel-btn {
-  background-color: red; /* Red */
+  background-color: #e74c3c; /* Red */
   color: white;
 }
 

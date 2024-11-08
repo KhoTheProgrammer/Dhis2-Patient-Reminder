@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Appointment.css";
 
+const Appointment = ({ onClose, onConfirm }) => {
+  const [selectedDate, setSelectedDate] = useState("");
 
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
 
-const Appointment = () => {
+  const handleConfirm = () => {
+    onConfirm(selectedDate); // Pass selected date to parent on confirmation
+  };
+
   return (
     <div className="appointment">
       <div>
-        <input type="date" name="" className="input" />
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={handleDateChange}
+          className="input"
+        />
       </div>
       <div className="buttons-container">
-        <button className="buttons ok-btn">OK</button>
-        <button className="buttons cancel-btn">Cancel</button>
+        <button className="buttons ok-btn" onClick={handleConfirm}>
+          OK
+        </button>
+        <button className="buttons cancel-btn" onClick={onClose}>
+          Cancel
+        </button>
       </div>
     </div>
   );
