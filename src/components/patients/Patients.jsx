@@ -12,6 +12,7 @@ import {
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
+import Appointment from "../Appointment/Appointment";// Import the Appointment component
 
 const Patients = () => {
   const tableHeaders = [
@@ -22,6 +23,8 @@ const Patients = () => {
   ];
 
   const [patients, setPatients] = useState([]);
+  const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
+  const [selectedPatientId, setSelectedPatientId] = useState(null);
   const { loading, error, data } = useDataQuery(patientsQuery);
 
   useEffect(() => {
@@ -54,6 +57,8 @@ const Patients = () => {
         });
 
       setPatients(patientsData);
+      console.log(patientsData);
+      
     }
   }, [data]);
 
@@ -66,7 +71,13 @@ const Patients = () => {
   }
 
   const handleAddAppointment = (patientId) => {
-    console.log(`Add appointment for patient ${patientId}`);
+    setSelectedPatientId(patientId);
+    setShowAppointmentPopup(true); // Show the appointment popup
+  };
+
+  const handleCloseAppointment = () => {
+    setShowAppointmentPopup(false); // Hide the appointment popup
+    setSelectedPatientId(null); // Reset selected patient
   };
 
   return (
@@ -102,6 +113,22 @@ const Patients = () => {
         </div>
       ) : (
         <Card />
+      )}
+
+      {/* Appointment popup */}
+      {showAppointmentPopup && (
+        <div className="appointment-popup">
+          <Appointment
+            onClose={handleCloseAppointment}
+            onConfirm={(date) => {
+              console.log(
+                `Appointment set for patient ${selectedPatientId} on ${date}`
+              );
+              handleCloseAppointment();
+            }}
+          />
+          <div className="popup-overlay" onClick={handleCloseAppointment}></div>
+        </div>
       )}
     </>
   );
