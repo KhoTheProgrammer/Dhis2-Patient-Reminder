@@ -2,8 +2,9 @@ import React from 'react';
 import { useDataQuery } from '@dhis2/app-runtime';
 import i18n from '@dhis2/d2-i18n';
 import HeaderBar from './components/HeaderBar'; // Importing HeaderBar component
-//import MessageTable from './components/MessageTable'; // Importing MessageTable component
+import MessageTable from './components/MessageTable'; // Importing MessageTable component
 import './App.css'; // Importing global styles
+import MessageTable from './components/MessageTable';
 
 const query = {
     me: {
@@ -29,7 +30,7 @@ const App = () => {
                 {i18n.t(' ', {  })}
             </h1>
             <h3>{i18n.t('')}</h3>
-          
+            <MessageTable/>
         </div>
     );
 };
