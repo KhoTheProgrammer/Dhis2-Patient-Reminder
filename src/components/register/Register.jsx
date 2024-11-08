@@ -5,10 +5,10 @@ import "./Register.css";
 
 // DHIS2 query to fetch organization units
 const orgUnitQuery = {
-  orgUnits: {
-    resource: "organisationUnits", // Endpoint to fetch org units
+  organisationUnits: {
+    resource: "organisationUnits.json", // Endpoint to fetch org units
     params: {
-      level: 1, // Level 1 org units, adjust as needed
+      level: 2, // Level 1 org units, adjust as needed
       fields: "id,name", // Specify the fields you need
       paging: false, // Disable pagination to fetch all units
     },
@@ -30,10 +30,13 @@ const Register = () => {
 
   // Fetch organization units from DHIS2 API
   const { loading, error, data } = useDataQuery(orgUnitQuery);
+  console.log(data);
+  
 
   useEffect(() => {
-    if (data && Array.isArray(data.orgUnits)) {
-      setOrgUnits(data.orgUnits); // Set fetched organization units only if it's an array
+    if (data && Array.isArray(data.organisationUnits.organisationUnits)) {
+      setOrgUnits(data.organisationUnits.organisationUnits); // Set fetched organization units only if it's an array
+      console.log(orgUnits);
     }
   }, [data]);
 
