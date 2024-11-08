@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './assets/sidebar/Sidebar';
 import Patients from './assets/Patients';
-import HomePage from './assets/HomePage';
+import HomePage from './assets/HomePage/HomePage';
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
