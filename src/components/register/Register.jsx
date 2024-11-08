@@ -98,7 +98,7 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <div>First Name</div>
                 <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
-                <div>Sirname</div>
+                <div>Surname</div>
                 <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
                 <div>Address</div>
                 <input type="text" name="address" placeholder="Address" onChange={handleChange} required />
