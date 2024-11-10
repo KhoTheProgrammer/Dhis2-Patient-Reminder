@@ -24,9 +24,7 @@ function MessageTable() {
         <tbody>
           {messages.map((msg, index) => (
             <tr key={index}>
-              <td>
-                {index + 1}. {msg.name}
-              </td>
+              <td>{index + 1}. {msg.name}</td>
               <td>{msg.message}</td>
               <td>{msg.date}</td>
             </tr>
