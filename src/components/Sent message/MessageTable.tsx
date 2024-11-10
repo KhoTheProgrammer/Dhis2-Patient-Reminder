@@ -12,6 +12,7 @@ function MessageTable() {
 
   return (
     <div className="message-table-container">
+      <div className="header-bar">Sent Messages</div>;
       <table className="message-table">
         <thead>
           <tr>
@@ -23,7 +24,9 @@ function MessageTable() {
         <tbody>
           {messages.map((msg, index) => (
             <tr key={index}>
-              <td>{index + 1}. {msg.name}</td>
+              <td>
+                {index + 1}. {msg.name}
+              </td>
               <td>{msg.message}</td>
               <td>{msg.date}</td>
             </tr>

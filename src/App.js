@@ -11,6 +11,7 @@ import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
 import Patients from './components/patients/Patients';
+import MessageTable from './components/Sent message/MessageTable';
 
 const App = () => (
   <Router>
@@ -22,7 +23,7 @@ const App = () => (
           <Route path="/patients" element={<Patients />} />
           <Route path="/register" element={<Register />} />
           <Route path="/enroll" element={<PatientEnrollment />} />
-          <Route path="/messages" element={<Messages />} />
+          <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUp />} />
           <Route path="/progress" element={<Progress />} />
           <Route exact path='/' Component={HomePage} />

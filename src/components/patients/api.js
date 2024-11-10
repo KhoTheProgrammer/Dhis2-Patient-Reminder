@@ -1,7 +1,7 @@
 import { useDataQuery } from "@dhis2/app-runtime";
 
 const trackedEntityType = "nEenWmSyUEp";
-const orgUnit = "DFyu9VGpodC";
+const orgUnit = "DiszpKrYNg8";
 
 
 export const patientsQuery = {
