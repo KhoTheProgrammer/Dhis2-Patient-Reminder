@@ -1,28 +1,35 @@
-import axios from 'axios';
+import { useDataMutation } from '@dhis2/app-runtime';
 
-const DHIS2_API_URL = 'https://localhost:9999/api'; // Replace with your DHIS2 API URL
-const DHIS2_AUTH = {
-    username: 'admin', 
-    password: 'district', 
+const registerPatientMutation = {
+    type: 'create',
+    resource: 'trackedEntityInstances',
+    data: ({ formData }) => ({
+        trackedEntityType: 'nEenWmSyUEp',
+        orgUnit: formData.orgUnit, 
+        attributes: [
+            { attribute: 'ATTRIBUTE_ID_FIRST_NAME', value: formData.firstName }, // Replace with your DHIS2 attribute IDs
+            { attribute: 'ATTRIBUTE_ID_LAST_NAME', value: formData.lastName },
+            { attribute: 'ATTRIBUTE_ID_DOB', value: formData.dob },
+            { attribute: 'ATTRIBUTE_ID_GENDER', value: formData.gender },
+            { attribute: 'ATTRIBUTE_ID_PHONE', value: formData.phone },
+            { attribute: 'ATTRIBUTE_ID_ADDRESS', value: formData.address },
+        ],
+    }),
 };
 
-export const fetchOrgUnits = async () => {
-    const response = await axios.get(`${DHIS2_API_URL}/organisationUnits`, {
-        auth: DHIS2_AUTH,
-    });
-    return response.data.organisationUnits; // Adjust based on the actual response structure
-};
 
-export const fetchPrograms = async () => {
-    const response = await axios.get(`${DHIS2_API_URL}/programs`, {
-        auth: DHIS2_AUTH,
-    });
-    returnresponse.data.programs; // Adjust based on the actual response structure
-};
+export const useRegisterPatient = () => {
+    const [mutate, { loading, error }] = useDataMutation(registerPatientMutation);
 
-export const registerPatient = async (patientData) => {
-    const response = await axios.post(`${DHIS2_API_URL}/patients`, patientData, {
-        auth: DHIS2_AUTH,
-    });
-    return response.data; // Adjust based on the actual response structure
+    const registerPatient = async (formData) => {
+        try {
+            await mutate({ formData });
+            alert("Patient registered successfully");
+        } catch (err) {
+            console.error("Error registering patient:", err);
+            throw err;
+        }
+    };
+
+    return { registerPatient, loading, error };
 };
