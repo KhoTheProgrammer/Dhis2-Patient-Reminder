@@ -1,24 +1,30 @@
-  .home{
+.main-container {
+    display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #d3d3d3;
+  }
+  
+  .app-title {
     text-align: center;
-
-  }
-  .home h1 {
-    color: #005cbf;
-    font-size: 10em;
-    font-weight: bolder;
-    margin-bottom: 10px;
+    color: #333; 
   }
   
-  .home h2 {
-    color: #333333;
-    font-size: 3.5em;
-    margin: 1px 0;
+  .app-title h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 0;
   }
   
-  .home h3 {
-    color: #666666;
-    font-size: 1.2em;
-    margin-top: 10px;
+  .app-title h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .app-title p {
+    font-size: 1.5rem;
+    margin: 0;
   }
   
