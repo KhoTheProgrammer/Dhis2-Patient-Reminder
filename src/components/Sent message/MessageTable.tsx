@@ -3,13 +3,13 @@ import "./Message.css" // Ensure you create this CSS file for styling
 
 function MessageTable() {
   const messages = [
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: ' 10/11/2024' },
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '12/11/2024' },
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '12/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
     { name: 'Justice    Khaira', message: 'You have an appointment...', date: '13/11/2024' },
-  
+    { name: 'Kondwan  Thuto', message: 'You have an appointment...', date: '13/11/2024' },
   ];
 
   return (
