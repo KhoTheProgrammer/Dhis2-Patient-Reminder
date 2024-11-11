@@ -1,32 +1,57 @@
-.main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width:100%;
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    background-color: hsl(0, 0%, 83%);
+/* Styling the main container */
+html, body {
+  height: 100%;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  overflow: hidden;
+}
+
+/* Styling the app title */
+.app-title {
+  text-align: center;
+  color: #333;
+}
+
+.app-title h1 {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.app-title h2 {
+  font-size: 32px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.app-title p {
+  font-size: 18px;
+  color: #777;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-title h1 {
+      font-size: 36px;
   }
-  
-  .homepage-container {
-    text-align: center;
-    color: #333; 
+
+  .app-title h2 {
+      font-size: 24px;
   }
-  
-  .homepage-container h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    margin: 0;
+
+  .app-title p {
+      font-size: 16px;
   }
-  
-  .homepage-container h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .homepage-container p {
-    font-size: 1.5rem;
-    margin: 0;
-  }
-  
+}
