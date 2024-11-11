@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const DHIS2_API_URL = 'https://localhost:8080/dhis/api'; // Replace with your DHIS2 API URL
+const DHIS2_API_URL = 'https://localhost:9999/api'; // Replace with your DHIS2 API URL
 const DHIS2_AUTH = {
     username: 'admin', 
     password: 'district', 
