@@ -10,8 +10,14 @@
 
 .table button{
     background-color: #2c6793;
+    color: #fff;
 }
 
 .tablerow:hover{
 background-color: #f0f0f0;
+}
+
+.table button:hover{
+    background-color: #2c6793;
+    color: #fff;
 }
