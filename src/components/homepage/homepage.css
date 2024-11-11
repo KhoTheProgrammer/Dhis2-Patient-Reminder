@@ -3,28 +3,28 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    
+
     background-color: #d3d3d3;
   }
   
-  .app-title {
+  .homepage-container {
     text-align: center;
     color: #333; 
   }
   
-  .app-title h1 {
+  .homepage-container h1 {
     font-size: 4rem;
     font-weight: bold;
     margin: 0;
   }
   
-  .app-title h2 {
+  .homepage-container h2 {
     font-size: 2rem;
     font-weight: bold;
     margin: 0;
   }
   
-  .app-title p {
+  .homepage-container p {
     font-size: 1.5rem;
     margin: 0;
   }
