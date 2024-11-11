@@ -12,7 +12,6 @@ function MessageTable() {
 
   return (
     <div className="message-table-container">
-      <div className="header-bar">Sent Messages</div>;
       <table className="message-table">
         <thead>
           <tr>
