@@ -12,7 +12,7 @@ import {
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
-import Appointment from "../Appointment/Appointment";// Import the Appointment component
+import Appointment from "../Appointment/Appointment";
 
 const Patients = () => {
   const tableHeaders = [
