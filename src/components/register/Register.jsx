@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDataQuery } from '@dhis2/app-runtime';
-import { Register } from './Api';
+import { registerPatient } from './Api';
 import './Register.css';
 
 // DHIS2 query to fetch organization units
@@ -47,7 +47,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await Register(formData);
+            await registerPatient(formData);
             alert('Patient registered successfully');
         } catch (error) {
             console.error('Error registering patient:', error);

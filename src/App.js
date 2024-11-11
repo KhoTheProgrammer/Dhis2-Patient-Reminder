@@ -9,6 +9,7 @@ import FollowUp from './assets/FollowUp';
 import Progress from './assets/Progress';
 import Register from './components/register/Register';
 import './App.css';
+import Message from './components/SentMessages/Message';
 
 const App = () => (
   <Router>
@@ -20,7 +21,7 @@ const App = () => (
           <Route path="/patients" element={<Patients />} />
           <Route path="/register" element={<Register />} />
           <Route path="/enroll" element={<PatientEnrollment />} />
-          <Route path="/messages" element={<Messages />} />
+          <Route path="/messages" element={<Message />} />
           <Route path="/follow-up" element={<FollowUp />} />
           <Route path="/progress" element={<Progress />} />
         </Routes>
