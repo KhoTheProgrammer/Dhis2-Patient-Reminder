@@ -8,7 +8,7 @@ function MessageTable() {
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-     
+    { name: 'Justice    Khaira', message: 'You have an appointment...', date: '13/11/2024' },
   ];
 
   return (
