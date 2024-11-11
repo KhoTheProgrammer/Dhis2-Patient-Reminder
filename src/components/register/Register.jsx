@@ -8,7 +8,7 @@ const orgUnitQuery = {
   organisationUnits: {
     resource: "organisationUnits.json", // Endpoint to fetch org units
     params: {
-      level: 2, // Level 1 org units, adjust as needed
+      level: 2, // Level 2 org units, adjust as needed
       fields: "id,name", // Specify the fields you need
       paging: false, // Disable pagination to fetch all units
     },
