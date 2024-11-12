@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './assets/sidebar/Sidebar';
 import NoPatientFound from './assets/NoPatientFound/NoPatientFound'
-import HomePage from './assets/HomePage';
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
@@ -28,7 +27,6 @@ const App = () => (
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpTable />} />
           <Route path="/progress" element={<Progress />} />
-          <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={NoPatientFound} />
           <Route path='/register' Component={Register} />
           <Route path="/enroll" component={PatientEnrollment} />

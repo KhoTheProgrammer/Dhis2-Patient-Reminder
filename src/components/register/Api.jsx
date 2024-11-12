@@ -25,10 +25,10 @@ export const registerPatient = async (patientData) => {
     };
 
     try {
-        const response = await api.post('/trackedEntityInstances', data);
-        return response.data;
-    } catch (error) {
-        console.error('Error registering patient:', error);
-        throw error;
-    }
+            const response = await api.post('/trackedEntityInstances', data);
+            return response.data;
+        } catch (error) {
+            console.error('Error registering patient:', error);
+            throw error;
+                }
 };
