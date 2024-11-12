@@ -13,14 +13,14 @@
   color: #fff;
 }
 
-.tablerow:hover {
+/* .tablerow:hover {
   background-color: #f0f0f0;
 }
 
 .table button:hover {
   background-color: #2c6793;
   color: #fff;
-}
+} */
 
 /* Pagination Styles */
 .pagination {
@@ -31,13 +31,22 @@
 }
 
 .pagination button {
-  background-color: #2c6793;
+  background-color:#2c6793;
   color: #fff;
   margin: 0 5px;
   padding: 10px 15px;
   border: none;
   cursor: pointer;
   font-size: 14px;
+}
+
+.table button:hover{
+background-color:#2c6793;
+  color: #fff;
+}
+.pagination button:hover{
+background-color:#2c6793;
+  color: #fff;
 }
 
 .pagination button:disabled {
@@ -49,3 +58,4 @@
   margin: 0 10px;
   font-size: 14px;
 }
+
