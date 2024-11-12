@@ -49,3 +49,10 @@
     border-radius: 5px;
     font-weight: bold;
 }
+
+.error {
+  color: red;
+  margin-top: 8px;
+  font-size: 0.9em;
+}
+
