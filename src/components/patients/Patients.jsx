@@ -9,6 +9,7 @@ import {
   TableCell,
   Button,
   TableCellHead,
+  CircularLoader
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
@@ -19,7 +20,7 @@ const Patients = () => {
   const tableHeaders = [
     "First name",
     "Last name",
-    "Date Enrolled",
+    "Date Registered",
     "Add Appointment",
   ];
 
@@ -43,7 +44,6 @@ const Patients = () => {
             return attribute ? attribute.value : "";
           };
 
-          // Extract the created date and format it
           const createdDate = attributes.find(
             (attr) => attr.displayName === "First name"
           )?.created;
@@ -68,7 +68,7 @@ const Patients = () => {
   }
 
   if (loading) {
-    return <span>Loading...</span>;
+    return <div className="loader"><CircularLoader></CircularLoader></div>;
   }
 
   // Pagination logic
@@ -86,13 +86,13 @@ const Patients = () => {
   };
 
   const handleCloseAppointment = () => {
-    setShowAppointmentPopup(false); 
-    setSelectedPatientId(null); 
+    setShowAppointmentPopup(false);
+    setSelectedPatientId(null);
   };
 
   const openAppointmentModal = (patientId) => {
     setSelectedPatientId(patientId);
-    setShowAppointmentPopup(true); 
+    setShowAppointmentPopup(true);
   };
 
   const handleAddAppointment = async (appointmentData) => {
@@ -100,11 +100,11 @@ const Patients = () => {
       const result = await addAppointment({
         ...appointmentData,
         id: selectedPatientId,
-      }); 
+      });
       window.alert("Appointment Created Successfully");
-      handleCloseAppointment(); 
+      handleCloseAppointment();
     } catch (error) {
-      window.alert("Patient not enrolled to a program")
+      window.alert("Patient not enrolled to a program");
     }
   };
 
@@ -127,9 +127,7 @@ const Patients = () => {
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => openAppointmentModal(person.id)}
-                    >
+                    <Button onClick={() => openAppointmentModal(person.id)}>
                       Add
                     </Button>
                   </TableCell>
