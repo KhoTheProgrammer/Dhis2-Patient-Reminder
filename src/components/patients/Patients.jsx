@@ -27,12 +27,7 @@ const Patients = () => {
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const { loading, error, data } = useDataQuery(patientsQuery);
-  const [appointmentData, setAppointmentData] = useState({
-    date: "",
-    time: "",
-    id: "",
-  });
-
+  
   useEffect(() => {
     if (data) {
       const patientsData =
@@ -88,7 +83,7 @@ const Patients = () => {
   const handleAddAppointment = async (appointmentData) => {
     try {
       const result = await addAppointment({...appointmentData, id: selectedPatientId}); // Sends appointment to API
-      console.log("Appointment Created: ", result);
+      window.alert("Appointment Created Successfully");
       handleCloseAppointment(); // Close modal upon successful appointment creation
     } catch (error) {
       console.error("Error creating appointment:", error);
