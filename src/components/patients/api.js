@@ -4,7 +4,7 @@ import { useDataQuery } from "@dhis2/app-runtime";
 //  Group 30 clinic id = DFyu9VGpodC
 // Ngelehe CHC id = DiszpKrYNg8
 const trackedEntityType = "nEenWmSyUEp";
-const orgUnit = "DFyu9VGpodC";
+const orgUnit = "DiszpKrYNg8";
 
 
 export const patientsQuery = {
