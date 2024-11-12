@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
 import { Button, SingleSelect, SingleSelectOption, Input, NoticeBox } from '@dhis2/ui';
-import './PatientEnrollment.css'
 
 const orgUnitsQuery = {
     orgUnits: {
@@ -9,29 +8,27 @@ const orgUnitsQuery = {
         params: {
             fields: ['id', 'displayName'],
             paging: false,
+            level:2,
         },
     },
 };
 
-// Fetch programs for the selected organization unit
-const programsQuery = (orgUnitId) => ({
+const programsQuery = {
     programs: {
         resource: 'programs',
         params: {
-            orgUnit: orgUnitId,
             fields: ['id', 'displayName'],
             paging: false,
         },
     },
-});
+};
 
-// Fetch patients for the selected organization unit
 const patientsQuery = (orgUnitId) => ({
     patients: {
         resource: 'trackedEntityInstances',
         params: {
             ou: orgUnitId,
-            trackedEntityType: 'nEenWmSyUEp', // Replace with your tracked entity type ID
+            trackedEntityType: "nEenWmSyUEp", // Replace with appropriate tracked entity type
             fields: ['trackedEntityInstance', 'attributes'],
             pageSize: 50,
         },
@@ -53,13 +50,9 @@ const PatientEnrollment = () => {
     const [enrollmentDate, setEnrollmentDate] = useState(new Date().toISOString().split("T")[0]);
     const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
     const [enrollmentError, setEnrollmentError] = useState(null);
-    const [validationError, setValidationError] = useState('');
 
     const { loading: loadingOrgUnits, data: orgUnitsData } = useDataQuery(orgUnitsQuery);
-    const { loading: loadingPrograms, data: programsData, refetch: refetchPrograms } = useDataQuery(
-        programsQuery(selectedOrgUnit),
-        { lazy: true }
-    );
+    const { loading: loadingPrograms, data: programsData } = useDataQuery(programsQuery);
     const { loading: loadingPatients, error: patientsError, data: patientsData, refetch: refetchPatients } = useDataQuery(
         patientsQuery(selectedOrgUnit),
         { lazy: true }
@@ -84,33 +77,24 @@ const PatientEnrollment = () => {
         if (selectedPatient && selectedProgram && selectedOrgUnit) {
             setEnrollmentSuccess(false);
             setEnrollmentError(null);
-            setValidationError('')
-
-
-            if (!selectedOrgUnit) return setValidationError('Please select an organization unit.');
-            if (!selectedProgram) return setValidationError('Please select a program.');
-            if (!selectedPatient) return setValidationError('Please select a patient.');
-            if (!enrollmentDate) return setValidationError('Please enter an enrollment date.');
 
             try {
                 await enrollPatient({
-                    data: JSON.stringfy({
+                    data: {
                         program: selectedProgram,
                         orgUnit: selectedOrgUnit,
                         trackedEntityInstance: selectedPatient,
                         enrollmentDate,
-                    }),
+                    },
                 });
             } catch (err) {
                 console.error("Enrollment failed:", err);
-                setEnrollmentError("Conflict detected: Please check if the patient is already enrolled.");
             }
         }
     };
 
     useEffect(() => {
         if (selectedOrgUnit) {
-            refetchPrograms();
             refetchPatients();
         }
     }, [selectedOrgUnit]);
@@ -141,13 +125,9 @@ const PatientEnrollment = () => {
                     onChange={({ selected }) => setSelectedProgram(selected)}
                     placeholder="Select a program"
                 >
-                    {programsList.length > 0 ? (
-                        programsList.map((program) => (
-                            <SingleSelectOption key={program.id} label={program.displayName} value={program.id} />
-                        ))
-                    ) : (
-                        <SingleSelectOption disabled label="No programs found for this organization unit" />
-                    )}
+                    {programsList.map((program) => (
+                        <SingleSelectOption key={program.id} label={program.displayName} value={program.id} />
+                    ))}
                 </SingleSelect>
             )}
 
@@ -172,7 +152,7 @@ const PatientEnrollment = () => {
                             />
                         ))
                     ) : (
-                        <SingleSelectOption disabled label="No patients found for this organization unit" />
+                        <SingleSelectOption disabled label="No patients found" />
                     )}
                 </SingleSelect>
             )}
@@ -188,12 +168,6 @@ const PatientEnrollment = () => {
             <Button onClick={handleEnroll} primary loading={enrolling}>
                 Enroll Patient
             </Button>
-
-            {validationError && (
-                <NoticeBox title="Missing Field" error>
-                    {validationError}
-                </NoticeBox>
-            )}
 
             {enrollmentSuccess && (
                 <NoticeBox title="Success" success>
