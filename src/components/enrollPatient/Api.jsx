@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/dhis/api', // Replace with your DHIS2 instance URL
+    baseURL: 'http://localhost:8080/dhis/api', 
     headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa('admin:district'), // Replace with your credentials
+        Authorization: 'Basic ' + btoa('admin:district'), 
     },
 });
 
-// Enroll patient function (existing)
+
 export const enrollPatient = async (formData) => {
     const data = {
         trackedEntityType: 'cZTzbETGlIw', 
         orgUnit: formData.orgUnit,
         attributes: [
-            { attribute: 'x3ZHmXpzVRy', value: formData.firstName }, // Replace with your attribute IDs
+            { attribute: 'x3ZHmXpzVRy', value: formData.firstName }, 
             { attribute: 'x3ZHmXpzVRy', value: formData.lastName },
             { attribute: 'x3ZHmXpzVRy', value: formData.address },
             { attribute: 'x3ZHmXpzVRy', value: formData.dob },
@@ -25,8 +25,8 @@ export const enrollPatient = async (formData) => {
             {
                 orgUnit: formData.orgUnit,
                 program: formData.healthProgram,
-                enrollmentDate: new Date().toISOString().split('T')[0], // Today's date
-                incidentDate: new Date().toISOString().split('T')[0], // Can set incident date as needed
+                enrollmentDate: new Date().toISOString().split('T')[0], 
+                incidentDate: new Date().toISOString().split('T')[0], 
             },
         ],
     };
