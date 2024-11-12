@@ -13,7 +13,7 @@ import Register from './components/register/Register';
 import FollowUpTable from './components/FollowUp/FollowUp'
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
-import Homepage from './components/homepage/HomePage';
+import Homepage from './components/Landingpage/HomePage';
 
 const App = () => (
   <Router>
