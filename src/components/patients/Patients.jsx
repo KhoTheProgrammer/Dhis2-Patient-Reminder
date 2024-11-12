@@ -27,7 +27,7 @@ const Patients = () => {
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [patientsPerPage] = useState(10); // Number of patients per page
+  const [patientsPerPage] = useState(9); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
 
   useEffect(() => {
@@ -86,13 +86,13 @@ const Patients = () => {
   };
 
   const handleCloseAppointment = () => {
-    setShowAppointmentPopup(false); // Hide the appointment popup
-    setSelectedPatientId(null); // Reset selected patient
+    setShowAppointmentPopup(false); 
+    setSelectedPatientId(null); 
   };
 
   const openAppointmentModal = (patientId) => {
     setSelectedPatientId(patientId);
-    setShowAppointmentPopup(true); // Only opens modal without creating an appointment
+    setShowAppointmentPopup(true); 
   };
 
   const handleAddAppointment = async (appointmentData) => {
@@ -100,11 +100,11 @@ const Patients = () => {
       const result = await addAppointment({
         ...appointmentData,
         id: selectedPatientId,
-      }); // Sends appointment to API
+      }); 
       window.alert("Appointment Created Successfully");
-      handleCloseAppointment(); // Close modal upon successful appointment creation
+      handleCloseAppointment(); 
     } catch (error) {
-      console.error("Error creating appointment:", error);
+      window.alert("Patient not enrolled to a program")
     }
   };
 
@@ -128,7 +128,6 @@ const Patients = () => {
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
                     <Button
-                      className="button"
                       onClick={() => openAppointmentModal(person.id)}
                     >
                       Add
