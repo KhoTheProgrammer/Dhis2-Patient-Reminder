@@ -13,6 +13,7 @@ import {
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
+import { addAppointment } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
@@ -26,6 +27,11 @@ const Patients = () => {
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const { loading, error, data } = useDataQuery(patientsQuery);
+  const [appointmentData, setAppointmentData] = useState({
+    date: "",
+    time: "",
+    id: "",
+  });
 
   useEffect(() => {
     if (data) {
@@ -58,7 +64,6 @@ const Patients = () => {
 
       setPatients(patientsData);
       console.log(patientsData);
-      
     }
   }, [data]);
 
@@ -70,15 +75,26 @@ const Patients = () => {
     return <span>Loading...</span>;
   }
 
-  const handleAddAppointment = (patientId) => {
-    setSelectedPatientId(patientId);
-    setShowAppointmentPopup(true); // Show the appointment popup
-  };
-
   const handleCloseAppointment = () => {
     setShowAppointmentPopup(false); // Hide the appointment popup
     setSelectedPatientId(null); // Reset selected patient
   };
+
+  const openAppointmentModal = (patientId) => {
+    setSelectedPatientId(patientId);
+    setShowAppointmentPopup(true); // Only opens modal without creating an appointment
+  };
+
+  const handleAddAppointment = async (appointmentData) => {
+    try {
+      const result = await addAppointment({...appointmentData, id: selectedPatientId}); // Sends appointment to API
+      console.log("Appointment Created: ", result);
+      handleCloseAppointment(); // Close modal upon successful appointment creation
+    } catch (error) {
+      console.error("Error creating appointment:", error);
+    }
+  };
+
 
   return (
     <>
@@ -101,7 +117,7 @@ const Patients = () => {
                   <TableCell>
                     <Button
                       className="button"
-                      onClick={() => handleAddAppointment(person.id)}
+                      onClick={() => openAppointmentModal(person.id)}
                     >
                       Add
                     </Button>
@@ -120,12 +136,7 @@ const Patients = () => {
         <div className="appointment-popup">
           <Appointment
             onClose={handleCloseAppointment}
-            onConfirm={(date) => {
-              console.log(
-                `Appointment set for patient ${selectedPatientId} on ${date}`
-              );
-              handleCloseAppointment();
-            }}
+            onConfirm={handleAddAppointment}
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
