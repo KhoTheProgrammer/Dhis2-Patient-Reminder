@@ -1,23 +1,51 @@
-.table{
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.table {
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tablehead{
-    background-color: #B0ACAC;
-    color: #2c2c2c;
+.tablehead {
+  background-color: #b0acac;
+  color: #2c2c2c;
 }
 
-.table button{
-    background-color: #2c6793;
-    color: #fff;
+.table button {
+  background-color: #2c6793;
+  color: #fff;
 }
 
-.tablerow:hover{
-background-color: #f0f0f0;
+.tablerow:hover {
+  background-color: #f0f0f0;
 }
 
-.table button:hover{
-    background-color: #2c6793;
-    color: #fff;
+.table button:hover {
+  background-color: #2c6793;
+  color: #fff;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #2c6793;
+  color: #fff;
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 14px;
 }
