@@ -1,6 +1,6 @@
-.table-container {
-    margin: 20px;
+body {
     font-family: Arial, sans-serif;
+    margin: 20px;
 }
 
 table {
@@ -15,7 +15,7 @@ th, td {
 }
 
 th {
-    background-color: #a0a0a0; /* Header color */
+    background-color: #a0a0a0; /* Matches header color */
     color: #ffffff;
 }
 
