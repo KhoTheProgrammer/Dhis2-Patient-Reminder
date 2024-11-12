@@ -94,6 +94,7 @@ const PatientEnrollment = () => {
                 });
             } catch (err) {
                 console.error("Enrollment failed:", err);
+                setEnrollmentError("Conflict detected: Please check if the patient is already enrolled.");
             }
         }
     };
