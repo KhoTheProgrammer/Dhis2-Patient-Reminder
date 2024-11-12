@@ -7,7 +7,7 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  z-index: 1000; 
+  z-index: 1000;
   width: 300px;
   text-align: center;
 }
@@ -18,7 +18,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
 
@@ -34,18 +34,24 @@
 }
 
 .ok-btn {
-  background-color: #2c6793; /* Green */
+  background-color: #2c6793;
   color: white;
 }
 
 .cancel-btn {
-  background-color: #e74c3c; /* Red */
+  background-color: #e74c3c;
   color: white;
 }
 
-.buttons{
-    width: 45%;
-    padding: 5px;
-    border-radius: 5px;
-    font-weight: bold;
+.buttons {
+  width: 45%;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  margin-top: 8px;
+  font-size: 0.9em;
 }
