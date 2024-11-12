@@ -5,7 +5,7 @@ import Home from '../../assets/pictures/home.jpg'
 const home = () => {
   return (
     <div className="main-container">
-      <div className="app-title">
+      <div className="title">
       <img src={Home} alt="" />
       </div>
     </div>
