@@ -1,13 +1,12 @@
 import React from 'react';
-import "./homepage.css"; 
+import "./homepage.css";
+import Home from '../../assets/pictures/home.jpg' 
 
 const home = () => {
   return (
     <div className="main-container">
       <div className="app-title">
-        <h1>DHIS2</h1>
-        <h2>Patient Reminder</h2>
-        <p>Application</p>
+      <img src={Home} alt="" />
       </div>
     </div>
   );
