@@ -26,7 +26,7 @@ const programsQuery = {
 
 const patientsQuery = (orgUnitId) => ({
     patients: {
-        resource: 'trackedEntityInstances',
+        resource: 'trackedEntityInstances.json',
         params: {
             ou: orgUnitId,
             trackedEntityType: "nEenWmSyUEp", // Replace with appropriate tracked entity type
