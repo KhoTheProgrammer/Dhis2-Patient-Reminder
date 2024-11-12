@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
 import { Button, SingleSelect, SingleSelectOption, Input, NoticeBox } from '@dhis2/ui';
+import './PatientEnrollment.css'
 
 const orgUnitsQuery = {
     orgUnits: {
@@ -52,6 +53,7 @@ const PatientEnrollment = () => {
     const [enrollmentDate, setEnrollmentDate] = useState(new Date().toISOString().split("T")[0]);
     const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
     const [enrollmentError, setEnrollmentError] = useState(null);
+    const [validationError, setValidationError] = useState('');
 
     const { loading: loadingOrgUnits, data: orgUnitsData } = useDataQuery(orgUnitsQuery);
     const { loading: loadingPrograms, data: programsData, refetch: refetchPrograms } = useDataQuery(
@@ -82,6 +84,13 @@ const PatientEnrollment = () => {
         if (selectedPatient && selectedProgram && selectedOrgUnit) {
             setEnrollmentSuccess(false);
             setEnrollmentError(null);
+            setValidationError('')
+
+
+            if (!selectedOrgUnit) return setValidationError('Please select an organization unit.');
+            if (!selectedProgram) return setValidationError('Please select a program.');
+            if (!selectedPatient) return setValidationError('Please select a patient.');
+            if (!enrollmentDate) return setValidationError('Please enter an enrollment date.');
 
             try {
                 await enrollPatient({
@@ -179,6 +188,12 @@ const PatientEnrollment = () => {
             <Button onClick={handleEnroll} primary loading={enrolling}>
                 Enroll Patient
             </Button>
+
+            {validationError && (
+                <NoticeBox title="Missing Field" error>
+                    {validationError}
+                </NoticeBox>
+            )}
 
             {enrollmentSuccess && (
                 <NoticeBox title="Success" success>
