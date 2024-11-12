@@ -1,11 +1,10 @@
-/* General reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Styling the main container */
+
 html, body {
   height: 100%;
 }
@@ -20,7 +19,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Styling the app title */
 .app-title {
   text-align: center;
   color: #0c0c0c;
@@ -42,7 +40,6 @@ html, body {
   color: #777;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .app-title h1 {
       font-size: 36px;
