@@ -3,16 +3,20 @@ import "./Message.css" // Ensure you create this CSS file for styling
 
 function MessageTable() {
   const messages = [
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: ' 10/11/2024' },
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '12/11/2024' },
+    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '12/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
     { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You have an appointment...', date: '13/11/2024' },
+    { name: 'Justice Khaira', message: 'You have an appointment...', date: '13/11/2024' },
+    { name: 'Kondwan  Thuto', message: 'You have an appointment...', date: '13/11/2024' },
+    { name: 'Adamz Major', message: 'You have an appointment...', date: '13/11/2024' },
+    { name: 'Victor Nangwile', message: 'You have an appointment...', date: '13/11/2024' },
+    
   ];
 
   return (
     <div className="message-table-container">
-      <div className="header-bar">Sent Messages</div>;
       <table className="message-table">
         <thead>
           <tr>
