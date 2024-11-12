@@ -1,0 +1,56 @@
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  background-color: #f2f2f2; /* Light gray background */
+}
+
+th {
+  background-color: #8B4513; /* Brown color */
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Light hover effect */
+}
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  background-color: #f2f2f2; /* Light gray background */
+}
+
+th {
+  background-color: #8B4513; /* Brown color */
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Light hover effect */
+}
