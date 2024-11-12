@@ -29,8 +29,8 @@ const FollowUpTable = () => {
                         
                     </tr>
                     <tr>
-                        <td>Kondwani Padyer</td>
-                        <td></td>
+                        <td>Kondwani Padyera</td>
+                        <td>Complete</td>
                         <td>01/12/2024</td>
                         <td><input type="checkbox" /></td>
                         
