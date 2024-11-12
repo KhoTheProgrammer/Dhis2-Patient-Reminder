@@ -19,12 +19,16 @@
     flex-direction: column;
 }
 
-.register-form input,
-.register-form select {
+.register-form input {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.register-form select{
+    display: flex;
+    flex-direction: row;
 }
 
 .register-form button {
@@ -43,4 +47,8 @@
 
 .register-form button:hover {
     background-color: #2980B9;
+}
+
+.register-form button[type="reset"]:hover {
+    background-color: #cc1e0b;
 }
