@@ -16,16 +16,24 @@ const FollowUpTable = () => {
                 <tbody>
                     
                     <tr>
-                        <td>VICTOR NANGWIYA</td>
-                        <td>rescheduled</td>
+                        <td>Victor Nangwiya</td>
+                        <td>Rescheduled</td>
                         <td>10/12/2024</td>
                         <td><input type="checkbox" /></td>
                     </tr>
                     <tr>
-                        <td>VICTOR NANGWIYA</td>
-                        <td>scheduled</td>
+                        <td>Adam Meja</td>
+                        <td>Scheduled</td>
                         <td>01/12/2024</td>
                         <td><input type="checkbox" /></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Kondwani Padyer</td>
+                        <td></td>
+                        <td>01/12/2024</td>
+                        <td><input type="checkbox" /></td>
+                        
                     </tr>
                     
                 
