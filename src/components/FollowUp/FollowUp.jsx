@@ -14,37 +14,16 @@ const FollowUpTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>victor major</td>
-                        <td>rescheduled</td>
-                        <td>10/12/2024</td>
-                        <td><input type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td>victor major</td>
-                        <td>rescheduled</td>
-                        <td>10/12/2024</td>
-                        <td><input type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td>victor major</td>
-                        <td>rescheduled</td>
-                        <td>10/12/2024</td>
-                        <td><input type="checkbox" /></td>
-                    </tr>
-                    <tr>
-                        <td>victor major</td>
-                        <td>rescheduled</td>
-                        <td>10/12/2024</td>
-                        <td><input type="checkbox" /></td>
-                    </tr>
-                    <tr>
                     
+                    <tr>
                         <td>victor major</td>
                         <td>rescheduled</td>
                         <td>10/12/2024</td>
                         <td><input type="checkbox" /></td>
                     </tr>
+                    
+                
+                    
                 </tbody>
             </table>
         </div>
