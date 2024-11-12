@@ -1,28 +1,30 @@
-html, body {
-  height: 100%; /* Ensure the body takes the full height of the viewport */
-  margin: 0; /* Remove default margin */
-}
-
 .main-container {
-  display: flex; /* Use flexbox to center the content if needed */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full height of the viewport */
-  overflow: hidden; /* Prevent overflow */
-}
-
-.pic {
-  position: relative; /* Position relative for absolute positioning of the image */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-}
-
-.pic img {
-  position: absolute; /* Position the image absolutely */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  object-fit: cover; /* Cover the entire area while maintaining aspect ratio */
-  transform: translate(-50%, -50%); /* Center the image */
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #d3d3d3;
+  }
+  
+  .app-title {
+    text-align: center;
+    color: #333; 
+  }
+  
+  .app-title h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .app-title h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .app-title p {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
