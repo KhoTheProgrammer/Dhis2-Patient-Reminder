@@ -1,47 +1,90 @@
-/* App.css */
+/* General styles for the container */
+.patient-progress-container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-/* General body and page setup */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Main app container */
-  .app-container {
-    display: flex;
-  }
-  
-  /* Sidebar styling */
-  .sidebar {
-    width: 250px;
-    background-color: #333;
-    color: white;
-    height: 100vh;
-    padding-top: 20px;
-  }
-  
-  /* Content area */
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  h1 {
-    font-size: 2em;
-    color: #333;
-  }
-  
-  a {
-    text-decoration: none;
-    color: white;
-  }
-  
-  a:hover {
-    color: #ddd;
-  }
-  
-  /* Additional styles for responsiveness can be added here */
-  
+/* Heading styles */
+h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  color: #34495e;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+/* Styling for patient program and status */
+p {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+}
+
+.patient-info {
+  margin-bottom: 20px;
+}
+
+.patient-info p {
+  font-size: 18px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Loading and error states */
+.loading, .error {
+  font-size: 18px;
+  color: #e74c3c;
+  text-align: center;
+  padding: 20px;
+  background-color: #f2dede;
+  border-radius: 5px;
+}
+
+/* Appointment list styles */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  background-color: #ecf0f1;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+li p {
+  margin: 5px 0;
+}
+
+.appointment-status {
+  font-weight: bold;
+}
+
+/* Appointment status colors */
+.attended {
+  color: #27ae60;
+}
+
+.missed {
+  color: #e74c3c;
+}
+
+/* No appointments message */
+.no-appointments {
+  text-align: center;
+  font-size: 18px;
+  color: #bdc3c7;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+}
