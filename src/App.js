@@ -11,7 +11,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
-import Homepage from './components/HomePage/HomePage';
+import HomePage from './components/homepage/HomePage';
+
 
 const App = () => (
   <Router>
@@ -19,7 +20,7 @@ const App = () => (
       <Sidebar />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/register" element={<Register />} />
           <Route path="/enroll" element={<PatientEnrollment />} />
