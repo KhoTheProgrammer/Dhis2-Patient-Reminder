@@ -26,8 +26,10 @@ const Patients = () => {
   const [patients, setPatients] = useState([]);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
-  
+
   useEffect(() => {
     if (data) {
       const patientsData =
@@ -58,7 +60,6 @@ const Patients = () => {
         });
 
       setPatients(patientsData);
-      console.log(patientsData);
     }
   }, [data]);
 
@@ -69,6 +70,20 @@ const Patients = () => {
   if (loading) {
     return <span>Loading...</span>;
   }
+
+  // Pagination logic
+  const indexOfLastPatient = currentPage * patientsPerPage;
+  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
+  const currentPatients = patients.slice(
+    indexOfFirstPatient,
+    indexOfLastPatient
+  );
+
+  const totalPages = Math.ceil(patients.length / patientsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleCloseAppointment = () => {
     setShowAppointmentPopup(false); // Hide the appointment popup
@@ -82,14 +97,16 @@ const Patients = () => {
 
   const handleAddAppointment = async (appointmentData) => {
     try {
-      const result = await addAppointment({...appointmentData, id: selectedPatientId}); // Sends appointment to API
+      const result = await addAppointment({
+        ...appointmentData,
+        id: selectedPatientId,
+      }); // Sends appointment to API
       window.alert("Appointment Created Successfully");
       handleCloseAppointment(); // Close modal upon successful appointment creation
     } catch (error) {
       console.error("Error creating appointment:", error);
     }
   };
-
 
   return (
     <>
@@ -104,7 +121,7 @@ const Patients = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {patients.map((person, index) => (
+              {currentPatients.map((person, index) => (
                 <TableRow key={index} className="tablerow">
                   <TableCell>{person.firstName}</TableCell>
                   <TableCell>{person.lastName}</TableCell>
@@ -125,6 +142,23 @@ const Patients = () => {
       ) : (
         <Card />
       )}
+
+      {/* Pagination controls */}
+      <div className="pagination">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </Button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </Button>
+      </div>
 
       {/* Appointment popup */}
       {showAppointmentPopup && (
