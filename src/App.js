@@ -13,7 +13,8 @@ import Register from './components/register/Register';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
 import Homepage from './components/homepage/HomePage';
-import PatientProgress from "./components/PatientProgress/patientProgress"
+import Progress from '.src/components/PatientProgress/Progress';
+
 
 const App = () => (
   <Router>
@@ -27,7 +28,7 @@ const App = () => (
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUp />} />
-          <Route path="/progress" element={<PatientProgress />} />
+          <Route path="/progress" element={<Progress />} />
           <Route exact path='/' Component={HomePage} />
           <Route path="/patients" component={NoPatientFound} />
           <Route path='/register' Component={Register} />
