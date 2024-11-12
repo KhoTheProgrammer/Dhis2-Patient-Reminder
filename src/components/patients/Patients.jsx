@@ -60,6 +60,7 @@ const Patients = () => {
         });
 
       setPatients(patientsData);
+      console.log(patientsData);
     }
   }, [data]);
 
