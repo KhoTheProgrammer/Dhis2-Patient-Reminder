@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
 import { Button, SingleSelect, SingleSelectOption, Input, NoticeBox } from '@dhis2/ui';
+import './PatientEnrollment.css'
 
 const orgUnitsQuery = {
     orgUnits: {
@@ -100,7 +101,10 @@ const PatientEnrollment = () => {
     }, [selectedOrgUnit]);
 
     return (
-        <div>
+        <div className='enrol'>
+            <div className="enrol-in">
+
+           
             <h1>Enroll Patient in Program</h1>
 
             {loadingOrgUnits ? (
@@ -180,6 +184,8 @@ const PatientEnrollment = () => {
                     {enrollmentError}
                 </NoticeBox>
             )}
+
+            </div>
         </div>
     );
 };
