@@ -1,17 +1,23 @@
+html, body {
+  height: 100%; /* Ensure the body takes the full height of the viewport */
+  margin: 0; /* Remove default margin */
+}
+
 .main-container {
   display: flex; /* Use flexbox to center the content if needed */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
+  height: 100vh; /* Full height of the viewport */
   overflow: hidden; /* Prevent overflow */
 }
 
-.title {
-  position: relative; /*Position relative for absolute positioning of the image*/
+.pic {
+  position: relative; /* Position relative for absolute positioning of the image */
   width: 100%; /* Full width */
   height: 100%; /* Full height */
 }
 
-.title img {
+.pic img {
   position: absolute; /* Position the image absolutely */
   top: 50%; /* Center vertically */
   left: 50%; /* Center horizontally */
