@@ -9,22 +9,26 @@ import {
   TableCell,
   Button,
   TableCellHead,
+  CircularLoader
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
+import { addAppointment } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
     "First name",
     "Last name",
-    "Date Enrolled",
+    "Date Registered",
     "Add Appointment",
   ];
 
   const [patients, setPatients] = useState([]);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [patientsPerPage] = useState(9); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
 
   useEffect(() => {
@@ -40,7 +44,6 @@ const Patients = () => {
             return attribute ? attribute.value : "";
           };
 
-          // Extract the created date and format it
           const createdDate = attributes.find(
             (attr) => attr.displayName === "First name"
           )?.created;
@@ -58,6 +61,7 @@ const Patients = () => {
 
       setPatients(patientsData);
       console.log(patientsData);
+      
     }
   }, [data]);
 
@@ -66,17 +70,44 @@ const Patients = () => {
   }
 
   if (loading) {
-    return <span>Loading...</span>;
+    return <div className="loader"><CircularLoader></CircularLoader></div>;
   }
 
-  const handleAddAppointment = (patientId) => {
-    setSelectedPatientId(patientId);
-    setShowAppointmentPopup(true); // Show the appointment popup
+  // Pagination logic
+  const indexOfLastPatient = currentPage * patientsPerPage;
+  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
+  const currentPatients = patients.slice(
+    indexOfFirstPatient,
+    indexOfLastPatient
+  );
+
+  const totalPages = Math.ceil(patients.length / patientsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   const handleCloseAppointment = () => {
-    setShowAppointmentPopup(false); // Hide the appointment popup
-    setSelectedPatientId(null); // Reset selected patient
+    setShowAppointmentPopup(false);
+    setSelectedPatientId(null);
+  };
+
+  const openAppointmentModal = (patientId) => {
+    setSelectedPatientId(patientId);
+    setShowAppointmentPopup(true);
+  };
+
+  const handleAddAppointment = async (appointmentData) => {
+    try {
+      const result = await addAppointment({
+        ...appointmentData,
+        id: selectedPatientId,
+      });
+      window.alert("Appointment Created Successfully");
+      handleCloseAppointment();
+    } catch (error) {
+      window.alert("Patient not enrolled to a program");
+    }
   };
 
   return (
@@ -92,16 +123,13 @@ const Patients = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {patients.map((person, index) => (
+              {currentPatients.map((person, index) => (
                 <TableRow key={index} className="tablerow">
                   <TableCell>{person.firstName}</TableCell>
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
-                    <Button
-                      className="button"
-                      onClick={() => handleAddAppointment(person.id)}
-                    >
+                    <Button onClick={() => openAppointmentModal(person.id)}>
                       Add
                     </Button>
                   </TableCell>
@@ -114,17 +142,29 @@ const Patients = () => {
         <Card />
       )}
 
+      {/* Pagination controls */}
+      <div className="pagination">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </Button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </Button>
+      </div>
+
       {/* Appointment popup */}
       {showAppointmentPopup && (
         <div className="appointment-popup">
           <Appointment
             onClose={handleCloseAppointment}
-            onConfirm={(date) => {
-              console.log(
-                `Appointment set for patient ${selectedPatientId} on ${date}`
-              );
-              handleCloseAppointment();
-            }}
+            onConfirm={handleAddAppointment}
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
