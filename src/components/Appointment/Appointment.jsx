@@ -25,8 +25,20 @@ const Appointment = ({ onClose, onConfirm }) => {
   return (
     <div className="appointment">
       <div>
-        <input type="date" value={selectedDate} onChange={handleDateChange} className="input"/>
-        <input type="time" value={selectedTime} onChange={handleTimeChange} />
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={handleDateChange}
+          className="input"
+          required
+        />
+        <input
+          type="time"
+          value={selectedTime}
+          onChange={handleTimeChange}
+          required
+          className="input"
+        />
       </div>
       <div className="buttons-container">
         <button className="buttons ok-btn" onClick={handleConfirm}>
