@@ -43,6 +43,6 @@ tr {
 }
 
 .pagination-buttons button:disabled {
-    background-color:#9ca5ac; /* Lighter green */
+    background-color: #fff; /* Lighter green */
     cursor: not-allowed;
 }
