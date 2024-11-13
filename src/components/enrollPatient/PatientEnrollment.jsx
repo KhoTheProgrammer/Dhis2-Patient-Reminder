@@ -6,7 +6,6 @@ import {
   Input,
   NoticeBox,
 } from "@dhis2/ui";
-import axios from "axios";
 import { enrollPatient } from "./Api";
 import "./PatientEnrollment.css";
 import { useDataQuery } from "@dhis2/app-runtime";
@@ -104,9 +103,10 @@ const PatientEnrollment = () => {
         };
 
         const response = await enrollPatient(enrollmentData); // Make the API call
-        if (response.status === 200) {
+        if (response.status === "OK") {
           setEnrollmentSuccess(true);
           setEnrollmentError(null);
+          console.log("kondwani");
         } else {
           setEnrollmentError("Enrollment failed: Unexpected response.");
         }
@@ -238,11 +238,11 @@ const PatientEnrollment = () => {
           </NoticeBox>
         )}
 
-        {/* {enrollmentError && (
+        {enrollmentError && (
           <NoticeBox title="Enrollment Error" error>
             {enrollmentError}
           </NoticeBox>
-        )} */}
+        )}
       </div>
     </div>
   );
