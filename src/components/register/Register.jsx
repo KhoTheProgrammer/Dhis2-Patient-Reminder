@@ -149,7 +149,7 @@ const Register = () => {
 
         {enrollmentSuccess && (
           <NoticeBox title="Success" success>
-            Patient enrolled successfully!
+            Patient Registered successfully!
           </NoticeBox>
         )}
 
