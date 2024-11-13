@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDataQuery, useDataMutation } from "@dhis2/app-runtime";
 import {
   Button,
   SingleSelect,
@@ -7,12 +6,14 @@ import {
   Input,
   NoticeBox,
 } from "@dhis2/ui";
-import "./PatientEnrollment.css";
 import axios from "axios";
 import { enrollPatient } from "./Api";
+import "./PatientEnrollment.css";
+import { useDataQuery } from "@dhis2/app-runtime";
 
 const orgUnitId = "DFyu9VGpodC";
 const programid = "qQIsC9hO2Gj";
+
 const orgUnitsQuery = {
   orgUnits: {
     resource: "organisationUnits",
@@ -49,14 +50,6 @@ const patientsQuery = (orgUnitId) => ({
   },
 });
 
-// const enrollPatientMutation = {
-//   resource: "events",
-//   type: "create",
-//   headers: {
-//     "Content type": "application/json"
-//   }
-// };
-
 const PatientEnrollment = () => {
   const [selectedOrgUnit, setSelectedOrgUnit] = useState(null);
   const [selectedProgram, setSelectedProgram] = useState(null);
@@ -67,6 +60,7 @@ const PatientEnrollment = () => {
   const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
   const [enrollmentError, setEnrollmentError] = useState(null);
   const [validationError, setValidationError] = useState("");
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const { loading: loadingOrgUnits, data: orgUnitsData } =
     useDataQuery(orgUnitsQuery);
@@ -77,24 +71,9 @@ const PatientEnrollment = () => {
   } = useDataQuery(programsQuery(selectedOrgUnit), { lazy: true });
   const {
     loading: loadingPatients,
-    error: patientsError,
     data: patientsData,
     refetch: refetchPatients,
   } = useDataQuery(patientsQuery(orgUnitId), { lazy: true });
-
-  // const [enrollPatient, { loading: enrolling }] = useDataMutation(
-  //   enrollPatientMutation,
-  //   {
-  //     onComplete: () => {
-  //       setEnrollmentSuccess(true);
-  //       setEnrollmentError(null);
-  //     },
-  //     onError: (err) => {
-  //       setEnrollmentError(err.message);
-  //       setEnrollmentSuccess(false);
-  //     },
-  //   }
-  // );
 
   const patientsList = patientsData?.patients?.trackedEntityInstances || [];
   const orgUnitsList = orgUnitsData?.orgUnits?.organisationUnits || [];
@@ -105,6 +84,7 @@ const PatientEnrollment = () => {
       setEnrollmentSuccess(false);
       setEnrollmentError(null);
       setValidationError("");
+      setLoading(true); // Start loading state
 
       if (!selectedOrgUnit)
         return setValidationError("Please select an organization unit.");
@@ -122,14 +102,21 @@ const PatientEnrollment = () => {
           trackedEntityInstance: selectedPatient,
           enrollmentDate: enrollmentDate,
         };
-        const response = enrollPatient(enrollmentData);
-        console.log(response);
+
+        const response = await enrollPatient(enrollmentData); // Make the API call
+        if (response.status === 200) {
+          setEnrollmentSuccess(true);
+          setEnrollmentError(null);
+        } else {
+          setEnrollmentError("Enrollment failed: Unexpected response.");
+        }
       } catch (err) {
         console.error("Enrollment failed:", err);
-        console.log(err);
         setEnrollmentError(
           "Conflict detected: Please check if the patient is already enrolled."
         );
+      } finally {
+        setLoading(false); // End loading state
       }
     }
   };
@@ -230,8 +217,13 @@ const PatientEnrollment = () => {
           required
         />
 
-        <Button onClick={handleEnroll} primary>
-          Enroll Patient
+        <Button
+          onClick={handleEnroll}
+          primary
+          loading={loading}
+          disabled={loading}
+        >
+          {loading ? "Enrolling..." : "Enroll Patient"}
         </Button>
 
         {validationError && (
@@ -246,11 +238,11 @@ const PatientEnrollment = () => {
           </NoticeBox>
         )}
 
-        {enrollmentError && (
+        {/* {enrollmentError && (
           <NoticeBox title="Enrollment Error" error>
             {enrollmentError}
           </NoticeBox>
-        )}
+        )} */}
       </div>
     </div>
   );
