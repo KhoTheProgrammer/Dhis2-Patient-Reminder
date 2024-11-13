@@ -9,3 +9,13 @@
     overflow-y: auto;
     flex-grow: 1;
 }
+
+.app-container.sidebar-open .content {
+    margin-left: 250px;
+    transition: margin 0.3s;
+  }
+  
+  .app-container.sidebar-closed .content {
+    margin-left: 80px;
+    transition: margin 0.3s;
+  }
