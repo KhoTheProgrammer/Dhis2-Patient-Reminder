@@ -104,7 +104,7 @@ const PatientEnrollment = () => {
         };
 
         const response = await enrollPatient(enrollmentData); // Make the API call
-        if (response.status === 200) {
+        if (response.status === "OK") {
           setEnrollmentSuccess(true);
           setEnrollmentError(null);
         } else {
@@ -238,11 +238,11 @@ const PatientEnrollment = () => {
           </NoticeBox>
         )}
 
-        {/* {enrollmentError && (
+        {enrollmentError && (
           <NoticeBox title="Enrollment Error" error>
             {enrollmentError}
           </NoticeBox>
-        )} */}
+        )}
       </div>
     </div>
   );
