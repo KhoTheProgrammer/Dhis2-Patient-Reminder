@@ -13,7 +13,7 @@ const api = axios.create({
 export const registerPatient = async (patientData) => {
     const data = {
       trackedEntityType: "nEenWmSyUEp", // ID for "Person" or "Patient" entity type
-      orgUnit: "DiszpKrYNg8", // Organization unit ID
+      orgUnit: "DFyu9VGpodC", // Organization unit ID
       attributes: [
         { attribute: "w75KJ2mc4zz", value: patientData.firstName }, // Replace with actual attribute ID
         { attribute: "zDhUuAYrxNC", value: patientData.lastName },
@@ -25,10 +25,10 @@ export const registerPatient = async (patientData) => {
     };
 
     try {
-        const response = await api.post('/trackedEntityInstances', data);
-        return response.data;
-    } catch (error) {
-        console.error('Error registering patient:', error);
-        throw error;
-    }
+            const response = await api.post('/trackedEntityInstances', data);
+            return response.data;
+        } catch (error) {
+            console.error('Error registering patient:', error);
+            throw error;
+                }
 };
