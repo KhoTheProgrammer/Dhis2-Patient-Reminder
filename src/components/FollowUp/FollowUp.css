@@ -31,18 +31,18 @@ tr {
     border-bottom: 1px solid #c0c0c0;
 }
 
-.pagination-button {
+.pagination-buttons button{
     padding: 10px 20px;
     margin: 5px;
     background-color: #4CAF50; /* Green background */
-    color: white;
+    color: rgb(36, 20, 184);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
 }
 
-.pagination-button:disabled {
-    background-color: #a5d6a7; /* Lighter green */
+.pagination-buttons button:disabled {
+    background-color: #10d816; /* Lighter green */
     cursor: not-allowed;
 }
