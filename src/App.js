@@ -14,37 +14,29 @@ import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
 import HomePage from './components/Landingpage/HomePage';
 
-const App = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  return(
-      <Router>
-          <div className={`app-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-          <div className="content">
-            <Routes>
-              <Route path='/' element={<HomePage/>}/>
-              <Route path="/patients" element={<Patients />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/enroll" element={<PatientEnrollment />} />
-              <Route path="/messages" element={<MessageTable />} />
-              <Route path="/follow-up" element={<FollowUpTable />} />
-              <Route path="/progress" element={<Progress />} />
-              <Route path="/patients" component={NoPatientFound} />
-              <Route path='/register' Component={Register} />
-              <Route path="/enroll" component={PatientEnrollment} />
-              <Route path="/messages" component={Messages} />
-              <Route path="/follow-up" component={FollowUp} />
-              <Route path="/progress" component={Progress} />
-            </Routes>
-          </div>
-        </div>
-      </Router>
-  )
-};
+const App = () => (
+  <Router>
+    <div className="app-container">
+      <Sidebar />
+      <div className="content">
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path="/patients" element={<Patients />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/enroll" element={<PatientEnrollment />} />
+          <Route path="/messages" element={<MessageTable />} />
+          <Route path="/follow-up" element={<FollowUpTable />} />
+          <Route path="/progress" element={<Progress />} />
+          <Route path="/patients" component={NoPatientFound} />
+          <Route path='/register' Component={Register} />
+          <Route path="/enroll" component={PatientEnrollment} />
+          <Route path="/messages" component={Messages} />
+          <Route path="/follow-up" component={FollowUp} />
+          <Route path="/progress" component={Progress} />
+        </Routes>
+      </div>
+    </div>
+  </Router>
+);
 
 export default App;
