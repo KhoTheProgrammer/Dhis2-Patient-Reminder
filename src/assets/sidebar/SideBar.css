@@ -1,53 +1,63 @@
 .sidebar {
-    width: 250px; 
-    background-color: #2c6793; 
-    padding: 20px; 
-    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1); 
-    height: 100vh; 
-    position: fixed; 
+    width: 250px; /* Adjust as needed */
+    background-color: #2c6793;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1);
+    height: 100vh;
+    position: fixed;
+    transition: width 0.3s;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
-.sidebar nav {
+.sidebar.closed {
+    width: 60px; /* Width for the closed state */
+    padding: 10px;
+}
+
+.toggle-button {
+    background-color: #0080ff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+nav.visible {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+}
+
+nav.hidden {
+    display: none;
 }
 
 .sidebar a {
-    text-decoration: none; 
+    text-decoration: none;
     color: #ffffff;
-    padding: 15px; 
-    border-radius: 4px; 
-    display: flex; 
-    align-items: center; 
-    transition: background-color 0.3s; 
-    margin-bottom: 10px; 
-    width: 100%; 
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .icon {
-    margin-right: 10px; 
+    margin-right: 10px;
     width: 20px;
     height: 20px;
-    fill: #ecf0f1; 
-    transition: fill 0.3s ease;
-}
-
-.sidebar a:last-child {
-    margin-bottom: 0; 
-}
-
-.sidebar a i {
-    margin-right: 10px; 
 }
 
 .sidebar a:hover {
-    background-color: #0080ff; 
+    background-color: #0080ff;
 }
 
 .sidebar .active {
-    background-color: #003d7e; 
-    color: #fff; 
+    background-color: #003d7e;
+    color: #fff;
     font-weight: bolder;
 }
