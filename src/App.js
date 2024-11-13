@@ -13,6 +13,7 @@ import FollowUpTable from './components/FollowUp/FollowUp'
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
 import Homepage from './components/Landingpage/HomePage';
+import ProgressT from './components/PatientProgress/patientProgress';
 
 const App = () => (
   <Router>
@@ -26,7 +27,7 @@ const App = () => (
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpTable />} />
-          <Route path="/progress" element={<Progress />} />
+          <Route path="/progress" element={<ProgressT />} />
           <Route path="/patients" component={NoPatientFound} />
           <Route path='/register' Component={Register} />
           <Route path="/enroll" component={PatientEnrollment} />
