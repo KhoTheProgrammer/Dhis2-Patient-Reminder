@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
-import { Button, SingleSelect, SingleSelectOption, Input, NoticeBox } from '@dhis2/ui';
-import './PatientEnrollment.css'
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  SingleSelect,
+  SingleSelectOption,
+  Input,
+  NoticeBox,
+} from "@dhis2/ui";
+import { enrollPatient } from "./Api";
+import "./PatientEnrollment.css";
+import { useDataQuery } from "@dhis2/app-runtime";
+
+const orgUnitId = "DFyu9VGpodC";
+const programid = "qQIsC9hO2Gj";
 
 const orgUnitsQuery = {
   orgUnits: {
@@ -39,14 +49,6 @@ const patientsQuery = (orgUnitId) => ({
   },
 });
 
-const enrollPatientMutation = {
-  resource: "enrollments",
-  type: "create",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
-
 const PatientEnrollment = () => {
   const [selectedOrgUnit, setSelectedOrgUnit] = useState(null);
   const [selectedProgram, setSelectedProgram] = useState(null);
@@ -57,6 +59,7 @@ const PatientEnrollment = () => {
   const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
   const [enrollmentError, setEnrollmentError] = useState(null);
   const [validationError, setValidationError] = useState("");
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const { loading: loadingOrgUnits, data: orgUnitsData } =
     useDataQuery(orgUnitsQuery);
@@ -67,24 +70,9 @@ const PatientEnrollment = () => {
   } = useDataQuery(programsQuery(selectedOrgUnit), { lazy: true });
   const {
     loading: loadingPatients,
-    error: patientsError,
     data: patientsData,
     refetch: refetchPatients,
-  } = useDataQuery(patientsQuery("DFyu9VGpodC"), { lazy: true });
-
-  const [enrollPatient, { loading: enrolling }] = useDataMutation(
-    enrollPatientMutation,
-    {
-      onComplete: () => {
-        setEnrollmentSuccess(true);
-        setEnrollmentError(null);
-      },
-      onError: (err) => {
-        setEnrollmentError(err.message);
-        setEnrollmentSuccess(false);
-      },
-    }
-  );
+  } = useDataQuery(patientsQuery(orgUnitId), { lazy: true });
 
   const patientsList = patientsData?.patients?.trackedEntityInstances || [];
   const orgUnitsList = orgUnitsData?.orgUnits?.organisationUnits || [];
@@ -95,6 +83,7 @@ const PatientEnrollment = () => {
       setEnrollmentSuccess(false);
       setEnrollmentError(null);
       setValidationError("");
+      setLoading(true); // Start loading state
 
       if (!selectedOrgUnit)
         return setValidationError("Please select an organization unit.");
@@ -106,20 +95,28 @@ const PatientEnrollment = () => {
         return setValidationError("Please enter an enrollment date.");
 
       try {
-        await enrollPatient({
-          data: {
-            program: selectedProgram,
-            orgUnit: selectedOrgUnit,
-            trackedEntityInstance: selectedPatient,
-            enrollmentDate,
-          },
-        });
+        const enrollmentData = {
+          program: programid,
+          orgUnit: orgUnitId,
+          trackedEntityInstance: selectedPatient,
+          enrollmentDate: enrollmentDate,
+        };
+
+        const response = await enrollPatient(enrollmentData); // Make the API call
+        if (response.status === "OK") {
+          setEnrollmentSuccess(true);
+          setEnrollmentError(null);
+          console.log("kondwani");
+        } else {
+          setEnrollmentError("Enrollment failed: Unexpected response.");
+        }
       } catch (err) {
         console.error("Enrollment failed:", err);
-        console.log(err);
         setEnrollmentError(
           "Conflict detected: Please check if the patient is already enrolled."
         );
+      } finally {
+        setLoading(false); // End loading state
       }
     }
   };
@@ -131,122 +128,124 @@ const PatientEnrollment = () => {
     }
   }, [selectedOrgUnit]);
 
-    return (
-        <div className='enrol'>
-            <div className="enrol-in">
+  return (
+    <div className="enrol">
+      <div className="enrol-in">
+        <h1>Enroll Patient in Program</h1>
 
-           
-            <h1>Enroll Patient in Program</h1>
-
-      {loadingOrgUnits ? (
-        <p>Loading organization units...</p>
-      ) : (
-        <SingleSelect
-          selected={selectedOrgUnit}
-          onChange={({ selected }) => setSelectedOrgUnit(selected)}
-          placeholder="Select an organization unit"
-        >
-          {orgUnitsList.map((orgUnit) => (
-            <SingleSelectOption
-              key={orgUnit.id}
-              label={orgUnit.displayName}
-              value={orgUnit.id}
-            />
-          ))}
-        </SingleSelect>
-      )}
-
-      {loadingPrograms ? (
-        <p>Loading programs...</p>
-      ) : (
-        <SingleSelect
-          selected={selectedProgram}
-          onChange={({ selected }) => setSelectedProgram(selected)}
-          placeholder="Select a program"
-        >
-          {programsList.length > 0 ? (
-            programsList.map((program) => (
+        {loadingOrgUnits ? (
+          <p>Loading organization units...</p>
+        ) : (
+          <SingleSelect
+            selected={selectedOrgUnit}
+            onChange={({ selected }) => setSelectedOrgUnit(selected)}
+            placeholder="Select an organization unit"
+          >
+            {orgUnitsList.map((orgUnit) => (
               <SingleSelectOption
-                key={program.id}
-                label={program.displayName}
-                value={program.id}
+                key={orgUnit.id}
+                label={orgUnit.displayName}
+                value={orgUnit.id}
               />
-            ))
-          ) : (
-            <SingleSelectOption
-              disabled
-              label="No programs found for this organization unit"
-            />
-          )}
-        </SingleSelect>
-      )}
+            ))}
+          </SingleSelect>
+        )}
 
-      {loadingPatients ? (
-        <p>Loading patients...</p>
-      ) : (
-        <SingleSelect
-          selected={selectedPatient}
-          onChange={({ selected }) => setSelectedPatient(selected)}
-          placeholder="Select a patient"
-        >
-          {patientsList.length > 0 ? (
-            patientsList.map((patient) => (
+        {loadingPrograms ? (
+          <p>Loading programs...</p>
+        ) : (
+          <SingleSelect
+            selected={selectedProgram}
+            onChange={({ selected }) => setSelectedProgram(selected)}
+            placeholder="Select a program"
+          >
+            {programsList.length > 0 ? (
+              programsList.map((program) => (
+                <SingleSelectOption
+                  key={program.id}
+                  label={program.displayName}
+                  value={program.id}
+                />
+              ))
+            ) : (
               <SingleSelectOption
-                key={patient.trackedEntityInstance}
-                label={
-                  patient.attributes.find(
-                    (attr) => attr.attribute === "w75KJ2mc4zz"
-                  )?.value +
-                  " " +
-                  patient.attributes.find(
-                    (attr) => attr.attribute === "zDhUuAYrxNC"
-                  )?.value
-                }
-                value={patient.trackedEntityInstance}
+                disabled
+                label="No programs found for this organization unit"
               />
-            ))
-          ) : (
-            <SingleSelectOption
-              disabled
-              label="No patients found for this organization unit"
-            />
-          )}
-        </SingleSelect>
-      )}
-
-      <Input
-        label="Enrollment Date"
-        type="date"
-        value={enrollmentDate}
-        onChange={({ value }) => setEnrollmentDate(value)}
-        required
-      />
-
-      <Button onClick={handleEnroll} primary loading={enrolling}>
-        Enroll Patient
-      </Button>
-
-      {validationError && (
-        <NoticeBox title="Missing Field" error>
-          {validationError}
-        </NoticeBox>
-      )}
-
-      {enrollmentSuccess && (
-        <NoticeBox title="Success" success>
-          Patient enrolled successfully!
-        </NoticeBox>
-      )}
-
-            {enrollmentError && (
-                <NoticeBox title="Enrollment Error" error>
-                    {enrollmentError}
-                </NoticeBox>
             )}
+          </SingleSelect>
+        )}
 
-            </div>
-        </div>
-    );
+        {loadingPatients ? (
+          <p>Loading patients...</p>
+        ) : (
+          <SingleSelect
+            selected={selectedPatient}
+            onChange={({ selected }) => setSelectedPatient(selected)}
+            placeholder="Select a patient"
+          >
+            {patientsList.length > 0 ? (
+              patientsList.map((patient) => (
+                <SingleSelectOption
+                  key={patient.trackedEntityInstance}
+                  label={
+                    patient.attributes.find(
+                      (attr) => attr.attribute === "w75KJ2mc4zz"
+                    )?.value +
+                    " " +
+                    patient.attributes.find(
+                      (attr) => attr.attribute === "zDhUuAYrxNC"
+                    )?.value
+                  }
+                  value={patient.trackedEntityInstance}
+                />
+              ))
+            ) : (
+              <SingleSelectOption
+                disabled
+                label="No patients found for this organization unit"
+              />
+            )}
+          </SingleSelect>
+        )}
+
+        <Input
+          label="Enrollment Date"
+          type="date"
+          value={enrollmentDate}
+          onChange={({ value }) => setEnrollmentDate(value)}
+          required
+        />
+
+        <Button
+          onClick={handleEnroll}
+          primary
+          loading={loading}
+          disabled={loading}
+        >
+          {loading ? "Enrolling..." : "Enroll Patient"}
+        </Button>
+
+        {validationError && (
+          <NoticeBox title="Missing Field" error>
+            {validationError}
+          </NoticeBox>
+        )}
+
+        {enrollmentSuccess && (
+          <NoticeBox title="Success" success>
+            Patient enrolled successfully!
+          </NoticeBox>
+        )}
+
+        {enrollmentError && (
+          <NoticeBox title="Enrollment Error" error>
+            {enrollmentError}
+          </NoticeBox>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default PatientEnrollment;

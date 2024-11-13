@@ -28,7 +28,7 @@ const Patients = () => {
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [patientsPerPage] = useState(9); // Number of patients per page
+  const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
 
   useEffect(() => {

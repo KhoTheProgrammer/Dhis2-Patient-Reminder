@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { registerPatient } from "./Api";
 import "./Register.css";
+import { Button, NoticeBox } from "@dhis2/ui";
 
 // DHIS2 query to fetch organization units
 const orgUnitQuery = {
@@ -27,11 +28,12 @@ const Register = () => {
   });
 
   const [orgUnits, setOrgUnits] = useState([]); // Ensure it's initialized as an array
+  const [loadin, setLoading] = useState(false);
+  const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
 
   // Fetch organization units from DHIS2 API
   const { loading, error, data } = useDataQuery(orgUnitQuery);
   console.log(data);
-  
 
   useEffect(() => {
     if (data && Array.isArray(data.organisationUnits.organisationUnits)) {
@@ -49,12 +51,18 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when form is submitted
+
     try {
-      await registerPatient(formData);
-      alert("Patient registered successfully");
+      const response = await registerPatient(formData); // Call the registerPatient function to send the data
+      if (response.status === "OK") {
+        setEnrollmentSuccess(true)
+      }
     } catch (error) {
       console.error("Error registering patient:", error);
       alert("Error registering patient");
+    } finally {
+      setLoading(false); // Set loading to false after the registration process is finished
     }
   };
 
@@ -133,7 +141,19 @@ const Register = () => {
             <option disabled>No organization units available</option>
           )}
         </select>
-        <button type="submit">Register</button>
+
+        {/* Button now shows 'Registering...' while loading */}
+        <Button type="submit" disabled={loadin} loading={loadin}>
+          {loadin ? "Registering..." : "Register"}
+        </Button>
+
+        {enrollmentSuccess && (
+          <NoticeBox title="Success" success>
+            Patient Registered successfully!
+          </NoticeBox>
+        )}
+
+        {/* Reset button */}
         <button type="reset">Cancel</button>
       </form>
     </div>
