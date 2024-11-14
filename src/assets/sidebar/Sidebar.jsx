@@ -19,7 +19,7 @@ const Sidebar = () => {
     return (
         <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
             <button className="toggle-button" onClick={toggleSidebar}>
-                {isOpen ? 'Close' : 'Open'}
+                {isOpen ? '' : ''}
             </button>
             <nav className={isOpen ? 'visible' : 'hidden'}>
                 <NavLink to="/patients" activeClassName="active">
