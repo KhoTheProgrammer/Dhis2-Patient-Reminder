@@ -9,7 +9,8 @@ import {
   TableCell,
   Button,
   TableCellHead,
-  CircularLoader
+  CircularLoader,
+  NoticeBox,
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
@@ -30,6 +31,7 @@ const Patients = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
+  const [appointmetadd, setappointmentadd] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -69,7 +71,12 @@ const Patients = () => {
   }
 
   if (loading) {
-    return <div className="loader"><CircularLoader></CircularLoader> <p>Getting patients. Please wait...</p></div>;
+    return (
+      <div className="loader">
+        <CircularLoader></CircularLoader>{" "}
+        <p>Getting patients. Please wait...</p>
+      </div>
+    );
   }
 
   // Pagination logic
@@ -97,15 +104,18 @@ const Patients = () => {
   };
 
   const handleAddAppointment = async (appointmentData) => {
+    setappointmentadd(true)
     try {
       const result = await addAppointment({
         ...appointmentData,
         id: selectedPatientId,
       });
-      window.alert("Appointment Created Successfully");
       handleCloseAppointment();
     } catch (error) {
       window.alert("Patient not enrolled to a program");
+    }
+    finally{
+      setappointmentadd(false)
     }
   };
 
@@ -128,8 +138,8 @@ const Patients = () => {
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
-                    <Button onClick={() => openAppointmentModal(person.id)}>
-                      Add
+                    <Button onClick={() => openAppointmentModal(person.id)} disabled={appointmetadd} loading={appointmetadd}>
+                      {appointmetadd ? "Adding appointment" : "Add"}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -168,6 +178,14 @@ const Patients = () => {
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
       )}
+
+      {
+        appointmetadd && (
+          <NoticeBox type>
+
+          </NoticeBox>
+        )
+      }
     </>
   );
 };
