@@ -69,7 +69,7 @@ const Patients = () => {
   }
 
   if (loading) {
-    return <div className="loader"><CircularLoader></CircularLoader></div>;
+    return <div className="loader"><CircularLoader></CircularLoader> <p>Getting patients. Please wait...</p></div>;
   }
 
   // Pagination logic
