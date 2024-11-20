@@ -33,6 +33,7 @@ const Patients = () => {
   const { loading, error, data } = useDataQuery(patientsQuery);
   const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -115,12 +116,15 @@ const Patients = () => {
         id: selectedPatientId,
       });
 
+      // Success
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
 
       handleCloseAppointment();
     } catch (error) {
-      window.alert("Patient not enrolled to a program");
+      // Failure
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
     } finally {
       newLoadingAppointments.delete(selectedPatientId);
       setLoadingAppointments(new Set(newLoadingAppointments));
@@ -165,9 +169,17 @@ const Patients = () => {
         <Card />
       )}
 
+      {/* Success NoticeBox */}
       {showSuccessMessage && (
         <NoticeBox title="Success" success>
           Appointment added successfully
+        </NoticeBox>
+      )}
+
+      {/* Error NoticeBox */}
+      {showErrorMessage && (
+        <NoticeBox title="Error" error>
+          Failed to add the appointment. Patient not enrolled to any program.
         </NoticeBox>
       )}
 
