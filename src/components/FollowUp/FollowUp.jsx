@@ -6,12 +6,13 @@ const appointmentData = [
   { name: "Adam Meja", status: "Scheduled", date: "01/12/2024", isComplete: false },
   { name: "Kondwani Padyera", status: "Complete", date: "01/12/2024", isComplete: true },
   { name: "Sarah Lee", status: "Scheduled", date: "15/12/2024", isComplete: false },
-  { name: "John Doe", status: "Canceled", date: "20/12/2024", isComplete: false },
+  { name: "John Doe", status: "Complete", date: "20/12/2024", isComplete: false },
+  { name: "John Adam", status: "Complete", date: "20/12/2024", isComplete: false },
   // Add more data as needed...
 ];
 
 const FollowUpTable = () => {
-  const rowsPerPage = 3; // Number of rows per page
+  const rowsPerPage = 5; // Number of rows per page
   const [currentPage, setCurrentPage] = useState(0);
 
   // Calculate the starting and ending index of rows for the current page
