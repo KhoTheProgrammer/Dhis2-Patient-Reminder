@@ -31,7 +31,8 @@ const Patients = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
-  const [appointmetadd, setappointmentadd] = useState(false);
+  const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -104,18 +105,25 @@ const Patients = () => {
   };
 
   const handleAddAppointment = async (appointmentData) => {
-    setappointmentadd(true)
+    const newLoadingAppointments = new Set(loadingAppointments);
+    newLoadingAppointments.add(selectedPatientId);
+    setLoadingAppointments(newLoadingAppointments);
+
     try {
       const result = await addAppointment({
         ...appointmentData,
         id: selectedPatientId,
       });
+
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
+
       handleCloseAppointment();
     } catch (error) {
       window.alert("Patient not enrolled to a program");
-    }
-    finally{
-      setappointmentadd(false)
+    } finally {
+      newLoadingAppointments.delete(selectedPatientId);
+      setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
 
@@ -138,8 +146,14 @@ const Patients = () => {
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
-                    <Button onClick={() => openAppointmentModal(person.id)} disabled={appointmetadd} loading={appointmetadd}>
-                      {appointmetadd ? "Adding appointment" : "Add"}
+                    <Button
+                      onClick={() => openAppointmentModal(person.id)}
+                      disabled={loadingAppointments.has(person.id)}
+                      loading={loadingAppointments.has(person.id)}
+                    >
+                      {loadingAppointments.has(person.id)
+                        ? "Adding appointment"
+                        : "Add"}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -149,6 +163,12 @@ const Patients = () => {
         </div>
       ) : (
         <Card />
+      )}
+
+      {showSuccessMessage && (
+        <NoticeBox title="Success" success>
+          Appointment added successfully
+        </NoticeBox>
       )}
 
       {/* Pagination controls */}
@@ -178,14 +198,6 @@ const Patients = () => {
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
       )}
-
-      {
-        appointmetadd && (
-          <NoticeBox type>
-
-          </NoticeBox>
-        )
-      }
     </>
   );
 };
