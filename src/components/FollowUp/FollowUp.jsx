@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
 import { Table, TableRow, TableCell, Button, SingleSelect, SingleSelectOption, NoticeBox } from '@dhis2/ui';
@@ -110,6 +111,124 @@ const FollowUpPage = ({ programId, orgUnitId }) => {
             {updateError && <NoticeBox title="Error updating status" error>{updateError.message}</NoticeBox>}
         </div>
     );
+=======
+import React from "react";
+import "./FollowUp.css";
+
+const FollowUpTable = () => {
+  return (
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Appointment status</th>
+            <th>Appointment date</th>
+            <th>AppointmentCheck</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Victor Nangwiya</td>
+            <td>Rescheduled</td>
+            <td>10/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Adam Meja</td>
+            <td>Scheduled</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Kondwani Padyera</td>
+            <td>Complete</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" disabled checked/>
+            </td>
+          </tr>
+          <tr>
+            <td>Victor Nangwiya</td>
+            <td>Rescheduled</td>
+            <td>10/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Adam Meja</td>
+            <td>Scheduled</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Kondwani Padyera</td>
+            <td>Complete</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" disabled checked />
+            </td>
+          </tr>
+          <tr>
+            <td>Victor Nangwiya</td>
+            <td>Rescheduled</td>
+            <td>10/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Adam Meja</td>
+            <td>Scheduled</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Kondwani Padyera</td>
+            <td>Complete</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" disabled checked />
+            </td>
+          </tr>
+          <tr>
+            <td>Victor Nangwiya</td>
+            <td>Rescheduled</td>
+            <td>10/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Adam Meja</td>
+            <td>Scheduled</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" />
+            </td>
+          </tr>
+          <tr>
+            <td>Kondwani Padyera</td>
+            <td>Complete</td>
+            <td>01/12/2024</td>
+            <td>
+              <input type="checkbox" disabled checked/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+>>>>>>> d76dfd83f313125d8520f49fe4971a9489791017
 };
 
 export default FollowUpPage;

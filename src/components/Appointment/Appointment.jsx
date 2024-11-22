@@ -34,7 +34,7 @@ const Appointment = ({ onClose, onConfirm }) => {
     }
 
     const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-    if (selectedHour < 9 || selectedHour > 17) {
+    if (selectedHour < 0 || selectedHour > 23) {
       setError("Please select a time between 09:00 and 17:00.");
       return;
     }

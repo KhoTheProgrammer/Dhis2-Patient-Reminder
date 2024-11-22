@@ -8,36 +8,6 @@ const api = axios.create({
   },
 });
 
-// export const enrollPatient = async (formData) => {
-//     const data = {
-//         trackedEntityType: 'cZTzbETGlIw',
-//         orgUnit: formData.orgUnit,
-//         attributes: [
-//             { attribute: 'x3ZHmXpzVRy', value: formData.firstName },
-//             { attribute: 'x3ZHmXpzVRy', value: formData.lastName },
-//             { attribute: 'x3ZHmXpzVRy', value: formData.address },
-//             { attribute: 'x3ZHmXpzVRy', value: formData.dob },
-//             { attribute: 'x3ZHmXpzVRy', value: formData.phone },
-//             { attribute: 'x3ZHmXpzVRy', value: formData.gender },
-//         ],
-//         enrollments: [
-//             {
-//                 orgUnit: formData.orgUnit,
-//                 program: formData.healthProgram,
-//                 enrollmentDate: new Date().toISOString().split('T')[0],
-//                 incidentDate: new Date().toISOString().split('T')[0],
-//             },
-//         ],
-//     };
-
-//     try {
-//         const response = await api.post('/trackedEntityInstances', data);
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error enrolling patient:', error);
-//         throw error;
-//     }
-// };
 
 // Fetch organization units
 export const fetchOrgUnits = async () => {

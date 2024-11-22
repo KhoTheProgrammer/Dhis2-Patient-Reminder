@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "d2-app-scripts build",
-    "start": "d2-app-scripts start",
+    "start": "d2-app-scripts start --proxy=https://data.research.dhis2.org/in5320",
     "test": "d2-app-scripts test",
     "deploy": "d2-app-scripts deploy"
   },
