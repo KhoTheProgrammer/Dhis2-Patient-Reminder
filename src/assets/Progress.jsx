@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-function Progress() {
+const MessagePage = () => {
   return (
-    <div>Progress</div>
-  )
-}
+    <div className="message-page">
+      <h1>Message Page</h1>
+      <p>This is the message page.</p>
+    </div>
+  );
+};
 
-export default Progress
+export default MessagePage;
