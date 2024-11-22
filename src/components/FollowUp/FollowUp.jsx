@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
 import { Table, TableRow, TableCell, Button, SingleSelect, SingleSelectOption, NoticeBox } from '@dhis2/ui';
@@ -8,14 +7,13 @@ const enrolledPatientsQuery = (programId, orgUnitId) => ({
         resource: 'trackedEntityInstances',
         params: {
             ou: orgUnitId,
-            program: programId, // Include the program ID
-            trackedEntityType: 'nEenWmSyUEp', // Your tracked entity type
+            program: programId, 
+            trackedEntityType: 'nEenWmSyUEp', 
             fields: ['trackedEntityInstance', 'attributes', 'enrollments[enrollmentDate,events[eventDate,dataValues]]'],
             paging: false,
         },
     },
 });
-
 
 const updateEventMutation = {
     resource: 'events',
@@ -48,8 +46,8 @@ const FollowUpPage = ({ programId, orgUnitId }) => {
             eventId,
             data: {
                 dataValues: [
-                    { dataElement: 'appointmentStatus', value: updatedStatus }, // Replace with actual data element ID for status
-                    ...(newStatus === 'Missed' ? [{ dataElement: 'appointmentDate', value: newDate }] : []), // Replace with actual ID
+                    { dataElement: 'appointmentStatus', value: updatedStatus }, 
+                    ...(newStatus === 'Missed' ? [{ dataElement: 'appointmentDate', value: newDate }] : []), 
                 ],
             },
         });
@@ -74,11 +72,11 @@ const FollowUpPage = ({ programId, orgUnitId }) => {
                     </thead>
                     <tbody>
                         {patientsList.map((patient) => {
-                            const enrollment = patient.enrollments[0]; // Assuming one enrollment per patient
-                            const event = enrollment?.events[0]; // Assuming one appointment per enrollment
+                            const enrollment = patient.enrollments[0]; 
+                            const event = enrollment?.events[0]; 
                             const appointmentDate = event?.eventDate.split('T')[0];
                             const currentStatus = event?.dataValues.find(
-                                (dv) => dv.dataElement === 'appointmentStatus' // Replace with actual data element ID
+                                (dv) => dv.dataElement === 'appointmentStatus' 
                             )?.value;
 
                             return (
@@ -111,124 +109,4 @@ const FollowUpPage = ({ programId, orgUnitId }) => {
             {updateError && <NoticeBox title="Error updating status" error>{updateError.message}</NoticeBox>}
         </div>
     );
-=======
-import React from "react";
-import "./FollowUp.css";
-
-const FollowUpTable = () => {
-  return (
-    <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Appointment status</th>
-            <th>Appointment date</th>
-            <th>AppointmentCheck</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Victor Nangwiya</td>
-            <td>Rescheduled</td>
-            <td>10/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Adam Meja</td>
-            <td>Scheduled</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Kondwani Padyera</td>
-            <td>Complete</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" disabled checked/>
-            </td>
-          </tr>
-          <tr>
-            <td>Victor Nangwiya</td>
-            <td>Rescheduled</td>
-            <td>10/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Adam Meja</td>
-            <td>Scheduled</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Kondwani Padyera</td>
-            <td>Complete</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" disabled checked />
-            </td>
-          </tr>
-          <tr>
-            <td>Victor Nangwiya</td>
-            <td>Rescheduled</td>
-            <td>10/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Adam Meja</td>
-            <td>Scheduled</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Kondwani Padyera</td>
-            <td>Complete</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" disabled checked />
-            </td>
-          </tr>
-          <tr>
-            <td>Victor Nangwiya</td>
-            <td>Rescheduled</td>
-            <td>10/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Adam Meja</td>
-            <td>Scheduled</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr>
-            <td>Kondwani Padyera</td>
-            <td>Complete</td>
-            <td>01/12/2024</td>
-            <td>
-              <input type="checkbox" disabled checked/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
->>>>>>> d76dfd83f313125d8520f49fe4971a9489791017
 };
-
-export default FollowUpPage;
