@@ -55,7 +55,11 @@ const FollowUpTable = () => {
     return firstName && lastName ? `${firstName} ${lastName}` : "Unknown";
   };
 
-  
+  // Function to fetch details for all unique trackedEntityInstance IDs
+  const fetchAllPatientDetails = async (appointmentsData) => {
+    const uniqueIds = [...new Set(appointmentsData.map((a) => a.id))];
+    const patientDetails = {};
+
     await Promise.all(
       uniqueIds.map(async (id) => {
         try {
