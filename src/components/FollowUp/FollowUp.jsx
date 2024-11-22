@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import "./FollowUp.css";
+import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetching patient details
+import { useDataQuery } from "@dhis2/app-runtime";
+import { CircularLoader } from "@dhis2/ui";
 
 const appointmentData = [
   { name: "Victor Nangwiya", status: "Rescheduled", date: "10/12/2024", isComplete: false },
