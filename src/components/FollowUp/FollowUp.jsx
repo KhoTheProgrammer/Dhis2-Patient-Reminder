@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import "./FollowUp.css";
 import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetching patient details
@@ -10,16 +9,18 @@ const FollowUpTable = () => {
   const [appointments, setAppointments] = useState([]);
   const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 5; // Number of rows per page
 
   useEffect(() => {
     const fetchData = async () => {
       if (data) {
         const appointmentsData = data.events.events.map((instance) => {
           const dateDataValue = instance.dataValues.find(
-            (dataValue) => dataValue.dataElement === "T0tg47LBsdW" 
+            (dataValue) => dataValue.dataElement === "T0tg47LBsdW"
           );
           const timeDataValue = instance.dataValues.find(
-            (dataValue) => dataValue.dataElement === "I4v5kQouxxF" 
+            (dataValue) => dataValue.dataElement === "I4v5kQouxxF"
           );
 
           return {
@@ -81,6 +82,22 @@ const FollowUpTable = () => {
     return patientDetails;
   };
 
+  const startIndex = currentPage * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const currentRows = appointments.slice(startIndex, endIndex);
+
+  const handleNext = () => {
+    if (endIndex < appointments.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   if (loading || isFetchingDetails)
     return (
       <div className="loader">
@@ -108,8 +125,8 @@ const FollowUpTable = () => {
           </tr>
         </thead>
         <tbody>
-          {appointments.length > 0 ? (
-            appointments.map((appointment, index) => {
+          {currentRows.length > 0 ? (
+            currentRows.map((appointment, index) => {
               const patient = patientDetailsCache[appointment.id];
               const name = patient ? patient.fullName : "Fetching...";
 
@@ -141,6 +158,15 @@ const FollowUpTable = () => {
           )}
         </tbody>
       </table>
+
+      <div className="pagination-buttons">
+        <button onClick={handlePrevious} disabled={currentPage === 0}>
+          Previous
+        </button>
+        <button onClick={handleNext} disabled={endIndex >= appointments.length}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };
