@@ -10,7 +10,7 @@ const FollowUpTable = () => {
   const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const rowsPerPage = 10; // Number of rows per page
+  const rowsPerPage = 12; // Number of rows per page
 
   useEffect(() => {
     const fetchData = async () => {
