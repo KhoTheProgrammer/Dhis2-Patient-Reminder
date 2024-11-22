@@ -1,10 +1,16 @@
-/* Main container to center the table */
+/* Remove default margin and padding from the body */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Ensures body takes up full width */
+}
+
+/* Main container to ensure no padding or margins */
 .table-container {
-  display: flex;
-  justify-content: center; /* Centers the table */
-  margin-top: 20px; /* Adds some margin on top */
+  display: block; /* Remove flex to avoid centering; make it a block element */
   width: 100%; /* Ensures the container stretches fully */
-  padding: 0;   /* Removes any padding */
+  margin: 0;   /* Remove any margin around the table */
+  padding: 0;  /* Remove any padding around the container */
 }
 
 /* Table styles */
