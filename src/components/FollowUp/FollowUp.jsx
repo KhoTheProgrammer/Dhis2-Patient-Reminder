@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./FollowUp.css";
-import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetching patient details
+import { appointmentQuery, fetchPatientDetails } from "./api";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
 
 const FollowUpTable = () => {
   const { loading, error, data } = useDataQuery(appointmentQuery);
   const [appointments, setAppointments] = useState([]);
-  const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
+  const [patientDetailsCache, setPatientDetailsCache] = useState({});
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const rowsPerPage = 10; // Number of rows per page
+  const [checkedStates, setCheckedStates] = useState({}); // State to track checkbox states
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,14 +26,21 @@ const FollowUpTable = () => {
             id: instance.trackedEntityInstance,
             status: instance.status,
             enrollment: instance.enrollment,
-            date: dateDataValue ? dateDataValue.value : null, // Safely handle missing values
-            time: timeDataValue ? timeDataValue.value : null, // Safely handle missing values
+            date: dateDataValue ? dateDataValue.value : null,
+            time: timeDataValue ? timeDataValue.value : null,
           };
         });
 
         setAppointments(appointmentsData);
 
-        // Fetch patient names in parallel
+        // Initialize checkbox states
+        const initialCheckedStates = {};
+        appointmentsData.forEach((appointment) => {
+          initialCheckedStates[appointment.id] = appointment.status === "Complete";
+        });
+        setCheckedStates(initialCheckedStates);
+
+        // Fetch patient details
         setIsFetchingDetails(true);
         const patientDetails = await fetchAllPatientDetails(appointmentsData);
         setPatientDetailsCache(patientDetails);
@@ -45,7 +51,6 @@ const FollowUpTable = () => {
     fetchData();
   }, [data]);
 
-  // Function to extract the full name from the patient's attributes
   const getFullName = (attributes) => {
     const firstName = attributes.find(
       (attr) => attr.displayName === "First name"
@@ -56,7 +61,6 @@ const FollowUpTable = () => {
     return firstName && lastName ? `${firstName} ${lastName}` : "Unknown";
   };
 
-  // Function to fetch details for all unique trackedEntityInstance IDs
   const fetchAllPatientDetails = async (appointmentsData) => {
     const uniqueIds = [...new Set(appointmentsData.map((a) => a.id))];
     const patientDetails = {};
@@ -82,20 +86,11 @@ const FollowUpTable = () => {
     return patientDetails;
   };
 
-  const startIndex = currentPage * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const currentRows = appointments.slice(startIndex, endIndex);
-
-  const handleNext = () => {
-    if (endIndex < appointments.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
+  const handleCheckboxChange = (id) => {
+    setCheckedStates((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
   };
 
   if (loading || isFetchingDetails)
@@ -125,8 +120,8 @@ const FollowUpTable = () => {
           </tr>
         </thead>
         <tbody>
-          {currentRows.length > 0 ? (
-            currentRows.map((appointment, index) => {
+          {appointments.length > 0 ? (
+            appointments.map((appointment, index) => {
               const patient = patientDetailsCache[appointment.id];
               const name = patient ? patient.fullName : "Fetching...";
 
@@ -142,8 +137,9 @@ const FollowUpTable = () => {
                   <td>
                     <input
                       type="checkbox"
+                      checked={checkedStates[appointment.id] || false}
+                      onChange={() => handleCheckboxChange(appointment.id)}
                       disabled={appointment.status === "Complete"}
-                      checked={appointment.status === "Complete"}
                     />
                   </td>
                 </tr>
@@ -158,15 +154,6 @@ const FollowUpTable = () => {
           )}
         </tbody>
       </table>
-
-      <div className="pagination-buttons">
-        <button onClick={handlePrevious} disabled={currentPage === 0}>
-          Previous
-        </button>
-        <button onClick={handleNext} disabled={endIndex >= appointments.length}>
-          Next
-        </button>
-      </div>
     </div>
   );
 };
