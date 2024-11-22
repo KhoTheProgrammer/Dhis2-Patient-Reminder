@@ -5,19 +5,22 @@ import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetchi
 import { useDataQuery } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
 
-const appointmentData = [
-  { name: "Victor Nangwiya", status: "Rescheduled", date: "10/12/2024", isComplete: false },
-  { name: "Adam Meja", status: "Scheduled", date: "01/12/2024", isComplete: false },
-  { name: "Kondwani Padyera", status: "Complete", date: "01/12/2024", isComplete: true },
-  { name: "Sarah Lee", status: "Scheduled", date: "15/12/2024", isComplete: false },
-  { name: "John Doe", status: "Complete", date: "20/12/2024", isComplete: false },
-  { name: "John Adam", status: "Complete", date: "20/12/2024", isComplete: false },
-  // Add more data as needed...
-];
-
 const FollowUpTable = () => {
-  const rowsPerPage = 5; // Number of rows per page
-  const [currentPage, setCurrentPage] = useState(0);
+  const { loading, error, data } = useDataQuery(appointmentQuery);
+  const [appointments, setAppointments] = useState([]);
+  const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
+  const [isFetchingDetails, setIsFetchingDetails] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (data) {
+        const appointmentsData = data.events.events.map((instance) => {
+          const dateDataValue = instance.dataValues.find(
+            (dataValue) => dataValue.dataElement === "T0tg47LBsdW" 
+          );
+          const timeDataValue = instance.dataValues.find(
+            (dataValue) => dataValue.dataElement === "I4v5kQouxxF" 
+          );
 
   // Calculate the starting and ending index of rows for the current page
   const startIndex = currentPage * rowsPerPage;
