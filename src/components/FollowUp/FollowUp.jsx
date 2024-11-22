@@ -125,7 +125,6 @@ const FollowUpTable = () => {
                   <td>
                     <input
                       type="checkbox"
-                      disabled={appointment.status === "Complete"}
                       checked={appointment.status === "Complete"}
                     />
                   </td>
