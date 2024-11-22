@@ -1,112 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import { useDataQuery, useDataMutation } from '@dhis2/app-runtime';
-import { Table, TableRow, TableCell, Button, SingleSelect, SingleSelectOption, NoticeBox } from '@dhis2/ui';
+import React, { useEffect, useState } from "react";
+import "./FollowUp.css";
+import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetching patient details
+import { useDataQuery } from "@dhis2/app-runtime";
+import { CircularLoader } from "@dhis2/ui";
 
-const enrolledPatientsQuery = (programId, orgUnitId) => ({
-    patients: {
-        resource: 'trackedEntityInstances',
-        params: {
-            ou: orgUnitId,
-            program: programId, 
-            trackedEntityType: 'nEenWmSyUEp', 
-            fields: ['trackedEntityInstance', 'attributes', 'enrollments[enrollmentDate,events[eventDate,dataValues]]'],
-            paging: false,
-        },
-    },
-});
+const FollowUpTable = () => {
+  const { loading, error, data } = useDataQuery(appointmentQuery);
+  const [appointments, setAppointments] = useState([]);
+  const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
+  const [isFetchingDetails, setIsFetchingDetails] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 10; // Number of rows per page
 
-const updateEventMutation = {
-    resource: 'events',
-    type: 'update',
-    id: ({ eventId }) => eventId,
-    data: ({ data }) => data,
-};
+  useEffect(() => {
+    const fetchData = async () => {
+      if (data) {
+        const appointmentsData = data.events.events.map((instance) => {
+          const dateDataValue = instance.dataValues.find(
+            (dataValue) => dataValue.dataElement === "T0tg47LBsdW"
+          );
+          const timeDataValue = instance.dataValues.find(
+            (dataValue) => dataValue.dataElement === "I4v5kQouxxF"
+          );
 
-const FollowUpPage = ({ programId, orgUnitId }) => {
-    const [selectedPatient, setSelectedPatient] = useState(null);
-    const [status, setStatus] = useState('');
-    const [rescheduleDate, setRescheduleDate] = useState(null);
-
-    const { loading, error, data, refetch } = useDataQuery(enrolledPatientsQuery(programId, orgUnitId));
-    const [updateEvent, { loading: updating, error: updateError }] = useDataMutation(updateEventMutation);
-
-    const patientsList = data?.patients?.trackedEntityInstances || [];
-
-    const handleStatusChange = async (eventId, newStatus, appointmentDate) => {
-        const newDate =
-            newStatus === 'Missed'
-                ? new Date(new Date(appointmentDate).setDate(new Date(appointmentDate).getDate() + 7))
-                    .toISOString()
-                    .split('T')[0]
-                : appointmentDate;
-
-        const updatedStatus = newStatus === 'Missed' ? 'Rescheduled' : newStatus;
-
-        await updateEvent({
-            eventId,
-            data: {
-                dataValues: [
-                    { dataElement: 'appointmentStatus', value: updatedStatus }, 
-                    ...(newStatus === 'Missed' ? [{ dataElement: 'appointmentDate', value: newDate }] : []), 
-                ],
-            },
+          return {
+            id: instance.trackedEntityInstance,
+            status: instance.status,
+            enrollment: instance.enrollment,
+            date: dateDataValue ? dateDataValue.value : null, // Safely handle missing values
+            time: timeDataValue ? timeDataValue.value : null, // Safely handle missing values
+          };
         });
 
-        refetch();
+        setAppointments(appointmentsData);
+
+        // Fetch patient names in parallel
+        setIsFetchingDetails(true);
+        const patientDetails = await fetchAllPatientDetails(appointmentsData);
+        setPatientDetailsCache(patientDetails);
+        setIsFetchingDetails(false);
+      }
     };
 
-    return (
-        <div>
-            <h1>Follow Up on Appointments</h1>
-            {loading && <p>Loading patients...</p>}
-            {error && <NoticeBox title="Error loading data" error>{error.message}</NoticeBox>}
-            {!loading && !error && (
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>Appointment Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {patientsList.map((patient) => {
-                            const enrollment = patient.enrollments[0]; 
-                            const event = enrollment?.events[0]; 
-                            const appointmentDate = event?.eventDate.split('T')[0];
-                            const currentStatus = event?.dataValues.find(
-                                (dv) => dv.dataElement === 'appointmentStatus' 
-                            )?.value;
+    fetchData();
+  }, [data]);
 
-                            return (
-                                <TableRow key={patient.trackedEntityInstance}>
-                                    <TableCell>
-                                        {patient.attributes.find((attr) => attr.attribute === 'w75KJ2mc4zz')?.value}{' '}
-                                        {patient.attributes.find((attr) => attr.attribute === 'zDhUuAYrxNC')?.value}
-                                    </TableCell>
-                                    <TableCell>{appointmentDate || 'N/A'}</TableCell>
-                                    <TableCell>{currentStatus || 'N/A'}</TableCell>
-                                    <TableCell>
-                                        <SingleSelect
-                                            selected={status}
-                                            onChange={({ selected }) =>
-                                                handleStatusChange(event.event, selected, appointmentDate)
-                                            }
-                                            placeholder="Update Status"
-                                        >
-                                            <SingleSelectOption label="Honored" value="Honored" />
-                                            <SingleSelectOption label="Completed" value="Completed" />
-                                            <SingleSelectOption label="Missed" value="Missed" />
-                                        </SingleSelect>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            )}
-            {updateError && <NoticeBox title="Error updating status" error>{updateError.message}</NoticeBox>}
-        </div>
+  // Function to extract the full name from the patient's attributes
+  const getFullName = (attributes) => {
+    const firstName = attributes.find(
+      (attr) => attr.displayName === "First name"
+    )?.value;
+    const lastName = attributes.find(
+      (attr) => attr.displayName === "Last name"
+    )?.value;
+    return firstName && lastName ? `${firstName} ${lastName}` : "Unknown";
+  };
+
+  // Function to fetch details for all unique trackedEntityInstance IDs
+  const fetchAllPatientDetails = async (appointmentsData) => {
+    const uniqueIds = [...new Set(appointmentsData.map((a) => a.id))];
+    const patientDetails = {};
+
+    await Promise.all(
+      uniqueIds.map(async (id) => {
+        try {
+          if (!patientDetailsCache[id]) {
+            const response = await fetchPatientDetails(id);
+            patientDetails[id] = {
+              fullName: getFullName(response.attributes),
+              ...response,
+            };
+          } else {
+            patientDetails[id] = patientDetailsCache[id];
+          }
+        } catch (error) {
+          console.error(`Failed to fetch details for patient ID: ${id}`, error);
+        }
+      })
     );
+
+    return patientDetails;
+  };
+
+  const startIndex = currentPage * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const currentRows = appointments.slice(startIndex, endIndex);
+
+  const handleNext = () => {
+    if (endIndex < appointments.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  if (loading || isFetchingDetails)
+    return (
+      <div className="loader">
+        <CircularLoader></CircularLoader>
+        <p>Fetching appointments and patient details. Please wait...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="error-message">
+        <p>Error fetching appointments: {error.message}</p>
+      </div>
+    );
+
+  return (
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Appointment Status</th>
+            <th>Appointment Date</th>
+            <th>Appointment Check</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentRows.length > 0 ? (
+            currentRows.map((appointment, index) => {
+              const patient = patientDetailsCache[appointment.id];
+              const name = patient ? patient.fullName : "Fetching...";
+
+              return (
+                <tr key={index}>
+                  <td>{name}</td>
+                  <td>{appointment.status}</td>
+                  <td>
+                    {appointment.date
+                      ? new Date(appointment.date).toLocaleDateString()
+                      : "No Date"}
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      disabled={appointment.status === "Complete"}
+                      checked={appointment.status === "Complete"}
+                    />
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ textAlign: "center" }}>
+                No appointments found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      <div className="pagination-buttons">
+        <button onClick={handlePrevious} disabled={currentPage === 0}>
+          Previous
+        </button>
+        <button onClick={handleNext} disabled={endIndex >= appointments.length}>
+          Next
+        </button>
+      </div>
+    </div>
+  );
 };
