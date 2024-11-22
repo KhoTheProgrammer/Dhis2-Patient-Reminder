@@ -54,7 +54,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #d5ddd6; /* Darker green on hover */
 }
 
 button:disabled {
