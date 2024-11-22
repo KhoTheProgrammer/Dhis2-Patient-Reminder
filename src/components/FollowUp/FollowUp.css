@@ -1,4 +1,4 @@
-.table-container {
+.table-container { 
     margin: 20px;
     font-family: Arial, sans-serif;
 }
@@ -29,4 +29,60 @@ thead th {
 
 tr {
     border-bottom: 1px solid #c0c0c0;
+}
+
+tr:hover {
+    background-color: #e0e0e0; /* Highlight row on hover */
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+button {
+    background-color: #4caf50; /* Green color for buttons */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.next-button-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.next-button {
+    background-color: #4caf50; /* Match main buttons */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.next-button:hover {
+    background-color: #45a049;
+}
+
+.next-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
