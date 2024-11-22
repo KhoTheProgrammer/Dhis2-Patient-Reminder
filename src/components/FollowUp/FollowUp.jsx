@@ -170,3 +170,5 @@ const FollowUpTable = () => {
     </div>
   );
 };
+
+export default FollowUpTable
