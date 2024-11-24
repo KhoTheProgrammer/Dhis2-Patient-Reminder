@@ -8,6 +8,19 @@ const api = axios.create({
   },
 });
 
+const smsapi = axios.create({
+  baseURL: "http://localhost:8080",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Basic " + btoa("admin:district"),
+  },
+});
+
+// Sends sms to a patient upon successful adding of appointment
+export const sendMessage = async (message) => {
+  const response = await smsapi.post("/messages", message);
+  return response;
+};
 
 export const addAppointment = async (appointmentData) => {
   const data = {
