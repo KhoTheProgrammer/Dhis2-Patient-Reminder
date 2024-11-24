@@ -1,7 +1,8 @@
-//  Group 30 clinic id = DFyu9VGpodC
-// Ngelehe CHC id = DiszpKrYNg8
-const trackedEntityType = "nEenWmSyUEp";
-const orgUnit = "DiszpKrYNg8";
+import { ids } from "../../assets/Ids";
+
+
+const trackedEntityType = ids.trackedEntityType;
+const orgUnit = ids.orgUnit;
 
 export const patientsQuery = {
   trackedEntityInstances: {
