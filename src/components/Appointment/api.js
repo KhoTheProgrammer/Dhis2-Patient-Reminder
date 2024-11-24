@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 const smsapi = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://telcomw.com/api-v2",
   headers: {
     "Content-Type": "application/json",
     Authorization: "Basic " + btoa("admin:district"),
@@ -17,8 +17,8 @@ const smsapi = axios.create({
 });
 
 // Sends sms to a patient upon successful adding of appointment
-export const sendMessage = async (message) => {
-  const response = await smsapi.post("/messages", message);
+export const sendMessage = async (messageData) => {
+  const response = await smsapi.post("/send", messageData);
   return response;
 };
 
