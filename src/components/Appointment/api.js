@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ids } from "../../assets/Ids";
 
 const api = axios.create({
   baseURL: "https://data.research.dhis2.org/in5320/api",
@@ -24,15 +25,15 @@ export const sendMessage = async (messageData) => {
 
 export const addAppointment = async (appointmentData) => {
   const data = {
-    program: "qQIsC9hO2Gj",
-    programStage: "djfuWTIR5zc",
-    orgUnit: "DFyu9VGpodC",
+    program: ids.program,
+    programStage: ids.programstage,
+    orgUnit: ids.orgUnit,
     eventDate: appointmentData.date,
     trackedEntityInstance: appointmentData.id,
     status: "SCHEDULE",
     dataValues: [
-      { dataElement: "T0tg47LBsdW", value: appointmentData.date },
-      { dataElement: "I4v5kQouxxF", value: appointmentData.time },
+      { dataElement: ids.date, value: appointmentData.date },
+      { dataElement: ids.time, value: appointmentData.time },
     ],
   };
 
