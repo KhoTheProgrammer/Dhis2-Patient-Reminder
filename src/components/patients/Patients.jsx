@@ -62,6 +62,7 @@ const Patients = () => {
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
             phoneNumber: getAttributeValue("Phone number"),
+            phoneNumber: getAttributeValue("Address"),
             created: formattedDate,
           };
         });
