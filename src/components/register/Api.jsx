@@ -12,7 +12,7 @@ const api = axios.create({
 export const registerPatient = async (patientData) => {
   const data = {
     trackedEntityType: "nEenWmSyUEp", // ID for "Person" or "Patient" entity type
-    orgUnit: "DFyu9VGpodC", // Organization unit ID
+    orgUnit: "DiszpKrYNg8", // Organization unit ID
     attributes: [
       { attribute: "w75KJ2mc4zz", value: patientData.firstName }, // Replace with actual attribute ID
       { attribute: "zDhUuAYrxNC", value: patientData.lastName },

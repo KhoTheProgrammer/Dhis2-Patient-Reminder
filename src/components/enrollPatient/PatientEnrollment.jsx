@@ -10,7 +10,7 @@ import { enrollPatient } from "./Api";
 import "./PatientEnrollment.css";
 import { useDataQuery } from "@dhis2/app-runtime";
 
-const orgUnitId = "DFyu9VGpodC";
+const orgUnitId = "DiszpKrYNg8";
 const programid = "qQIsC9hO2Gj";
 
 const orgUnitsQuery = {
