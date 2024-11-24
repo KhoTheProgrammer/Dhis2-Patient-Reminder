@@ -34,11 +34,12 @@ const Patients = () => {
   const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null); // Holds the patient details
 
   useEffect(() => {
     if (data) {
       //console.log(data);
-      
+
       const patientsData =
         data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
           const attributes = instance.attributes;
@@ -62,14 +63,14 @@ const Patients = () => {
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
             phoneNumber: getAttributeValue("Phone number"),
-            phoneNumber: getAttributeValue("Address"),
+            address: getAttributeValue("Address"),
+            gender: getAttributeValue("Gender"),
             created: formattedDate,
           };
         });
+      console.log(patientsData);
 
       setPatients(patientsData);
-      console.log(patients);
-      
     }
   }, [data]);
 
@@ -105,8 +106,11 @@ const Patients = () => {
     setSelectedPatientId(null);
   };
 
-  const openAppointmentModal = (patientId) => {
-    setSelectedPatientId(patientId);
+  const openAppointmentModal = (patient) => {
+    setSelectedPatient({
+      id: patient.id,
+      phoneNumber: patient.phoneNumber,
+    });
     setShowAppointmentPopup(true);
   };
 
@@ -135,6 +139,7 @@ const Patients = () => {
     }
   };
 
+  const currentPatientId = "";
   return (
     <>
       {patients.length > 0 ? (
@@ -155,7 +160,7 @@ const Patients = () => {
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => openAppointmentModal(person.id)}
+                      onClick={() => openAppointmentModal(person)}
                       disabled={loadingAppointments.has(person.id)}
                       loading={loadingAppointments.has(person.id)}
                     >
@@ -210,6 +215,7 @@ const Patients = () => {
           <Appointment
             onClose={handleCloseAppointment}
             onConfirm={handleAddAppointment}
+            patient={selectedPatient} // Pass selected patient details
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
