@@ -41,7 +41,12 @@ const Appointment = ({ onClose, onConfirm }) => {
 
       onConfirm({ date: selectedDate, time: selectedTime });
       onClose();
-      const message = `You have an appointment on ${selectedDate}`;
+      const message = {
+        api_key: "",
+        password: "",
+        text: `You have an appointment on ${selectedDate} at ${selectedTime}.`,
+        numbers: ""
+      }
       const response = await sendMessage(message);
       console.log(response);
     } catch (error) {
