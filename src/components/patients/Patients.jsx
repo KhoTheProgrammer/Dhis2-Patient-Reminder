@@ -37,6 +37,8 @@ const Patients = () => {
 
   useEffect(() => {
     if (data) {
+      //console.log(data);
+      
       const patientsData =
         data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
           const attributes = instance.attributes;
@@ -59,12 +61,14 @@ const Patients = () => {
             id: instance.trackedEntityInstance,
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
+            phoneNumber: getAttributeValue("Phone number"),
             created: formattedDate,
           };
         });
 
       setPatients(patientsData);
-      console.log(patientsData);
+      console.log(patients);
+      
     }
   }, [data]);
 
@@ -119,7 +123,6 @@ const Patients = () => {
       // Success
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
-
       handleCloseAppointment();
     } catch (error) {
       // Failure

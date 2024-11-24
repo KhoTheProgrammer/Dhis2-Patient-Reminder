@@ -3,8 +3,6 @@
 const trackedEntityType = "nEenWmSyUEp";
 const orgUnit = "DFyu9VGpodC";
 
-
-
 export const patientsQuery = {
   trackedEntityInstances: {
     resource: "trackedEntityInstances.json",
