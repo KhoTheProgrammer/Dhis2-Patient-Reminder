@@ -8,14 +8,6 @@ const api = axios.create({
   },
 });
 
-// {
-//     "program": "qQIsC9hO2Gj",
-//     "programStage": "djfuWTIR5zc",
-//     "orgUnit": "DFyu9VGpodC",
-//     "trackedEntityInstance": "zwnJOqfZFPO",
-//     "eventDate": "2024-11-10",
-//     "status": "ACTIVE"
-// }
 
 export const addAppointment = async (appointmentData) => {
   const data = {

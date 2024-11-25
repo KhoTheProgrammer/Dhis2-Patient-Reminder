@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "d2-app-scripts build",
-    "start": "d2-app-scripts start",
+    "start": "d2-app-scripts start --proxy=https://data.research.dhis2.org/in5320",
     "test": "d2-app-scripts test",
     "deploy": "d2-app-scripts deploy"
   },
@@ -18,7 +18,7 @@
     "@dhis2/app-runtime": "^3.11.2",
     "@dhis2/cli": "^5.0.1",
     "@dhis2/ui": "^9.13.0",
-    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@fortawesome/fontawesome-free": "^6.7.1",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",

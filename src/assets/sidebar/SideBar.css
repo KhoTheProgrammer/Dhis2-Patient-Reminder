@@ -1,50 +1,21 @@
 .sidebar {
-    width: 250px;
-    background-color: #2c6793;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1);
-    height: 100vh;
-    position: fixed;
-    transition: width 0.3s;
+    width: 250px; 
+    background-color: #2c6793; 
+    padding: 20px; 
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1); 
+    height: 100vh; 
+    position: fixed; 
     display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Ensures no overflow */
+    flex-direction: column; 
 }
 
-.sidebar.closed {
-    width: 60px;
-    padding: 10px;
-    background-color: transparent; /* Transparent background for closed state */
-}
-
-.icon {
-    margin-right: 10px;
-    width: 20px; /* Ensure icons are properly sized */
-    height: 20px;
-    flex-shrink: 0; /* Prevent icons from shrinking */
-}
-
-.content {
-    margin-left: 250px;
-    background-color: #ECF0F1;
-    overflow-y: auto;
-    flex-grow: 1;
-    transition: margin-left 0.3s;
-}
-
-.sidebar.closed + .content {
-    margin-left: 60px; /* Adjusts content position when sidebar is closed */
-}
-
-nav {
+.sidebar nav {
     display: flex;
-    flex-direction: column; /* Ensures items are stacked vertically */
-    gap: 10px; /* Adds spacing between the items */
-    width: 100%; /* Ensures nav takes the full width of the sidebar */
+    flex-direction: column; 
 }
 
 .sidebar a {
-    text-decoration: none;
+    text-decoration: none; 
     color: #ffffff;
     padding: 10px; /* Reduced padding to fit the closed state better */
     border-radius: 4px;
