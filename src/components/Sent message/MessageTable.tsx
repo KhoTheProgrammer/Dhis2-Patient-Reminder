@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import "./Message.css"; // Ensure you create this CSS file for styling
+import React, { useState, useMemo } from 'react';
+import "./Message.css";
 
 function MessageTable() {
   const messages = [
@@ -21,14 +21,12 @@ function MessageTable() {
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10; // Maximum of 10 rows (patients) per page
+  const rowsPerPage = 10;
 
-  // Calculate total pages
-  const totalPages = Math.ceil(messages.length / rowsPerPage);
+  const totalPages = useMemo(() => Math.ceil(messages.length / rowsPerPage), [messages, rowsPerPage]);
 
-  // Get current page data
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentMessages = messages.slice(startIndex, startIndex + rowsPerPage);
+  const currentMessages = useMemo(() => messages.slice(startIndex, startIndex + rowsPerPage), [messages, startIndex]);
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -64,8 +62,8 @@ function MessageTable() {
       </table>
 
       <div className="pagination-controls">
-        <button 
-          onClick={handlePrevious} 
+        <button
+          onClick={handlePrevious}
           disabled={currentPage === 1}
           className="pagination-button"
         >
@@ -74,8 +72,8 @@ function MessageTable() {
         <span className="page-indicator">
           Page {currentPage} of {totalPages}
         </span>
-        <button 
-          onClick={handleNext} 
+        <button
+          onClick={handleNext}
           disabled={currentPage === totalPages}
           className="pagination-button"
         >

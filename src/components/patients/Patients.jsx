@@ -200,6 +200,8 @@ const Patients = () => {
         </Button>
       </div>
 
+
+
       {/* Appointment popup */}
       {showAppointmentPopup && (
         <div className="appointment-popup">
