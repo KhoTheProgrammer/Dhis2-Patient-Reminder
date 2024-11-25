@@ -11,6 +11,7 @@ const FollowUpTable = () => {
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 15;
+  const totalPages = Math.ceil(appointments.length / rowsPerPage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -172,7 +173,10 @@ const FollowUpTable = () => {
         <button onClick={handlePrevious} disabled={currentPage === 0}>
           Previous
         </button>
-        <button onClick={handleNext} disabled={endIndex >= appointments.length}>
+        <span className="page-info">
+          Page {currentPage + 1} of {totalPages}
+        </span>
+        <button onClick={handleNext} disabled={currentPage >= totalPages - 1}>
           Next
         </button>
       </div>
