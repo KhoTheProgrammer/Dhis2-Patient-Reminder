@@ -57,3 +57,35 @@ nav {
     overflow: hidden; /* Hides overflow text in closed state */
     text-overflow: ellipsis; /* Shows '...' when text overflows */
 }
+
+/* SideBar.css */
+.toggle-button {
+    background: none;
+    border: none;
+    font-size: 30px; /* Adjust size as needed */
+    color: #000; /* Icon color */
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: flex; /* Ensures the icon is displayed correctly */
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.toggle-button:hover {
+    transform: scale(1.1);
+}
+
+
+.toggle-icon {
+    width: 24px; /* Set size of the icon */
+    height: 24px;
+  }
+  
+  .icon {
+    width: 20px; /* Size of icons inside the sidebar */
+    height: 20px;
+  }
+  
