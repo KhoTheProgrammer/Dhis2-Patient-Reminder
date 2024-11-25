@@ -42,22 +42,25 @@ const Appointment = ({ onClose, onConfirm, patientsData }) => {
         return;
       }
 
-      onConfirm({ date: selectedDate, time: selectedTime });
-      onClose();
-      const message = {
-        api_key: "XWS7bIpDQoaYlOLhSQlF",
-        password: "2003kondwani",
-        text: `Hello, ${patientsData.firstName} ${patientsData.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
-        numbers: patientsData.phoneNumber,
-        from: "WGIT",
-      };
-      console.log(message);
+ const message = {
+  accountSid: "AC799d52ff569652209cd117506bcc3502",
+  authToken: "1d2ba077549bd1a2b20e78d804583574",
+  from: "+1234567890",
+  to: patientsData.phoneNumber,
+  body: `Hello, ${patientsData.firstName} ${patientsData.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
+};
+const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${message.accountSid}/Messages.json`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+  },
+  body: `From=${message.from}&To=${message.to}&Body=${message.body}`,
+  auth: {
+    username: message.accountSid,
+    password: message.authToken,
+  },
+});
       
-      const response = await sendMessage(message);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
