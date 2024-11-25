@@ -9,16 +9,20 @@ const api = axios.create({
 });
 
 const smsapi = axios.create({
-  baseURL: "https://telcomw.com/api-v2",
+  baseURL: "https://api.twilio.com/2010-04-01/Accounts",
   headers: {
-    "Content-Type": "application/json",
-    Authorization: "Basic " + btoa("admin:district"),
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: "Basic " + btoa("your_account_sid:your_auth_token"),
   },
 });
 
 // Sends sms to a patient upon successful adding of appointment
 export const sendMessage = async (messageData) => {
-  const response = await smsapi.post("/send", messageData);
+  const response = await smsapi.post("/Messages.json", {
+    From: "your_twilio_phone_number",
+    To: messageData.to,
+    Body: messageData.message,
+  });
   return response;
 };
 
