@@ -4,17 +4,18 @@ import "./Appointment.css";
 const Appointment = ({ onClose, onConfirm }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
-    setError(""); 
+    setError(null);
   };
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
-    setError(""); 
+    setError(null);
   };
+  
 
   const handleConfirm = () => {
     const today = new Date().toISOString().split("T")[0];
@@ -32,27 +33,38 @@ const Appointment = ({ onClose, onConfirm }) => {
       return;
     }
 
-    
     const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-    if (selectedHour < 9 || selectedHour > 17) {
+    if (selectedHour < 0 || selectedHour > 23) {
       setError("Please select a time between 09:00 and 17:00.");
       return;
     }
 
-    
     onConfirm({ date: selectedDate, time: selectedTime });
     onClose();
+    sendMessage(selectedDate, selectedTime);
   };
 
   return (
     <div className="appointment">
       <div>
-        <input type="date" value={selectedDate} onChange={handleDateChange} className="input"/>
-        <input type="time" value={selectedTime} onChange={handleTimeChange} className="input"/>
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={handleDateChange}
+          className="input"
+          required
+        />
+        <input
+          type="time"
+          value={selectedTime}
+          onChange={handleTimeChange}
+          className="input"
+          required
+        />
       </div>
-      {error && <div className="error">{error}</div>}{" "}
+      {error && <div className="error">{error}</div>}
       <div className="buttons-container">
-        <button className="buttons ok-btn" onClick={handleConfirm}>
+        <button className="buttons ok-btn" onClick={handleConfirm} disabled={!selectedDate || !selectedTime}>
           Confirm
         </button>
         <button className="buttons cancel-btn" onClick={onClose}>
