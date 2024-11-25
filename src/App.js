@@ -13,8 +13,8 @@ import FollowUpTable from './components/FollowUp/FollowUp';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
 import HomePage from './components/Landingpage/HomePage';
-import FollowUpPage from './components/FollowUp/FollowUp';
-
+import FollowUp from './components/FollowUp/FollowUp';
+import Progress from './components/PatientProgress/Progress'
 const App = () => (
   <Router>
     <div className="app-container">
