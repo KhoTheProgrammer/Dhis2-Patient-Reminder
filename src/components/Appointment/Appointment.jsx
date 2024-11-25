@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Appointment.css";
 import { sendMessage } from "./api";
-const Appointment = ({ onClose, onConfirm, patientsData }) => {
+const Appointment = ({ onClose, onConfirm, patient }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [error, setError] = useState(null);
@@ -16,8 +16,7 @@ const Appointment = ({ onClose, onConfirm, patientsData }) => {
     setError(null);
   };
 
-  console.log(patientsData);
-  
+  console.log(patient);
 
   const handleConfirm = async () => {
     try {
@@ -42,6 +41,17 @@ const Appointment = ({ onClose, onConfirm, patientsData }) => {
         return;
       }
 
+      onConfirm({ date: selectedDate, time: selectedTime });
+      onClose();
+      const message = {
+        text: `Hello, ${patient.firstName} ${patient.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
+        number: patient.phoneNumber,
+      };
+      sendMessage(message);
+      console.log(process.env.REACT_APP_API_KEY);
+    } catch (error) {
+      console.log(error);
+    }
  const message = {
   accountSid: "AC799d52ff569652209cd117506bcc3502",
   authToken: "1d2ba077549bd1a2b20e78d804583574",

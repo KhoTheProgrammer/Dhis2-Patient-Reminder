@@ -1,23 +1,83 @@
-import React, { useState, useMemo } from 'react';
-import "./Message.css";
+import React, { useState } from "react";
+import "./Message.css"; // Ensure you create this CSS file for styling
 
 function MessageTable() {
   const messages = [
-    { name: 'Kondwani Padyera', message: 'You missed an appointment on...', date: '12/11/2024' },
-    { name: 'Justice Khaira', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwan  Thuto', message: 'Thank you for completing...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You missed an appointment on...', date: '12/11/2024' },
-    { name: 'Adamz Major', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Victor Nangwile', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Justice Khaira', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwan  Thuto', message: 'Thank you for completing...', date: '13/11/2024' },
-    { name: 'Adamz Major', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You missed an appointment on...', date: '13/11/2024' },
-    { name: 'Victor Nangwile', message: 'You have an appointment...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You missed an appointment on...', date: '10/11/2024' },
-    { name: 'Kondwan  Thuto', message: 'Thank you for completing...', date: '13/11/2024' },
-    { name: 'Kondwani Padyera', message: 'You missed an appointment on...', date: '13/11/2024' },
-    { name: 'Adamz Major', message: 'You have an appointment...', date: '13/11/2024' },
+    {
+      name: "Kondwani Padyera",
+      message: "You missed an appointment on...",
+      date: "12/11/2024",
+    },
+    {
+      name: "Justice Khaira",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwan  Thuto",
+      message: "Thank you for completing...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwani Padyera",
+      message: "You missed an appointment on...",
+      date: "12/11/2024",
+    },
+    {
+      name: "Adamz Major",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Victor Nangwile",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Justice Khaira",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwan  Thuto",
+      message: "Thank you for completing...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Adamz Major",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwani Padyera",
+      message: "You missed an appointment on...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Victor Nangwile",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwani Padyera",
+      message: "You missed an appointment on...",
+      date: "10/11/2024",
+    },
+    {
+      name: "Kondwan  Thuto",
+      message: "Thank you for completing...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Kondwani Padyera",
+      message: "You missed an appointment on...",
+      date: "13/11/2024",
+    },
+    {
+      name: "Adamz Major",
+      message: "You have an appointment...",
+      date: "13/11/2024",
+    },
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,7 +113,9 @@ function MessageTable() {
         <tbody>
           {currentMessages.map((msg, index) => (
             <tr key={index}>
-              <td>{startIndex + index + 1}. {msg.name}</td>
+              <td>
+                {startIndex + index + 1}. {msg.name}
+              </td>
               <td>{msg.message}</td>
               <td>{msg.date}</td>
             </tr>

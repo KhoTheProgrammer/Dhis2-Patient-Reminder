@@ -27,14 +27,13 @@ const Patients = () => {
 
   const [patients, setPatients] = useState([]);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
-  const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
   const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState(null); // Holds the patient details
 
   useEffect(() => {
     if (data) {
@@ -103,26 +102,23 @@ const Patients = () => {
 
   const handleCloseAppointment = () => {
     setShowAppointmentPopup(false);
-    setSelectedPatientId(null);
+    setSelectedPatient(null); // Clear the selected patient correctly
   };
 
   const openAppointmentModal = (patient) => {
-    setSelectedPatient({
-      id: patient.id,
-      phoneNumber: patient.phoneNumber,
-    });
+    setSelectedPatient(patient);
     setShowAppointmentPopup(true);
   };
 
   const handleAddAppointment = async (appointmentData) => {
     const newLoadingAppointments = new Set(loadingAppointments);
-    newLoadingAppointments.add(selectedPatientId);
+    newLoadingAppointments.add(selectedPatient.id); // Use selectedPatient.id
     setLoadingAppointments(newLoadingAppointments);
 
     try {
       const result = await addAppointment({
         ...appointmentData,
-        id: selectedPatientId,
+        id: selectedPatient.id, // Use selectedPatient.id here
       });
 
       // Success
@@ -134,12 +130,12 @@ const Patients = () => {
       setShowErrorMessage(true);
       setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
     } finally {
-      newLoadingAppointments.delete(selectedPatientId);
+      newLoadingAppointments.delete(selectedPatient.id); // Use selectedPatient.id here
       setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
 
-  const currentPatientId = "";
+
   return (
     <>
       {patients.length > 0 ? (
@@ -217,7 +213,7 @@ const Patients = () => {
           <Appointment
             onClose={handleCloseAppointment}
             onConfirm={handleAddAppointment}
-            patient={selectedPatient} // Pass selected patient details
+            patient={selectedPatient}
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
@@ -226,4 +222,4 @@ const Patients = () => {
   );
 };
 
-export default Patients;
+export default Patients; 

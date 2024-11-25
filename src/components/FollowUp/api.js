@@ -6,7 +6,8 @@ export const appointmentQuery = {
         params: {
             fields: "trackedEntityInstance, status, enrollment, dataValues[dataElement, value]",
             paging: false,
-            programStage: programStageId
+            programStage: programStageId,
+            orgUnit:ids.orgUnit
         }
     }
 }
