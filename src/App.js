@@ -2,9 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './assets/sidebar/Sidebar';
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
-
 import './App.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
