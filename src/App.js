@@ -1,11 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './assets/sidebar/Sidebar';
-import NoPatientFound from './assets/NoPatientFound/NoPatientFound'
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
-import Messages from './assets/Messages';
-import FollowUp from './assets/FollowUp';
-import Progress from './assets/Progress';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
@@ -26,13 +22,6 @@ const App = () => (
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpPage />} />
-          <Route path="/progress" element={<Progress />} />
-          <Route path="/patients" component={NoPatientFound} />
-          <Route path='/register' Component={Register} />
-          <Route path="/enroll" component={PatientEnrollment} />
-          <Route path="/messages" component={Messages} />
-          <Route path="/follow-up" component={FollowUp} />
-          <Route path="/progress" component={Progress} />
         </Routes>
       </div>
     </div>
