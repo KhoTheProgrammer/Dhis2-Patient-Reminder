@@ -1,4 +1,5 @@
-const programStageId = "djfuWTIR5zc";
+import { ids } from "../../assets/Ids";
+const programStageId = ids.programstage;
 export const appointmentQuery = {
     events: {
         resource: "events.json",
@@ -9,3 +10,22 @@ export const appointmentQuery = {
         }
     }
 }
+
+
+
+export const fetchPatientDetails = async (trackedEntityInstance) => {
+  const response = await fetch(
+    `https://data.research.dhis2.org/in5320/api/trackedEntityInstances/${trackedEntityInstance}`,
+    {
+      headers: {
+        Authorization: "Basic " + btoa("admin:district"),
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch patient details");
+  }
+
+  return response.json(); // Adjust according to your API response structure
+};
