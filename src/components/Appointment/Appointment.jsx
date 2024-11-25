@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Appointment.css";
 import { sendMessage } from "./api";
-import { createuser } from "./api";
 const Appointment = ({ onClose, onConfirm, patient }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -48,9 +47,8 @@ const Appointment = ({ onClose, onConfirm, patient }) => {
         text: `Hello, ${patient.firstName} ${patient.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
         number: patient.phoneNumber,
       };
-      const response = await sendMessage(message);
-      createuser();
-      console.log(response);
+      sendMessage(message);
+      console.log(process.env.REACT_APP_API_KEY);
     } catch (error) {
       console.log(error);
     }
