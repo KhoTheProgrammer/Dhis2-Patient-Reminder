@@ -184,4 +184,4 @@ const FollowUpTable = () => {
   );
 };
 
-export default FollowUpTable;
+export default FollowUpTable

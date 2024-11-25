@@ -1,11 +1,13 @@
-const programStageId = "djfuWTIR5zc";
+import { ids } from "../../assets/Ids";
+const programStageId = ids.programstage;
 export const appointmentQuery = {
     events: {
         resource: "events.json",
         params: {
             fields: "trackedEntityInstance, status, enrollment, dataValues[dataElement, value]",
             paging: false,
-            programStage: programStageId
+            programStage: programStageId,
+            orgUnit:ids.orgUnit
         }
     }
 }

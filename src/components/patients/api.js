@@ -1,11 +1,8 @@
-import { useDataQuery } from "@dhis2/app-runtime";
+import { ids } from "../../assets/Ids";
 
 
-//  Group 30 clinic id = DFyu9VGpodC
-// Ngelehe CHC id = DiszpKrYNg8
-const trackedEntityType = "nEenWmSyUEp";
-const orgUnit = "DFyu9VGpodC";
-
+const trackedEntityType = ids.trackedEntityType;
+const orgUnit = ids.orgUnit;
 
 export const patientsQuery = {
   trackedEntityInstances: {
@@ -19,3 +16,5 @@ export const patientsQuery = {
     },
   },
 };
+
+
