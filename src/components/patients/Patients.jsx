@@ -9,37 +9,26 @@ import {
   TableCell,
   Button,
   TableCellHead,
-  CircularLoader,
-  NoticeBox,
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
-import { addAppointment } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
     "First name",
     "Last name",
-    "Date Registered",
+    "Date Enrolled",
     "Add Appointment",
   ];
 
   const [patients, setPatients] = useState([]);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
-  const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState(null); // Holds the patient details
 
   useEffect(() => {
     if (data) {
-      //console.log(data);
-
       const patientsData =
         data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
           const attributes = instance.attributes;
@@ -51,6 +40,7 @@ const Patients = () => {
             return attribute ? attribute.value : "";
           };
 
+          // Extract the created date and format it
           const createdDate = attributes.find(
             (attr) => attr.displayName === "First name"
           )?.created;
@@ -62,15 +52,13 @@ const Patients = () => {
             id: instance.trackedEntityInstance,
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
-            phoneNumber: getAttributeValue("Phone number"),
-            address: getAttributeValue("Address"),
-            gender: getAttributeValue("Gender"),
             created: formattedDate,
           };
         });
-      console.log(patientsData);
 
       setPatients(patientsData);
+      console.log(patientsData);
+      
     }
   }, [data]);
 
@@ -79,67 +67,19 @@ const Patients = () => {
   }
 
   if (loading) {
-    return (
-      <div className="loader">
-        <CircularLoader></CircularLoader>{" "}
-        <p>Getting patients. Please wait...</p>
-      </div>
-    );
+    return <span>Loading...</span>;
   }
 
-  // Pagination logic
-  const indexOfLastPatient = currentPage * patientsPerPage;
-  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
-  const currentPatients = patients.slice(
-    indexOfFirstPatient,
-    indexOfLastPatient
-  );
-
-  const totalPages = Math.ceil(patients.length / patientsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handleAddAppointment = (patientId) => {
+    setSelectedPatientId(patientId);
+    setShowAppointmentPopup(true); // Show the appointment popup
   };
 
   const handleCloseAppointment = () => {
-    setShowAppointmentPopup(false);
-    setSelectedPatientId(null);
+    setShowAppointmentPopup(false); // Hide the appointment popup
+    setSelectedPatientId(null); // Reset selected patient
   };
 
-  const openAppointmentModal = (patient) => {
-    setSelectedPatient({
-      id: patient.id,
-      phoneNumber: patient.phoneNumber,
-    });
-    setShowAppointmentPopup(true);
-  };
-
-  const handleAddAppointment = async (appointmentData) => {
-    const newLoadingAppointments = new Set(loadingAppointments);
-    newLoadingAppointments.add(selectedPatientId);
-    setLoadingAppointments(newLoadingAppointments);
-
-    try {
-      const result = await addAppointment({
-        ...appointmentData,
-        id: selectedPatientId,
-      });
-
-      // Success
-      setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
-      handleCloseAppointment();
-    } catch (error) {
-      // Failure
-      setShowErrorMessage(true);
-      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
-    } finally {
-      newLoadingAppointments.delete(selectedPatientId);
-      setLoadingAppointments(new Set(newLoadingAppointments));
-    }
-  };
-
-  const currentPatientId = "";
   return (
     <>
       {patients.length > 0 ? (
@@ -153,20 +93,17 @@ const Patients = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentPatients.map((person, index) => (
+              {patients.map((person, index) => (
                 <TableRow key={index} className="tablerow">
                   <TableCell>{person.firstName}</TableCell>
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => openAppointmentModal(person)}
-                      disabled={loadingAppointments.has(person.id)}
-                      loading={loadingAppointments.has(person.id)}
+                      className="button"
+                      onClick={() => handleAddAppointment(person.id)}
                     >
-                      {loadingAppointments.has(person.id)
-                        ? "Adding appointment"
-                        : "Add"}
+                      Add
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -178,46 +115,17 @@ const Patients = () => {
         <Card />
       )}
 
-      {/* Success NoticeBox */}
-      {showSuccessMessage && (
-        <NoticeBox title="Success" success>
-          Appointment added successfully
-        </NoticeBox>
-      )}
-
-      {/* Error NoticeBox */}
-      {showErrorMessage && (
-        <NoticeBox title="Error" error>
-          Failed to add the appointment. Patient not enrolled to any program.
-        </NoticeBox>
-      )}
-
-      {/* Pagination controls */}
-      <div className="pagination">
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Previous
-        </Button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Next
-        </Button>
-      </div>
-
-
-
       {/* Appointment popup */}
       {showAppointmentPopup && (
         <div className="appointment-popup">
           <Appointment
             onClose={handleCloseAppointment}
-            onConfirm={handleAddAppointment}
-            patient={selectedPatient} // Pass selected patient details
+            onConfirm={(date) => {
+              console.log(
+                `Appointment set for patient ${selectedPatientId} on ${date}`
+              );
+              handleCloseAppointment();
+            }}
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
