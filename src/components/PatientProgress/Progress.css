@@ -1,0 +1,43 @@
+/* Remove default margin and padding from the body */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Ensures body takes up full width */
+}
+
+/* Main container to ensure no padding or margins */
+.table-container {
+  display: block; /* Remove flex to avoid centering; make it a block element */
+  width: 100%; /* Ensures the container stretches fully */
+  margin: 0;   /* Remove any margin around the table */
+  padding: 0;  /* Remove any padding around the container */
+}
+
+/* Table styles */
+table {
+  border-collapse: collapse; /* Merges table borders */
+  width: 100%; /* Makes the table take up full width of the container */
+  background-color: #f2f2f2; /* Light gray background */
+  margin: 0; /* Removes any margin around the table */
+  padding: 0; /* Removes padding around the table */
+}
+
+/* Header styles */
+th {
+  background-color: #9b9696; /* Brownish-gray background */
+  color: white; /* White text */
+  padding: 10px;
+  text-align: left;
+}
+
+/* Cell styles */
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Adds a bottom border for the rows */
+}
+
+/* Hover effect for rows */
+tr:hover {
+  background-color: #f1f1f1; /* Light hover effect on rows */
+}
