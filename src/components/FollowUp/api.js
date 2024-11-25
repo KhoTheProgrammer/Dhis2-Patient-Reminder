@@ -1,4 +1,5 @@
-const programStageId = "djfuWTIR5zc";
+import { ids } from "../../assets/Ids";
+const programStageId = ids.programstage;
 export const appointmentQuery = {
     events: {
         resource: "events.json",
