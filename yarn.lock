@@ -15549,6 +15549,11 @@ follow-redirects@^1.0.0, follow-redirects@^1.14.7, follow-redirects@^1.15.6:
 >>>>>>> 1c3853f71f899151bf391b6bfdbe59d6a47742d9
   integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
 
+font-awesome@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
+  integrity sha512-U6kGnykA/6bFmg1M/oT9EkFeIYv7JlX3bozwQJWiiLz6L0w3F5vBVPxHlwyX/vtNq1ckcpRKOB9f2Qal/VtFpg==
+
 for-each@^0.3.3, for-each@~0.3.3:
   version "0.3.3"
 <<<<<<< HEAD

@@ -12,8 +12,9 @@ import Register from './components/register/Register';
 import FollowUpTable from './components/FollowUp/FollowUp';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
-import Homepage from './components/Landingpage/HomePage';
-import ProgressT from './components/PatientProgress/patientProgress';
+import HomePage from './components/Landingpage/HomePage';
+import 'font-awesome/css/font-awesome.min.css';
+
 
 const App = () => (
   <Router>
