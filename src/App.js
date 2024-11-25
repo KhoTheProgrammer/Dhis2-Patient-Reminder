@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './assets/sidebar/Sidebar';
 import NoPatientFound from './assets/NoPatientFound/NoPatientFound';
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
-import Messages from './assets/Messages';
-import FollowUp from './assets/FollowUp';
-import Progress from './assets/Progress';
+//import Messages from './assets/Messages';
+//import FollowUp from './assets/FollowUp';
+//.d2/shell/src/D2App/components/Landingpageimport Progress from './assets/Progress';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
@@ -14,7 +14,7 @@ import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
 import HomePage from './components/Landingpage/HomePage';
 import 'font-awesome/css/font-awesome.min.css';
-
+import Progress from './components/PatientProgress/Progress';
 
 const App = () => (
   <Router>
@@ -28,7 +28,7 @@ const App = () => (
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpTable />} />
-          <Route path="/progress" element={<ProgressT />} />
+          <Route path="/progress" element={<Progress />} />
           <Route path="*" element={<NoPatientFound />} />
         </Routes>
       </div>
