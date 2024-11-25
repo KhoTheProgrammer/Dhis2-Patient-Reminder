@@ -96,6 +96,7 @@ const Register = () => {
           name="dob"
           placeholder="Date of Birth"
           onChange={handleChange}
+          max={new Date().toISOString().split('T')[0]}
           required
         />
         <div>
@@ -123,10 +124,12 @@ const Register = () => {
         <input
           type="tel"
           name="phone"
-          placeholder="Phone Number"
+          placeholder="Phone Number (e.g. 0999 123456)"
+          pattern="^\(?([0-9]{4})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$"
+          title="(e.g. 0999 123456)"
           onChange={handleChange}
           required
-        />
+        />  
         <input
           type="text"
           name="address"

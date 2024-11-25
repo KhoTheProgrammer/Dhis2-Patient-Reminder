@@ -9,19 +9,16 @@ import {
   TableCell,
   Button,
   TableCellHead,
-  CircularLoader,
-  NoticeBox,
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
-import { addAppointment } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
     "First name",
     "Last name",
-    "Date Registered",
+    "Date Enrolled",
     "Add Appointment",
   ];
 
@@ -37,8 +34,6 @@ const Patients = () => {
 
   useEffect(() => {
     if (data) {
-      //console.log(data);
-
       const patientsData =
         data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
           const attributes = instance.attributes;
@@ -50,6 +45,7 @@ const Patients = () => {
             return attribute ? attribute.value : "";
           };
 
+          // Extract the created date and format it
           const createdDate = attributes.find(
             (attr) => attr.displayName === "First name"
           )?.created;
@@ -61,15 +57,13 @@ const Patients = () => {
             id: instance.trackedEntityInstance,
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
-            phoneNumber: getAttributeValue("Phone number"),
-            address: getAttributeValue("Address"),
-            gender: getAttributeValue("Gender"),
             created: formattedDate,
           };
         });
-      console.log(patientsData);
 
       setPatients(patientsData);
+      console.log(patientsData);
+      
     }
   }, [data]);
 
@@ -78,26 +72,12 @@ const Patients = () => {
   }
 
   if (loading) {
-    return (
-      <div className="loader">
-        <CircularLoader></CircularLoader>{" "}
-        <p>Getting patients. Please wait...</p>
-      </div>
-    );
+    return <span>Loading...</span>;
   }
 
-  // Pagination logic
-  const indexOfLastPatient = currentPage * patientsPerPage;
-  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
-  const currentPatients = patients.slice(
-    indexOfFirstPatient,
-    indexOfLastPatient
-  );
-
-  const totalPages = Math.ceil(patients.length / patientsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handleAddAppointment = (patientId) => {
+    setSelectedPatientId(patientId);
+    setShowAppointmentPopup(true); // Show the appointment popup
   };
 
   const handleCloseAppointment = () => {
@@ -149,20 +129,17 @@ const Patients = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentPatients.map((person, index) => (
+              {patients.map((person, index) => (
                 <TableRow key={index} className="tablerow">
                   <TableCell>{person.firstName}</TableCell>
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => openAppointmentModal(person)}
-                      disabled={loadingAppointments.has(person.id)}
-                      loading={loadingAppointments.has(person.id)}
+                      className="button"
+                      onClick={() => handleAddAppointment(person.id)}
                     >
-                      {loadingAppointments.has(person.id)
-                        ? "Adding appointment"
-                        : "Add"}
+                      Add
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -173,37 +150,6 @@ const Patients = () => {
       ) : (
         <Card />
       )}
-
-      {/* Success NoticeBox */}
-      {showSuccessMessage && (
-        <NoticeBox title="Success" success>
-          Appointment added successfully
-        </NoticeBox>
-      )}
-
-      {/* Error NoticeBox */}
-      {showErrorMessage && (
-        <NoticeBox title="Error" error>
-          Failed to add the appointment. Patient not enrolled to any program.
-        </NoticeBox>
-      )}
-
-      {/* Pagination controls */}
-      <div className="pagination">
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Previous
-        </Button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Next
-        </Button>
-      </div>
 
       {/* Appointment popup */}
       {showAppointmentPopup && (
