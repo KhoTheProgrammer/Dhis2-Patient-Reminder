@@ -12,8 +12,7 @@ import Register from './components/register/Register';
 import FollowUpTable from './components/FollowUp/FollowUp';
 import Patients from './components/patients/Patients';
 import MessageTable from './components/Sent message/MessageTable';
-import Homepage from './components/Landingpage/HomePage';
-import ProgressT from './components/PatientProgress/patientProgress';
+import HomePage from './components/Landingpage/HomePage';
 
 const App = () => (
   <Router>
@@ -21,7 +20,7 @@ const App = () => (
       <Sidebar />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path='/' element={<HomePage/>}/>
           <Route path="/patients" element={<Patients />} />
           <Route path="/register" element={<Register />} />
           <Route path="/enroll" element={<PatientEnrollment />} />

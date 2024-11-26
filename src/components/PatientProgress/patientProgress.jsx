@@ -3,13 +3,13 @@ import './progress.css'; // Importing the CSS file
 
 function ProgressT() {
   const data = [
-    { name: 'adam Meja', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'kondwani padyera', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'kondwani kachikuni', appointments: 3, achieved: 3, progress: '100%' },
+    { name: 'Adam Meja', appointments: 6, achieved: 3, progress: '50%' },
+    { name: 'kondwani padyera', appointments: 4, achieved: 4, progress: '100%' },
+    { name: 'kondwani kachikuni', appointments: 5, achieved: 3, progress: '60%' },
     { name: 'Victor Nangwiya', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'justice khaira', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'jonna umali', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'lolesi meja', appointments: 3, achieved: 3, progress: '100%' },
+    { name: 'justice khaira', appointments: 7, achieved: 3, progress: '45%' },
+    { name: 'jonna umali', appointments: 4, achieved: 3, progress: '75%' },
+    { name: 'Innocent mwendenge Chisi', appointments: 6, achieved: 3, progress: '50%' },
   ];
 
   return (
