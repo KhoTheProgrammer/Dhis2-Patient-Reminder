@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./Appointment.css";
-import { sendSMS } from "./api";
-
 const Appointment = ({ onClose, onConfirm, patient }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -42,16 +40,7 @@ const Appointment = ({ onClose, onConfirm, patient }) => {
 
       onConfirm({ date: selectedDate, time: selectedTime });
       onClose();
-
-      const message = {
-        accountSid: "AC799d52ff569652209cd117506bcc3502",
-        authToken: "1d2ba077549bd1a2b20e78d804583574",
-        from: "+1234567890",
-        to: patient.phoneNumber,
-        body: `Hello, ${patient.firstName} ${patient.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
-      };
-
-      await sendSMS(message);
+      
     } catch (error) {
       console.error(error);
     }

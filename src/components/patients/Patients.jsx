@@ -16,6 +16,7 @@ import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
 import { addAppointment } from "../Appointment/api";
+import { sendMessage } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
@@ -121,6 +122,15 @@ const Patients = () => {
         id: selectedPatient.id, // Use selectedPatient.id here
       });
 
+      if (result) {
+        // Send SMS after successful appointment creation
+        const message = {
+          text: `Hello, ${selectedPatient.firstName} ${selectedPatient.lastName}! You have an appointment on ${appointmentData.date} at ${appointmentData.time}. Thank you!!`,
+          number: selectedPatient.phoneNumber,
+        };
+        const response = await sendMessage(message);
+        console.log(response);
+      }
       // Success
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
@@ -134,7 +144,6 @@ const Patients = () => {
       setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
-
 
   return (
     <>
@@ -222,4 +231,4 @@ const Patients = () => {
   );
 };
 
-export default Patients; 
+export default Patients;

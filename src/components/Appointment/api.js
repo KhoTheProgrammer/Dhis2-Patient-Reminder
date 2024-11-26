@@ -1,11 +1,14 @@
 import axios from "axios";
 import { ids } from "../../assets/Ids";
 
+const password = process.env.REACT_APP_DHIS_PASSWORD;
+const username = process.env.REACT_APP_DHIS_USERNAME;
+
 const api = axios.create({
   baseURL: "https://data.research.dhis2.org/in5320/api",
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Basic " + btoa("admin:district"),
+    Authorization: "Basic " + btoa(`${username}:${password}`),
   },
 });
 
@@ -19,11 +22,14 @@ const smsapi = axios.create({
 
 export const sendSMS = async (messageData) => {
   try {
-    const response = await smsapi.post("/Messages.json", {
-      From: "+1234567890",
-      To: messageData.to,
-      Body: messageData.message,
-    });
+    // Bypassing cors error by using corsproxy.io
+    const response = await fetch(
+      "https://corsproxy.io/?https://telcomw.com/api-v2/send",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
     return response;
   } catch (error) {
     console.error("Error sending SMS:", error);
