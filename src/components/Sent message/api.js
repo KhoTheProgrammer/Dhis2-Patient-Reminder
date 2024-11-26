@@ -5,9 +5,11 @@ export async function getMessage() {
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    const json = await response.json();
-    console.log(json);
+    const data = await response.json();
+    console.log("API Response:", data); // Log the response to inspect it
+    return data;
   } catch (error) {
-    console.error(error.message);
+    console.error("Error fetching messages:", error.message);
+    return [];
   }
 }
