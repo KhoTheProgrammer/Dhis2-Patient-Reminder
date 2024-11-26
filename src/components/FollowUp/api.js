@@ -1,7 +1,7 @@
 import { ids } from "../../assets/Ids";
 const programStageId = ids.programstage;
-const password = process.env.REACT_APP_DHIS2_PASSWORD;
-const username = process.env.REACT_APP_DHIS2_USERNAME;
+const password = process.env.REACT_APP_DHIS_PASSWORD;
+const username = process.env.REACT_APP_DHIS_USERNAME;
 export const appointmentQuery = {
   events: {
     resource: "events.json",
