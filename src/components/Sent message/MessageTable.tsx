@@ -1,82 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Message.css"; // Ensure you create this CSS file for styling
+import { getMessage } from "./api";
+
 
 function MessageTable() {
+  const [sentmessages, setmessages] = useState([]);
+  
+
+  useEffect(() => {
+    const result = getMessage();
+    setmessages(result);
+  }, []);
+
   const messages = [
     {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "12/11/2024",
-    },
-    {
-      name: "Justice Khaira",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "12/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Victor Nangwile",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Justice Khaira",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Victor Nangwile",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "10/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
+      name: "",
+      text: "",
+      date: "",
     },
   ];
 
@@ -113,13 +53,13 @@ function MessageTable() {
           </tr>
         </thead>
         <tbody>
-          {currentMessages.map((msg, index) => (
+          {sentmessages.map((msg, index) => (
             <tr key={index}>
               <td>
-                {startIndex + index + 1}. {msg.name}
+                {startIndex + index + 1}. {msg.patientId}
               </td>
-              <td>{msg.message}</td>
-              <td>{msg.date}</td>
+              <td>{msg.text}</td>
+              <td>{msg.dateCreated}</td>
             </tr>
           ))}
         </tbody>
