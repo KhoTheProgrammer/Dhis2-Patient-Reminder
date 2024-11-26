@@ -62,7 +62,7 @@ function MessageTable() {
                 {/* Extracted name */}
               </td>
               <td>{msg.text}</td>
-              <td>{msg.date}</td>
+              <td>{msg.dateCreated}</td>
             </tr>
           ))}
         </tbody>
