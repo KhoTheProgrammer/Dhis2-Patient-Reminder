@@ -124,12 +124,13 @@ const Register = () => {
         <input
           type="tel"
           name="phone"
-          placeholder="Phone Number (e.g. 0999 123456)"
-          pattern="^\(?([0-9]{4})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$"
-          title="(e.g. 0999 123456)"
+          placeholder="Phone Number (e.g. 0999 123 456)"
+          pattern="^(09|08|07|02)\d{8}$"
+          title="Please enter a valid Malawian phone number, e.g., 0999123456"
           onChange={handleChange}
           required
-        />  
+        />
+ 
         <input
           type="text"
           name="address"

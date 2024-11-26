@@ -6,14 +6,14 @@ const api = axios.create({
   baseURL: "https://data.research.dhis2.org/in5320/api",
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Basic " + btoa(`${username}:${password}`)
+    Authorization: `Basic ${btoa(`${username}:${password}`)}`
   }
 });
 const smsapi = axios.create({
   baseURL: "https://api.twilio.com/2010-04-01/Accounts",
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: "Basic " + btoa("AC799d52ff569652209cd117506bcc3502:1d2ba077549bd1a2b20e78d804583574")
+    Authorization: `Basic ${btoa("AC799d52ff569652209cd117506bcc3502:1d2ba077549bd1a2b20e78d804583574")}`
   }
 });
 let messageLogs = []; // Temporary in-memory storage for messages
@@ -78,7 +78,7 @@ export const addAppointment = async appointmentData => {
       to: appointmentData.phoneNumber,
       message: `Appointment scheduled for ${appointmentData.date} at ${appointmentData.time}`
     });
-    console.log("Im running");
+    console.log("I'm running");
     return response.data;
   } catch (error) {
     console.error("Error registering patient:", error);
