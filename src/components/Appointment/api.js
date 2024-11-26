@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ids } from "../../assets/Ids";
 
-const password = process.env.REACT_APP_DHIS_PASSWORD
-const username = process.env.REACT_APP_DHIS_USERNAME
+const password = process.env.REACT_APP_DHIS_PASSWORD;
+const username = process.env.REACT_APP_DHIS_USERNAME;
 
 const api = axios.create({
   baseURL: "https://data.research.dhis2.org/in5320/api",
@@ -29,7 +29,7 @@ export const sendMessage = async (messageData) => {
 
   try {
     const response = await fetch(
-      "https://telcomw.com/api-v2/send",
+      "https://corsproxy.io/?https://telcomw.com/api-v2/send",
       requestOptions
     )
       .then((response) => response.text())
