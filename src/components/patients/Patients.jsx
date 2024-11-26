@@ -9,7 +9,8 @@ import {
   TableCell,
   Button,
   TableCellHead,
-  CircularLoader
+  CircularLoader,
+  NoticeBox,
 } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
@@ -28,11 +29,17 @@ const Patients = () => {
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [patientsPerPage] = useState(9); // Number of patients per page
+  const [patientsPerPage] = useState(10); // Number of patients per page
   const { loading, error, data } = useDataQuery(patientsQuery);
+  const [loadingAppointments, setLoadingAppointments] = useState(new Set()); // Tracks loading per patient
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null); // Holds the patient details
 
   useEffect(() => {
     if (data) {
+      //console.log(data);
+
       const patientsData =
         data.trackedEntityInstances.trackedEntityInstances.map((instance) => {
           const attributes = instance.attributes;
@@ -55,12 +62,15 @@ const Patients = () => {
             id: instance.trackedEntityInstance,
             firstName: getAttributeValue("First name"),
             lastName: getAttributeValue("Last name"),
+            phoneNumber: getAttributeValue("Phone number"),
+            address: getAttributeValue("Address"),
+            gender: getAttributeValue("Gender"),
             created: formattedDate,
           };
         });
+      console.log(patientsData);
 
       setPatients(patientsData);
-      console.log(patientsData);
     }
   }, [data]);
 
@@ -69,7 +79,12 @@ const Patients = () => {
   }
 
   if (loading) {
-    return <div className="loader"><CircularLoader></CircularLoader></div>;
+    return (
+      <div className="loader">
+        <CircularLoader></CircularLoader>{" "}
+        <p>Getting patients. Please wait...</p>
+      </div>
+    );
   }
 
   // Pagination logic
@@ -91,24 +106,40 @@ const Patients = () => {
     setSelectedPatientId(null);
   };
 
-  const openAppointmentModal = (patientId) => {
-    setSelectedPatientId(patientId);
+  const openAppointmentModal = (patient) => {
+    setSelectedPatient({
+      id: patient.id,
+      phoneNumber: patient.phoneNumber,
+    });
     setShowAppointmentPopup(true);
   };
 
   const handleAddAppointment = async (appointmentData) => {
+    const newLoadingAppointments = new Set(loadingAppointments);
+    newLoadingAppointments.add(selectedPatientId);
+    setLoadingAppointments(newLoadingAppointments);
+
     try {
       const result = await addAppointment({
         ...appointmentData,
         id: selectedPatientId,
       });
-      window.alert("Appointment Created Successfully");
+
+      // Success
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
       handleCloseAppointment();
     } catch (error) {
-      window.alert("Patient not enrolled to a program");
+      // Failure
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
+    } finally {
+      newLoadingAppointments.delete(selectedPatientId);
+      setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
 
+  const currentPatientId = "";
   return (
     <>
       {patients.length > 0 ? (
@@ -128,8 +159,14 @@ const Patients = () => {
                   <TableCell>{person.lastName}</TableCell>
                   <TableCell>{person.created}</TableCell>
                   <TableCell>
-                    <Button onClick={() => openAppointmentModal(person.id)}>
-                      Add
+                    <Button
+                      onClick={() => openAppointmentModal(person)}
+                      disabled={loadingAppointments.has(person.id)}
+                      loading={loadingAppointments.has(person.id)}
+                    >
+                      {loadingAppointments.has(person.id)
+                        ? "Adding appointment"
+                        : "Add"}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -139,6 +176,20 @@ const Patients = () => {
         </div>
       ) : (
         <Card />
+      )}
+
+      {/* Success NoticeBox */}
+      {showSuccessMessage && (
+        <NoticeBox title="Success" success>
+          Appointment added successfully
+        </NoticeBox>
+      )}
+
+      {/* Error NoticeBox */}
+      {showErrorMessage && (
+        <NoticeBox title="Error" error>
+          Failed to add the appointment. Patient not enrolled to any program.
+        </NoticeBox>
       )}
 
       {/* Pagination controls */}
@@ -164,6 +215,7 @@ const Patients = () => {
           <Appointment
             onClose={handleCloseAppointment}
             onConfirm={handleAddAppointment}
+            patient={selectedPatient} // Pass selected patient details
           />
           <div className="popup-overlay" onClick={handleCloseAppointment}></div>
         </div>
