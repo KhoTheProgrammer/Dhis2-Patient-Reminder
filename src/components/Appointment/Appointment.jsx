@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Appointment.css";
-import { sendMessage } from "./api";
+import { sendSMS } from "./api";
+
 const Appointment = ({ onClose, onConfirm, patient }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -15,8 +16,6 @@ const Appointment = ({ onClose, onConfirm, patient }) => {
     setSelectedTime(event.target.value);
     setError(null);
   };
-
-  console.log(patient);
 
   const handleConfirm = async () => {
     try {
@@ -36,41 +35,26 @@ const Appointment = ({ onClose, onConfirm, patient }) => {
       }
 
       const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-      if (selectedHour < 0 || selectedHour > 23) {
+      if (selectedHour < 9 || selectedHour > 17) {
         setError("Please select a time between 09:00 and 17:00.");
         return;
       }
 
       onConfirm({ date: selectedDate, time: selectedTime });
       onClose();
+
       const message = {
-        text: `Hello, ${patient.firstName} ${patient.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
-        number: patient.phoneNumber,
+        accountSid: "AC799d52ff569652209cd117506bcc3502",
+        authToken: "1d2ba077549bd1a2b20e78d804583574",
+        from: "+1234567890",
+        to: patient.phoneNumber,
+        body: `Hello, ${patient.firstName} ${patient.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
       };
-      sendMessage(message);
-      console.log(process.env.REACT_APP_API_KEY);
+
+      await sendSMS(message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
- const message = {
-  accountSid: "AC799d52ff569652209cd117506bcc3502",
-  authToken: "1d2ba077549bd1a2b20e78d804583574",
-  from: "+1234567890",
-  to: patientsData.phoneNumber,
-  body: `Hello, ${patientsData.firstName} ${patientsData.lastName}! You have an appointment on ${selectedDate} at ${selectedTime}. Thank you!!`,
-};
-const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${message.accountSid}/Messages.json`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-  body: `From=${message.from}&To=${message.to}&Body=${message.body}`,
-  auth: {
-    username: message.accountSid,
-    password: message.authToken,
-  },
-});
-      
   };
 
   return (
