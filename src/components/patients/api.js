@@ -1,6 +1,5 @@
 import { ids } from "../../assets/Ids";
 
-
 const trackedEntityType = ids.trackedEntityType;
 const orgUnit = ids.orgUnit;
 
@@ -13,8 +12,7 @@ export const patientsQuery = {
       fields: [
         "attributes[displayName, value, created], trackedEntityInstance",
       ],
+      paging: false,
     },
   },
 };
-
-

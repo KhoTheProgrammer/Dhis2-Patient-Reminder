@@ -15,6 +15,8 @@ import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
 import { addAppointment } from "../Appointment/api";
+import { sendMessage, saveMessage } from "../Appointment/api";
+import { fetchPatientDetails } from "../FollowUp/api";
 
 const Patients = () => {
   const tableHeaders = [
@@ -97,15 +99,50 @@ const Patients = () => {
   };
 
   const handleAddAppointment = async (appointmentData) => {
+    // Check if the selected patient already has an appointment
+    const existingAppointment = await fetchPatientDetails(selectedPatient.id); // Implement this function to fetch appointments
+    console.log(existingAppointment, selectedPatient.id);
+    
+    if (existingAppointment) {
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
+      return; // Exit the function if an appointment already exists
+    }
+
+    const newLoadingAppointments = new Set(loadingAppointments);
+    newLoadingAppointments.add(selectedPatient.id);
+    setLoadingAppointments(newLoadingAppointments);
+
     try {
       const result = await addAppointment({
         ...appointmentData,
-        id: selectedPatientId,
+        id: selectedPatient.id,
       });
-      window.alert("Appointment Created Successfully");
+
+      if (result) {
+        const message = {
+          text: `Hello, ${selectedPatient.firstName} ${selectedPatient.lastName}! You have an appointment on ${appointmentData.date} at ${appointmentData.time}. Thank you!!`,
+          number: selectedPatient.phoneNumber,
+        };
+        await sendMessage(message);
+
+        const messageData = {
+          message: message.text,
+          patientId: selectedPatient.id,
+        };
+        const response = await saveMessage(messageData);
+        console.log(response);
+      }
+
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
       handleCloseAppointment();
     } catch (error) {
-      window.alert("Patient not enrolled to a program");
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 3000);
+    } finally {
+      newLoadingAppointments.delete(selectedPatient.id);
+      setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
 
