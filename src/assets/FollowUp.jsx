@@ -1,9 +1,9 @@
 import React from 'react'
 
-function FollowUp() {
+function Messages() {
   return (
-    <div>FollowUp</div>
+    <div>Messages</div>
   )
 }
 
-export default FollowUp
+export default Messages

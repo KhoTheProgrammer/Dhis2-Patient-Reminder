@@ -9,9 +9,10 @@ import {
 import { enrollPatient } from "./Api";
 import "./PatientEnrollment.css";
 import { useDataQuery } from "@dhis2/app-runtime";
+import { ids } from "../../assets/Ids";
 
-const orgUnitId = "DFyu9VGpodC";
-const programid = "qQIsC9hO2Gj";
+const orgUnitId = ids.orgUnit;
+const programid = ids.program;
 
 const orgUnitsQuery = {
   orgUnits: {
@@ -42,7 +43,7 @@ const patientsQuery = (orgUnitId) => ({
     resource: "trackedEntityInstances",
     params: {
       ou: orgUnitId,
-      trackedEntityType: "nEenWmSyUEp", // Replace with your tracked entity type ID
+      trackedEntityType: ids.trackedEntityType, // Replace with your tracked entity type ID
       fields: ["trackedEntityInstance", "attributes"],
       pageSize: 50,
     },
