@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { registerPatient } from "./Api";
 import "./Register.css";
-import { Button, NoticeBox, CircularLoader} from "@dhis2/ui";
+import { Button, NoticeBox } from "@dhis2/ui";
 
 // DHIS2 query to fetch organization units
 const orgUnitQuery = {
@@ -66,11 +66,7 @@ const Register = () => {
     }
   };
 
-  if (loading) return (
-    <div className="loader">
-      <CircularLoader></CircularLoader> <p>Getting organisation Units. Please wait...</p>
-    </div>
-  );
+  if (loading) return <div>Loading organization units...</div>;
   if (error) return <div>Error fetching organization units</div>;
 
   return (
@@ -153,7 +149,7 @@ const Register = () => {
 
         {enrollmentSuccess && (
           <NoticeBox title="Success" success>
-            Patient Registered successfully!
+            Patient enrolled successfully!
           </NoticeBox>
         )}
 
