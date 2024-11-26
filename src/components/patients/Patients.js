@@ -92,6 +92,8 @@ const Patients = () => {
   const handleAddAppointment = async (appointmentData) => {
     // Check if the selected patient already has an appointment
     const existingAppointment = await fetchPatientDetails(selectedPatient.id); // Implement this function to fetch appointments
+    console.log(existingAppointment, selectedPatient.id);
+    
     if (existingAppointment) {
       setShowErrorMessage(true);
       setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds

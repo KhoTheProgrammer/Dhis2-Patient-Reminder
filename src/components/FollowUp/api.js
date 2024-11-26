@@ -25,7 +25,7 @@ export const fetchPatientDetails = async (trackedEntityInstance) => {
     }
   );
 
-  if (!response.ok) {
+  if (!response.status === "ERROR") {
     return false;
   }
   return true; // Adjust according to your API response structure
