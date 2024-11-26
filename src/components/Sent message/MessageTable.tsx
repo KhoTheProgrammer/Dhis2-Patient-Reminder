@@ -1,149 +1,45 @@
-import React, { useState } from "react";
-import "./Message.css"; // Ensure you create this CSS file for styling
+import React, { useState, useEffect } from "react";
+import { Table, TableHead, TableBody, TableRow, TableCell, TableCellHead } from "@dhis2/ui";
+import { getMessageLogs } from "../Appointment/api";
 
-function MessageTable() {
-  const messages = [
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "12/11/2024",
-    },
-    {
-      name: "Justice Khaira",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "12/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Victor Nangwile",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Justice Khaira",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Victor Nangwile",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "10/11/2024",
-    },
-    {
-      name: "Kondwan  Thuto",
-      message: "Thank you for completing...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Kondwani Padyera",
-      message: "You missed an appointment on...",
-      date: "13/11/2024",
-    },
-    {
-      name: "Adamz Major",
-      message: "You have an appointment...",
-      date: "13/11/2024",
-    },
-  ];
+const Outbox = () => {
+  const [messages, setMessages] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
-
-  const totalPages = useMemo(() => Math.ceil(messages.length / rowsPerPage), [messages, rowsPerPage]);
-
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentMessages = useMemo(() => messages.slice(startIndex, startIndex + rowsPerPage), [messages, startIndex]);
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  useEffect(() => {
+    // Fetch the logs on component mount
+    const logs = getMessageLogs();
+    setMessages(logs);
+  }, []);
 
   return (
-    <div className="message-table-container">
-      <table className="message-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Message</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentMessages.map((msg, index) => (
-            <tr key={index}>
-              <td>
-                {startIndex + index + 1}. {msg.name}
-              </td>
-              <td>{msg.message}</td>
-              <td>{msg.date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="pagination-controls">
-        <button
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-          className="pagination-button"
-        >
-          Previous
-        </button>
-        <span className="page-indicator">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-          className="pagination-button"
-        >
-          Next
-        </button>
-      </div>
+    <div className="outbox">
+      <h2>Outbox</h2>
+      {messages.length > 0 ? (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCellHead>Patient Name</TableCellHead>
+              <TableCellHead>Message</TableCellHead>
+              <TableCellHead>Status</TableCellHead>
+              <TableCellHead>Timestamp</TableCellHead>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {messages.map((msg, index) => (
+              <TableRow key={index}>
+                <TableCell>{msg.patientName}</TableCell>
+                <TableCell>{msg.message}</TableCell>
+                <TableCell>{msg.status}</TableCell>
+                <TableCell>{msg.timestamp}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <p>No messages have been sent yet.</p>
+      )}
     </div>
   );
-}
+};
 
-export default MessageTable;
+export default Outbox;

@@ -15,8 +15,7 @@ import {
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
-import { addAppointment } from "../Appointment/api";
-import { sendMessage } from "../Appointment/api";
+import { addAppointment, sendSMS } from "../Appointment/api";
 
 const Patients = () => {
   const tableHeaders = [
@@ -128,7 +127,7 @@ const Patients = () => {
           text: `Hello, ${selectedPatient.firstName} ${selectedPatient.lastName}! You have an appointment on ${appointmentData.date} at ${appointmentData.time}. Thank you!!`,
           number: selectedPatient.phoneNumber,
         };
-        const response = await sendMessage(message);
+        const response = await sendSMS(message);
         console.log(response);
       }
       // Success

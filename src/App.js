@@ -8,6 +8,7 @@ import Patients from "./components/patients/Patients";
 import MessageTable from "./components/Sent message/MessageTable";
 import HomePage from "./components/Landingpage/HomePage";
 import FollowUpPage from "./components/FollowUp/FollowUp";
+import ProgressReport from "./components/progressReport/ProgressReport";
 
 const App = () => (
   <Router>
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpPage />} />
+          <Route path="/progress" element = {<ProgressReport />} />
         </Routes>
       </div>
     </div>

@@ -1,0 +1,10 @@
+{
+  "type": "app",
+  "name": "dhis2-patient-reminder",
+  "version": "1.0.0",
+  "description": "",
+  "title": "dhis2-patient-reminder",
+  "entryPoints": {
+    "app": "index.html"
+  }
+}

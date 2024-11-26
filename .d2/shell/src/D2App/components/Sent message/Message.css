@@ -1,0 +1,59 @@
+.message-table-container {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+.message-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.message-table th,
+.message-table td {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.message-table th {
+    background-color: #9b9696; /* Set to #727272 */
+    color: white;
+}
+
+.message-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.message-table tr:hover {
+    background-color: #e6f7ff;
+}
+
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .pagination-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .page-indicator {
+    font-size: 16px;
+  }
+  
