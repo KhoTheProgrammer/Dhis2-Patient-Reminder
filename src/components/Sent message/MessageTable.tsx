@@ -2,33 +2,28 @@ import React, { useState, useEffect } from "react";
 import "./Message.css"; // Ensure you create this CSS file for styling
 import { getMessage } from "./api";
 
-
 function MessageTable() {
-  const [sentmessages, setmessages] = useState([]);
-  
-
-  useEffect(() => {
-    const result = getMessage();
-    setmessages(result);
-  }, []);
-
-  const messages = [
-    {
-      name: "",
-      text: "",
-      date: "",
-    },
-  ];
-
+  const [sentmessages, setMessages] = useState([]); // State to hold fetched messages
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10; // Maximum of 10 rows (patients) per page
 
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const result = await getMessage(); // Await the fetch
+      setMessages(result); // Set the messages state with the fetched data
+    };
+    fetchMessages();
+  }, []);
+
   // Calculate total pages
-  const totalPages = Math.ceil(messages.length / rowsPerPage);
+  const totalPages = Math.ceil(sentmessages.length / rowsPerPage);
 
   // Get current page data
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentMessages = messages.slice(startIndex, startIndex + rowsPerPage);
+  const currentMessages = sentmessages.slice(
+    startIndex,
+    startIndex + rowsPerPage
+  );
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -53,13 +48,13 @@ function MessageTable() {
           </tr>
         </thead>
         <tbody>
-          {sentmessages.map((msg, index) => (
+          {currentMessages.map((msg, index) => (
             <tr key={index}>
               <td>
-                {startIndex + index + 1}. {msg.patientId}
+                {startIndex + index + 1}. {msg.name}
               </td>
               <td>{msg.text}</td>
-              <td>{msg.dateCreated}</td>
+              <td>{msg.date}</td>
             </tr>
           ))}
         </tbody>
