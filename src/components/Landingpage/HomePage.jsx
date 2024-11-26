@@ -1,5 +1,5 @@
 import React from 'react';
-import "./homepage.css";
+import './HomePage.CSS'
 import Home from '../../assets/pictures/home.jpg' 
 
 const HomePage = () => {
