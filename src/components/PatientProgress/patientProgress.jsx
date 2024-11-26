@@ -1,5 +1,5 @@
 import React from 'react';
-import './Progress.css'; // Importing the CSS file
+import './progress.css'; // Importing the CSS file
 
 function ProgressT() {
   const data = [

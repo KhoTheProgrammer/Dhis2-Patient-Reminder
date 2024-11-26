@@ -1,15 +1,16 @@
 import React from 'react';
-import "./homepage.css";
-import Home from '../../assets/pictures/home.jpg' 
+import "./homepage.css"; 
 
-const HomePage = () => {
+const Homepage = () => {
   return (
     <div className="main-container">
-      <div className="pic">
-      <img src={Home} alt="" />
+      <div className="app-title">
+        <h1>DHIS2</h1>
+        <h2>Patient Reminder</h2>
+        <p>Application</p>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default Homepage;

@@ -1,9 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-// Import custom icons from the assets folder
-//import OpenIcon from '../../assets/icons/sidebar(3).png'; // Sidebar open icon
-//import CloseIcon from '../../assets/icons/sidebar(2).png'; // Sidebar close icon
 import PatientIcon from '../../icons/patient.png';
 import RegisterIcon from '../../icons/register.png';
 import EnrollIcon from '../../icons/enroll.png';
