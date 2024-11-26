@@ -13,44 +13,22 @@ const smsapi = axios.create({
   baseURL: "https://api.twilio.com/2010-04-01/Accounts",
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: "Basic " + btoa("your_account_sid:your_auth_token"),
+    Authorization: "Basic " + btoa("AC799d52ff569652209cd117506bcc3502:1d2ba077549bd1a2b20e78d804583574"),
   },
 });
 
-// Sends sms to a patient upon successful adding of appointment
-export const sendMessage = async (messageData) => {
-  const formdata = new FormData();
-  formdata.append("api_key", process.env.REACT_APP_API_KEY);
-  formdata.append("password", process.env.REACT_APP_API_PASSWORD);
-  formdata.append("text", messageData.text);
-  formdata.append("numbers", messageData.number);
-  formdata.append("from", "WGIT");
-
-  var requestOptions = {
-    method: "POST",
-    body: formdata,
-    redirect: "follow",
-  };
-
+export const sendSMS = async (messageData) => {
   try {
-    const response = await fetch(
-      "https://telcomw.com/api-v2/send",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    const response = await smsapi.post("/Messages.json", {
+      From: "+1234567890",
+      To: messageData.to,
+      Body: messageData.message,
+    });
     return response;
   } catch (error) {
-    console.error("Error sending message:", error);
+    console.error("Error sending SMS:", error);
     throw error;
   }
-  const response = await smsapi.post("/Messages.json", {
-    From: "your_twilio_phone_number",
-    To: messageData.to,
-    Body: messageData.message,
-  });
-  return response;
 };
 
 export const addAppointment = async (appointmentData) => {
@@ -69,6 +47,12 @@ export const addAppointment = async (appointmentData) => {
 
   try {
     const response = await api.post("/events", data);
+    await sendSMS({
+      to: appointmentData.phoneNumber,
+      message: `Appointment scheduled for ${appointmentData.date} at ${appointmentData.time}`,
+    });
+    console.log("Im running");
+    
     return response.data;
   } catch (error) {
     console.error("Error registering patient:", error);
