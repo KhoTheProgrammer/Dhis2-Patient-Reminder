@@ -28,6 +28,7 @@ export const sendMessage = async (messageData) => {
   };
 
   try {
+    // Bypassing cors error by using corsproxy.io
     const response = await fetch(
       "https://corsproxy.io/?https://telcomw.com/api-v2/send",
       requestOptions
