@@ -6,7 +6,7 @@ import App from './App';
 import dotenv from 'dotenv'
 
 dotenv.config();
-console.log("API_KEY", process.env.REACT_APP_API_KEY);
+
 
 
 ReactDOM.render(

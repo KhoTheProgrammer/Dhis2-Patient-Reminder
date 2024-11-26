@@ -13,6 +13,9 @@ import {
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
+import { addAppointment } from "../Appointment/api";
+import { sendMessage, saveMessage } from "../Appointment/api";
+import { fetchPatientDetails } from "../FollowUp/api";
 
 const Patients = () => {
   const tableHeaders = [
@@ -75,10 +78,6 @@ const Patients = () => {
     return <span>Loading...</span>;
   }
 
-  const handleAddAppointment = (patientId) => {
-    setSelectedPatientId(patientId);
-    setShowAppointmentPopup(true); // Show the appointment popup
-  };
 
   const handleCloseAppointment = () => {
     setShowAppointmentPopup(false);
@@ -91,30 +90,50 @@ const Patients = () => {
   };
 
   const handleAddAppointment = async (appointmentData) => {
+    // Check if the selected patient already has an appointment
+    const existingAppointment = await fetchPatientDetails(selectedPatient.id); // Implement this function to fetch appointments
+    if (existingAppointment) {
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
+      return; // Exit the function if an appointment already exists
+    }
+
     const newLoadingAppointments = new Set(loadingAppointments);
-    newLoadingAppointments.add(selectedPatient.id); // Use selectedPatient.id
+    newLoadingAppointments.add(selectedPatient.id);
     setLoadingAppointments(newLoadingAppointments);
 
     try {
       const result = await addAppointment({
         ...appointmentData,
-        id: selectedPatient.id, // Use selectedPatient.id here
+        id: selectedPatient.id,
       });
 
-      // Success
+      if (result) {
+        const message = {
+          text: `Hello, ${selectedPatient.firstName} ${selectedPatient.lastName}! You have an appointment on ${appointmentData.date} at ${appointmentData.time}. Thank you!!`,
+          number: selectedPatient.phoneNumber,
+        };
+        await sendMessage(message);
+
+        const messageData = {
+          message: message.text,
+          patientId: selectedPatient.id,
+        };
+        const response = await saveMessage(messageData);
+        console.log(response);
+      }
+
       setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
+      setTimeout(() => setShowSuccessMessage(false), 3000);
       handleCloseAppointment();
     } catch (error) {
-      // Failure
       setShowErrorMessage(true);
-      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
+      setTimeout(() => setShowErrorMessage(false), 3000);
     } finally {
-      newLoadingAppointments.delete(selectedPatient.id); // Use selectedPatient.id here
+      newLoadingAppointments.delete(selectedPatient.id);
       setLoadingAppointments(new Set(newLoadingAppointments));
     }
   };
-
 
   return (
     <>
@@ -166,4 +185,4 @@ const Patients = () => {
   );
 };
 
-export default Patients; 
+export default Patients;
