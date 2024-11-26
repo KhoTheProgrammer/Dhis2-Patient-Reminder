@@ -15,6 +15,13 @@ function MessageTable() {
     fetchMessages();
   }, []);
 
+  // Function to extract the patient's name from the message
+  const extractName = (message) => {
+    const nameStart = message.indexOf("Hello, ") + "Hello, ".length;
+    const nameEnd = message.indexOf("!", nameStart);
+    return message.substring(nameStart, nameEnd).trim();
+  };
+
   // Calculate total pages
   const totalPages = Math.ceil(sentmessages.length / rowsPerPage);
 
@@ -51,7 +58,8 @@ function MessageTable() {
           {currentMessages.map((msg, index) => (
             <tr key={index}>
               <td>
-                {startIndex + index + 1}. {msg.name}
+                {startIndex + index + 1}. {extractName(msg.text)}{" "}
+                {/* Extracted name */}
               </td>
               <td>{msg.text}</td>
               <td>{msg.date}</td>
