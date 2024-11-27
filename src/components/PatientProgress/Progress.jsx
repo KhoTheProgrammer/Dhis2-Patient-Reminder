@@ -1,15 +1,15 @@
 import React from 'react';
 import './progress.css'; // Importing the CSS file
 
-function ProgressT() {
+function Progress() {
   const data = [
     { name: 'Adam Meja', appointments: 6, achieved: 3, progress: '50%' },
-    { name: 'kondwani padyera', appointments: 4, achieved: 4, progress: '100%' },
-    { name: 'kondwani kachikuni', appointments: 5, achieved: 3, progress: '60%' },
+    { name: 'Kondwani Padyera', appointments: 4, achieved: 4, progress: '100%' },
+    { name: 'Kondwani Kachikuni', appointments: 5, achieved: 3, progress: '60%' },
     { name: 'Victor Nangwiya', appointments: 3, achieved: 3, progress: '100%' },
-    { name: 'justice khaira', appointments: 7, achieved: 3, progress: '45%' },
-    { name: 'jonna umali', appointments: 4, achieved: 3, progress: '75%' },
-    { name: 'Innocent mwendenge Chisi', appointments: 6, achieved: 3, progress: '50%' },
+    { name: 'Justice Khaira', appointments: 7, achieved: 3, progress: '45%' },
+    { name: 'Jonna Umali', appointments: 4, achieved: 3, progress: '75%' },
+    { name: 'Innocent Mwendenge Chisi', appointments: 6, achieved: 3, progress: '50%' },
   ];
 
   return (
@@ -38,4 +38,4 @@ function ProgressT() {
   );
 }
 
-export default ProgressT;
+export default Progress;
