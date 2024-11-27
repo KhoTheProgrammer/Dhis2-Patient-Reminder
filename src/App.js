@@ -5,7 +5,7 @@ import NoPatientFound from './assets/NoPatientFound/NoPatientFound';
 import PatientEnrollment from './components/enrollPatient/PatientEnrollment';
 import Messages from './assets/Messages';
 import FollowUp from './assets/FollowUp';
-import Progress from './assets/Progress';
+import Progress from './components/PatientProgress/Progress'; // Correct import
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Register from './components/register/Register';
@@ -20,13 +20,13 @@ const App = () => (
       <Sidebar />
       <div className="content">
         <Routes>
-          <Route path='/' element={<HomePage/>}/>
+          <Route path='/' element={<HomePage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/register" element={<Register />} />
           <Route path="/enroll" element={<PatientEnrollment />} />
           <Route path="/messages" element={<MessageTable />} />
           <Route path="/follow-up" element={<FollowUpTable />} />
-          <Route path="/progress" element={<ProgressT />} />
+          <Route path="/progress" element={<Progress />} /> {/* Make sure this route is correct */}
           <Route path="*" element={<NoPatientFound />} />
         </Routes>
       </div>
