@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "./Appointment.css";
+<<<<<<< HEAD
 
 const Appointment = ({ onClose, onConfirm }) => {
+=======
+const Appointment = ({ onClose, onConfirm, patient }) => {
+>>>>>>> 8d20d4ef676c76dd842111010fd07ebb8b3e246e
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [error, setError] = useState("");
@@ -16,12 +20,45 @@ const Appointment = ({ onClose, onConfirm }) => {
     setError(""); 
   };
 
+<<<<<<< HEAD
   const handleConfirm = () => {
     const today = new Date().toISOString().split("T")[0];
 
     if (!selectedDate) {
       setError("Please select a date.");
       return;
+=======
+  console.log(patient);
+
+  const handleConfirm = async () => {
+    try {
+      const today = new Date().toISOString().split("T")[0];
+
+      if (!selectedDate) {
+        setError("Please select a date.");
+        return;
+      }
+      if (!selectedTime) {
+        setError("Please select a time.");
+        return;
+      }
+      if (selectedDate < today) {
+        setError("The appointment date cannot be in the past.");
+        return;
+      }
+
+      const selectedHour = parseInt(selectedTime.split(":")[0], 10);
+      if (selectedHour < 0 || selectedHour > 23) {
+        setError("Please select a time between 09:00 and 17:00.");
+        return;
+      }
+
+      onConfirm({ date: selectedDate, time: selectedTime });
+      onClose();
+      
+    } catch (error) {
+      console.log(error);
+>>>>>>> 8d20d4ef676c76dd842111010fd07ebb8b3e246e
     }
     if (!selectedTime) {
       setError("Please select a time.");

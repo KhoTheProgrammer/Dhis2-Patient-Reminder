@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const password = process.env.REACT_APP_DHIS_PASSWORD;
+const username = process.env.REACT_APP_DHIS_USERNAME;
 const api = axios.create({
   baseURL: "https://data.research.dhis2.org/in5320/api/",
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Basic " + btoa("admin:district"),
+    Authorization: "Basic " + btoa(`${username}:${password}`),
   },
 });
 
