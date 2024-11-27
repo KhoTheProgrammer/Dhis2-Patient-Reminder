@@ -14,7 +14,7 @@
   "icons": {
     "48": "dhis2-app-icon.png"
   },
-  "manifest_generated_at": "Tue Nov 26 2024 20:36:33 GMT+0000 (Greenwich Mean Time)",
+  "manifest_generated_at": "Wed Nov 27 2024 06:48:21 GMT+0000 (Greenwich Mean Time)",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"

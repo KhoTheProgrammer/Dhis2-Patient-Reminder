@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./FollowUp.css";
-import { appointmentQuery, fetchPatientDetails } from "./api"; // API for fetching patient details
+import { appointmentQuery, fetchPatientDetails, updateAppointmentStatus // API for updating appointment status
+} from "./api";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
+import { ids } from "../../assets/Ids";
 const FollowUpTable = () => {
   const {
     loading,
@@ -10,29 +12,26 @@ const FollowUpTable = () => {
     data
   } = useDataQuery(appointmentQuery);
   const [appointments, setAppointments] = useState([]);
-  const [patientDetailsCache, setPatientDetailsCache] = useState({}); // Cache for patient details
+  const [patientDetailsCache, setPatientDetailsCache] = useState({});
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const rowsPerPage = 10; // Number of rows per page
-
+  const rowsPerPage = 10;
   useEffect(() => {
     const fetchData = async () => {
       if (data) {
         const appointmentsData = data.events.events.map(instance => {
-          const dateDataValue = instance.dataValues.find(dataValue => dataValue.dataElement === "T0tg47LBsdW");
-          const timeDataValue = instance.dataValues.find(dataValue => dataValue.dataElement === "I4v5kQouxxF");
+          const dateDataValue = instance.dataValues.find(dataValue => dataValue.dataElement === ids.date);
+          const timeDataValue = instance.dataValues.find(dataValue => dataValue.dataElement === ids.time);
           return {
             id: instance.trackedEntityInstance,
             status: instance.status,
             enrollment: instance.enrollment,
             date: dateDataValue ? dateDataValue.value : null,
-            // Safely handle missing values
-            time: timeDataValue ? timeDataValue.value : null // Safely handle missing values
+            time: timeDataValue ? timeDataValue.value : null,
+            event: instance.event
           };
         });
         setAppointments(appointmentsData);
-
-        // Fetch patient names in parallel
         setIsFetchingDetails(true);
         const patientDetails = await fetchAllPatientDetails(appointmentsData);
         setPatientDetailsCache(patientDetails);
@@ -41,16 +40,12 @@ const FollowUpTable = () => {
     };
     fetchData();
   }, [data]);
-
-  // Function to extract the full name from the patient's attributes
   const getFullName = attributes => {
     var _attributes$find, _attributes$find2;
     const firstName = (_attributes$find = attributes.find(attr => attr.displayName === "First name")) === null || _attributes$find === void 0 ? void 0 : _attributes$find.value;
     const lastName = (_attributes$find2 = attributes.find(attr => attr.displayName === "Last name")) === null || _attributes$find2 === void 0 ? void 0 : _attributes$find2.value;
     return firstName && lastName ? `${firstName} ${lastName}` : "Unknown";
   };
-
-  // Function to fetch details for all unique trackedEntityInstance IDs
   const fetchAllPatientDetails = async appointmentsData => {
     const uniqueIds = [...new Set(appointmentsData.map(a => a.id))];
     const patientDetails = {};
@@ -70,6 +65,29 @@ const FollowUpTable = () => {
       }
     }));
     return patientDetails;
+  };
+  const handleCheckboxChange = async appointment => {
+    // Update local state optimistically
+    const updatedAppointments = appointments.map(a => a.event === appointment.event ? {
+      ...a,
+      status: "COMPLETED"
+    } : a);
+    setAppointments(updatedAppointments);
+
+    // Persist the status update to the database
+    try {
+      await updateAppointmentStatus({
+        ...appointment,
+        status: "COMPLETED"
+      });
+    } catch (error) {
+      console.error("Failed to update appointment status:", error);
+      // Revert the status update on failure
+      setAppointments(prev => prev.map(a => a.event === appointment.event ? {
+        ...a,
+        status: appointment.status
+      } : a));
+    }
   };
   const startIndex = currentPage * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
@@ -100,7 +118,8 @@ const FollowUpTable = () => {
     }, /*#__PURE__*/React.createElement("td", null, name), /*#__PURE__*/React.createElement("td", null, appointment.status), /*#__PURE__*/React.createElement("td", null, appointment.date ? new Date(appointment.date).toLocaleDateString() : "No Date"), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",
       disabled: appointment.status === "Complete",
-      checked: appointment.status === "Complete"
+      checked: appointment.status === "Complete",
+      onChange: () => handleCheckboxChange(appointment)
     })));
   }) : /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
     colSpan: "4",

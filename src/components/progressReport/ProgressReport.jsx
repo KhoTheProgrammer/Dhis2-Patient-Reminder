@@ -51,7 +51,7 @@ const ProgressReport = () => {
               const response = await fetchPatientDetails(id);
               patientDetails[id] = {
                 fullName: getFullName(response.attributes),
-                healthProgram: response.enrollments?.[0]?.program || "N/A",
+                program: response.enrollments?.[0]?.program || "N/A",
                 totalAppointments: response.enrollments?.length || 0,
                 honoredAppointments:
                   response.enrollments?.filter((a) => a.status === "HONORED")
@@ -131,6 +131,7 @@ const ProgressReport = () => {
             currentRows.map((appointment, index) => {
               const patient = patientDetailsCache[appointment.id];
               const name = patient ? patient.fullName : "Fetching...";
+              const program = patient ? patient.program : "Fetching...";
               const totalAppointments = patient?.totalAppointments || 0;
               const honoredAppointments = patient?.honoredAppointments || 0;
               const percentageHonored =
@@ -141,7 +142,7 @@ const ProgressReport = () => {
               return (
                 <tr key={index}>
                   <td>{name}</td>
-                  <td>{patient?.healthProgram}</td>
+                  <td>{program}</td>
                   <td>{totalAppointments}</td>
                   <td>{honoredAppointments}</td>
                   <td>{percentageHonored}</td>

@@ -44,7 +44,7 @@ const ProgressReport = () => {
             const response = await fetchPatientDetails(id);
             patientDetails[id] = {
               fullName: getFullName(response.attributes),
-              healthProgram: ((_response$enrollments = response.enrollments) === null || _response$enrollments === void 0 ? void 0 : (_response$enrollments2 = _response$enrollments[0]) === null || _response$enrollments2 === void 0 ? void 0 : _response$enrollments2.program) || "N/A",
+              program: ((_response$enrollments = response.enrollments) === null || _response$enrollments === void 0 ? void 0 : (_response$enrollments2 = _response$enrollments[0]) === null || _response$enrollments2 === void 0 ? void 0 : _response$enrollments2.program) || "N/A",
               totalAppointments: ((_response$enrollments3 = response.enrollments) === null || _response$enrollments3 === void 0 ? void 0 : _response$enrollments3.length) || 0,
               honoredAppointments: ((_response$enrollments4 = response.enrollments) === null || _response$enrollments4 === void 0 ? void 0 : _response$enrollments4.filter(a => a.status === "HONORED").length) || 0
             };
@@ -89,12 +89,13 @@ const ProgressReport = () => {
   }, /*#__PURE__*/React.createElement("h1", null, "Appointment Progress Report"), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Patient Name"), /*#__PURE__*/React.createElement("th", null, "Health Program"), /*#__PURE__*/React.createElement("th", null, "Total Appointments"), /*#__PURE__*/React.createElement("th", null, "Honored Appointments"), /*#__PURE__*/React.createElement("th", null, "Percentage Honored (%)"))), /*#__PURE__*/React.createElement("tbody", null, currentRows.length > 0 ? currentRows.map((appointment, index) => {
     const patient = patientDetailsCache[appointment.id];
     const name = patient ? patient.fullName : "Fetching...";
+    const program = patient ? patient.program : "Fetching...";
     const totalAppointments = (patient === null || patient === void 0 ? void 0 : patient.totalAppointments) || 0;
     const honoredAppointments = (patient === null || patient === void 0 ? void 0 : patient.honoredAppointments) || 0;
     const percentageHonored = totalAppointments > 0 ? (honoredAppointments / totalAppointments * 100).toFixed(2) : "0";
     return /*#__PURE__*/React.createElement("tr", {
       key: index
-    }, /*#__PURE__*/React.createElement("td", null, name), /*#__PURE__*/React.createElement("td", null, patient === null || patient === void 0 ? void 0 : patient.healthProgram), /*#__PURE__*/React.createElement("td", null, totalAppointments), /*#__PURE__*/React.createElement("td", null, honoredAppointments), /*#__PURE__*/React.createElement("td", null, percentageHonored));
+    }, /*#__PURE__*/React.createElement("td", null, name), /*#__PURE__*/React.createElement("td", null, program), /*#__PURE__*/React.createElement("td", null, totalAppointments), /*#__PURE__*/React.createElement("td", null, honoredAppointments), /*#__PURE__*/React.createElement("td", null, percentageHonored));
   }) : /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
     colSpan: "5",
     style: {

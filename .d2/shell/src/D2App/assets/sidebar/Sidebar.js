@@ -44,12 +44,5 @@ const Sidebar = () => /*#__PURE__*/React.createElement("div", {
   src: FollowUpIcon,
   alt: "Follow Up",
   className: "icon"
-}), " Follow Up"), /*#__PURE__*/React.createElement(NavLink, {
-  to: "/progress",
-  activeClassName: "active"
-}, /*#__PURE__*/React.createElement("img", {
-  src: ProgressIcon,
-  alt: "Patient's Progress",
-  className: "icon"
-}), " Patient's Progress")));
+}), " Follow Up")));
 export default Sidebar;

@@ -94,3 +94,17 @@ export const addAppointment = async (appointmentData) => {
     throw error;
   }
 };
+
+export const saveMessage = (messageData) => {
+  const response = fetch(
+    "https://dhis2-messages-backend.onrender.com/api/messages",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(messageData),
+    }
+  );
+  return response;
+};

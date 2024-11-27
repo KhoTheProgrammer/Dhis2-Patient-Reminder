@@ -5,7 +5,8 @@ import { Table, TableHead, TableBody, TableRow, TableCell, Button, TableCellHead
 import { useDataQuery } from "@dhis2/app-runtime";
 import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
-import { addAppointment, sendSMS } from "../Appointment/api";
+import { addAppointment } from "../Appointment/api";
+import { sendMessage, saveMessage } from "../Appointment/api";
 const Patients = () => {
   const tableHeaders = ["First name", "Last name", "Date Registered", "Add Appointment"];
   const [patients, setPatients] = useState([]);
@@ -74,34 +75,39 @@ const Patients = () => {
     setShowAppointmentPopup(true);
   };
   const handleAddAppointment = async appointmentData => {
-    const newLoadingAppointments = new Set(loadingAppointments);
-    newLoadingAppointments.add(selectedPatient.id); // Use selectedPatient.id
-    setLoadingAppointments(newLoadingAppointments);
+    // Add the patient ID to the loading set
+    setLoadingAppointments(prev => new Set(prev).add(selectedPatient.id));
     try {
       const result = await addAppointment({
         ...appointmentData,
-        id: selectedPatient.id // Use selectedPatient.id here
+        id: selectedPatient.id
       });
       if (result) {
-        // Send SMS after successful appointment creation
         const message = {
           text: `Hello, ${selectedPatient.firstName} ${selectedPatient.lastName}! You have an appointment on ${appointmentData.date} at ${appointmentData.time}. Thank you!!`,
           number: selectedPatient.phoneNumber
         };
-        const response = await sendSMS(message);
+        await sendMessage(message);
+        const messageData = {
+          message: message.text,
+          patientId: selectedPatient.id
+        };
+        const response = await saveMessage(messageData);
         console.log(response);
       }
-      // Success
       setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide success message after 3 seconds
+      setTimeout(() => setShowSuccessMessage(false), 3000);
       handleCloseAppointment();
     } catch (error) {
-      // Failure
       setShowErrorMessage(true);
-      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
+      setTimeout(() => setShowErrorMessage(false), 3000);
     } finally {
-      newLoadingAppointments.delete(selectedPatient.id); // Use selectedPatient.id here
-      setLoadingAppointments(new Set(newLoadingAppointments));
+      // Remove the patient ID from the loading set
+      setLoadingAppointments(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(selectedPatient.id);
+        return newSet; // Return a new set
+      });
     }
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, patients.length > 0 ? /*#__PURE__*/React.createElement("div", {
