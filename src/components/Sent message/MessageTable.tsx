@@ -22,12 +22,6 @@ function MessageTable() {
     return message.substring(nameStart, nameEnd).trim();
   };
 
-  // Function to format the date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Get only the date part (YYYY-MM-DD)
-  };
-
   // Calculate total pages
   const totalPages = Math.ceil(sentmessages.length / rowsPerPage);
 
@@ -68,7 +62,7 @@ function MessageTable() {
                 {/* Extracted name */}
               </td>
               <td>{msg.text}</td>
-              <td>{formatDate(msg.dateCreated)}</td> {/* Formatted date */}
+              <td>{msg.dateCreated}</td>
             </tr>
           ))}
         </tbody>
