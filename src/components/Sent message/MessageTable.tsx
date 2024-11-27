@@ -3,14 +3,22 @@ import "./Message.css"; // Ensure you create this CSS file for styling
 import { getMessage } from "./api";
 
 function MessageTable() {
-  const [sentmessages, setMessages] = useState([]); // State to hold fetched messages
+  const [sentMessages, setMessages] = useState([]); // State to hold fetched messages
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true); // State for loading indicator
   const rowsPerPage = 10; // Maximum of 10 rows (patients) per page
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const result = await getMessage(); // Await the fetch
-      setMessages(result); // Set the messages state with the fetched data
+      setLoading(true); // Start loading
+      try {
+        const result = await getMessage(); // Await the fetch
+        setMessages(result); // Set the messages state with the fetched data
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      } finally {
+        setLoading(false); // End loading
+      }
     };
     fetchMessages();
   }, []);
@@ -29,11 +37,11 @@ function MessageTable() {
   };
 
   // Calculate total pages
-  const totalPages = Math.ceil(sentmessages.length / rowsPerPage);
+  const totalPages = Math.ceil(sentMessages.length / rowsPerPage);
 
   // Get current page data
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentMessages = sentmessages.slice(
+  const currentMessages = sentMessages.slice(
     startIndex,
     startIndex + rowsPerPage
   );
@@ -49,6 +57,14 @@ function MessageTable() {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <p>Loading messages...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="message-table-container">

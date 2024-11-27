@@ -17,8 +17,6 @@ import Card from "../../assets/NoPatientFound/Card/Card";
 import Appointment from "../Appointment/Appointment";
 import { addAppointment } from "../Appointment/api";
 import { sendMessage, saveMessage } from "../Appointment/api";
-import { fetchPatientDetails } from "../FollowUp/api";
-
 const Patients = () => {
   const tableHeaders = [
     "First name",
@@ -113,19 +111,8 @@ const Patients = () => {
   };
 
   const handleAddAppointment = async (appointmentData) => {
-    // Check if the selected patient already has an appointment
-    const existingAppointment = await fetchPatientDetails(selectedPatient.id); // Implement this function to fetch appointments
-    console.log(existingAppointment, selectedPatient.id);
-    
-    if (existingAppointment) {
-      setShowErrorMessage(true);
-      setTimeout(() => setShowErrorMessage(false), 3000); // Hide error message after 3 seconds
-      return; // Exit the function if an appointment already exists
-    }
-
-    const newLoadingAppointments = new Set(loadingAppointments);
-    newLoadingAppointments.add(selectedPatient.id);
-    setLoadingAppointments(newLoadingAppointments);
+    // Add the patient ID to the loading set
+    setLoadingAppointments((prev) => new Set(prev).add(selectedPatient.id));
 
     try {
       const result = await addAppointment({
@@ -155,11 +142,14 @@ const Patients = () => {
       setShowErrorMessage(true);
       setTimeout(() => setShowErrorMessage(false), 3000);
     } finally {
-      newLoadingAppointments.delete(selectedPatient.id);
-      setLoadingAppointments(new Set(newLoadingAppointments));
+      // Remove the patient ID from the loading set
+      setLoadingAppointments((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(selectedPatient.id);
+        return newSet; // Return a new set
+      });
     }
   };
-
   return (
     <>
       {patients.length > 0 ? (
