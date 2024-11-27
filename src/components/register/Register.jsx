@@ -126,6 +126,8 @@ const Register = () => {
           placeholder="Phone Number"
           onChange={handleChange}
           required
+          pattern="^(09|08)\d{8}$"
+          title="Please enter a valid malawian phone number"
         />
         <input
           type="text"

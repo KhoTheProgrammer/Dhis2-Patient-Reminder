@@ -6,7 +6,7 @@ function MessageTable() {
   const [sentMessages, setMessages] = useState([]); // State to hold fetched messages
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true); // State for loading indicator
-  const rowsPerPage = 10; // Maximum of 10 rows (patients) per page
+  const rowsPerPage = 14; // Maximum of 10 rows (patients) per page
 
   useEffect(() => {
     const fetchMessages = async () => {

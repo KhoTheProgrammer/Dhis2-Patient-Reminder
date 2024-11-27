@@ -26,9 +26,6 @@ const Sidebar = () => (
             <NavLink to="/follow-up" activeClassName="active">
                 <img src={FollowUpIcon} alt="Follow Up" className="icon" /> Follow Up
             </NavLink>
-            <NavLink to="/progress" activeClassName="active">
-                <img src={ProgressIcon} alt="Patient's Progress" className="icon" /> Patient's Progress
-            </NavLink>
         </nav>
     </div>
 );
