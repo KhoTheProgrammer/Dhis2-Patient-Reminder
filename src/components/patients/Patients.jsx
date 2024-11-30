@@ -165,9 +165,9 @@ const Patients = () => {
             <TableBody>
               {currentPatients.map((person, index) => (
                 <TableRow key={index} className="tablerow">
-                  <TableCell>{person.firstName}</TableCell>
-                  <TableCell>{person.lastName}</TableCell>
-                  <TableCell>{person.created}</TableCell>
+                  <TableCell className="tablerow">{person.firstName}</TableCell>
+                  <TableCell className="tablerow">{person.lastName}</TableCell>
+                  <TableCell className="tablerow">{person.created}</TableCell>
                   <TableCell>
                     <Button
                       onClick={() => openAppointmentModal(person)}
